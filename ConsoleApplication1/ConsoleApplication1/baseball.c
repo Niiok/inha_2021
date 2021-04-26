@@ -17,8 +17,6 @@ int main()
 	{
 		int arr[NUMS];
 		int tryi[NUMS];
-		int score[2];
-		int tries = 1;
 
 		number_setup(arr, NUMS);
 		baseball_game(arr, tryi, NUMS, CHANCE);
@@ -31,12 +29,9 @@ int main()
 int check_overlap(int* arr, int size, int num)
 {
 	for (int i = 0; i < size; i++)
-	{
 		if (*(arr + i) == num)
-		{
 			return 1;
-		}
-	}
+
 	return 0;
 }
 
@@ -57,7 +52,7 @@ int number_setup(int* arr, int size)
 		i++;
 	}
 
-	return 1;
+	return 0;
 }
 
 
@@ -78,7 +73,7 @@ int baseball_game(int* arr, int* tryi, int size, int chance)
 				printf("\n조건을 맞추어 입력해주세요. 처음부터 다시 해주세요.\n\n");
 				printf("\n\t남은 기회 %d번\n\t숫자 1~9를 %d개 입력하세요 : ", chance - tries, size);
 				i = 0;
-				fflush(stdin);
+				rewind(stdin);
 				continue;
 			}
 			if (check_overlap(tryi, i, num))
@@ -86,7 +81,7 @@ int baseball_game(int* arr, int* tryi, int size, int chance)
 				printf("\n중복 입력입니다. 처음부터 다시 해주세요.\n\n");
 				printf("\n\t남은 기회 %d번\n\t숫자 1~9를 %d개 입력하세요 : ", chance - tries, size);
 				i = 0;
-				fflush(stdin);
+				rewind(stdin);
 				continue;
 			}
 			tryi[i] = num;
