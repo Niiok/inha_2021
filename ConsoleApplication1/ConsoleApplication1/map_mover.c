@@ -31,12 +31,10 @@ int main()
 	while (1)
 	{
 		printf("frame : %d", frame++);
-		if (frame % 100 == 99)
-		{
-			system("cls");
-			show_window(map, map_size);
-		}
 		input_key(map, map_size);
+
+		if (frame % 100 == 99)
+			show_window(map, map_size);
 
 	}
 
@@ -63,28 +61,28 @@ int input_key(int* map, Point size)
 			if (move_character(map, size, character))
 				puts("error");
 			else
-				printf("     ");
+				puts("     ");
 			break;
 		case 72:
 			//puts("^");
 			if(move_character(map, size, character))
 				puts("error");
 			else
-				printf("     ");
+				puts("     ");
 			break;
 		case 80:
 			//puts("v");
 			if(move_character(map, size, character))
 				puts("error");
 			else
-				printf("     ");
+				puts("     ");
 			break;
 		case 77:
 			//puts(">");
 			if(move_character(map, size, character))
 				puts("error");
 			else
-				printf("     ");
+				puts("     ");
 			break;
 		}
 		break;
