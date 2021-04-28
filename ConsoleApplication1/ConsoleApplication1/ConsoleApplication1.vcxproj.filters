@@ -72,5 +72,14 @@
     <ClCompile Include="문제1번.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="April28.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="April28_problem1_old.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="kang.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
