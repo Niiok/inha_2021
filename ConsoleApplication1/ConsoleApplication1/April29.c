@@ -13,7 +13,7 @@ int problem2();
 
 int main()
 {
-	problem2();
+	problem1();
 }
 
 int ex18_2()
@@ -222,6 +222,10 @@ int problem1()
 {
 	const int GOOGOO = 9;
 	int select = 0;
+	int line_size = 15;
+#ifdef _WIN32
+	line_size++;
+#endif
 
 	FILE* fp = fopen("../data/99.txt", "w+");
 	if (fp == NULL)
@@ -238,11 +242,13 @@ int problem1()
 	printf("출력을 원하는 구구단은 ?  ");
 	scanf("%d", &select);
 	
-	rewind(fp);
-	for (int i = 2;;i++)
-	{
-		if (i == select)
-		{
+	fseek(fp, line_size * (select - 2) * GOOGOO, SEEK_SET);
+
+	//rewind(fp);
+	//for (int i = 2;;i++)
+	//{
+	//	if (i == select)
+	//	{
 			printf("\t=========\n");
 			for (int j = 0; j < GOOGOO; j++)
 			{
@@ -250,17 +256,17 @@ int problem1()
 				printf("%s", stdin);
 			}
 			printf("\t=========\n");
-			break;
-		}
-		else
-		{
-			for (int j = 0; j < GOOGOO; j++)
-			{
-				fgets(stdin, 99, fp);
-			}
-			rewind(stdin);
-		}
-	}
+	//		break;
+	//	}
+	//	else
+	//	{
+	//		for (int j = 0; j < GOOGOO; j++)
+	//		{
+	//			fgets(stdin, 99, fp);
+	//		}
+	//		rewind(stdin);
+	//	}
+	//}
 
 	fclose(fp);
 }
@@ -307,7 +313,7 @@ int problem2()
 		system("cls");
 		gap = abs(start - ftell(fp_source));
 		percent = (float)(gap*100) / source_size;
-		printf("복사중 : %d %c\n", percent, '%');
+		printf("복사중 : %.2f %c\n", percent, '%');
 		if (percent == 100.0)
 		{
 			printf("\t복사완료");
