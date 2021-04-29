@@ -286,10 +286,10 @@ int problem2()
 		end = ftell(fp_source);
 		fseek(fp_source, 0, SEEK_SET);
 		start = ftell(fp_source);
-	source_size = abs(end - start);
+		source_size = abs(end - start);
 	}
 
-	int percent = 50;
+	float percent = 50.0;
 	int gap = 0;
 
 	for (;;)
@@ -306,7 +306,7 @@ int problem2()
 		}
 		system("cls");
 		gap = abs(start - ftell(fp_source));
-		percent = (gap*100) / source_size;
+		percent = (float)(gap*100) / source_size;
 		printf("∫πªÁ¡ﬂ : %d %c\n", percent, '%');
 		if (percent == 100.0)
 		{
