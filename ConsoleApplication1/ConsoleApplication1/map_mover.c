@@ -2,6 +2,9 @@
 #include<stdlib.h>
 #include<windows.h>
 
+#include<mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+
 typedef struct Point
 {
 	int x;
