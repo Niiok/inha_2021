@@ -13,10 +13,17 @@ float dx = 0, dy = 0;
  */
 int main(int argc, char* argv[])
 {
-	HANDLE console_buffer_1, console_buffer_2;
+	HANDLE console_buffer_1, console_buffer_2, initial;
 	SMALL_RECT draw_region = { 0, 0, WIDTH - 1,HEIGHT - 1 };
 	COORD console_buffer_area = {WIDTH, HEIGHT};
 	COORD buffer_coord = {0, 0};
+
+
+	initial = GetStdHandle(STD_OUTPUT_HANDLE);
+	if (initial == INVALID_HANDLE_VALUE)
+		return 0;
+	//SetConsoleScreenBufferSize(initial, console_buffer_area);
+	SetConsoleWindowInfo(initial, TRUE, &draw_region);
 
 	console_buffer_1 = CreateConsoleScreenBuffer(		// first buffer create
 		GENERIC_WRITE,
@@ -41,9 +48,9 @@ int main(int argc, char* argv[])
 
 	SetConsoleTitle((LPCSTR)L"Console Game Prototype");		// window name
 	SetConsoleScreenBufferSize(console_buffer_1, console_buffer_area);
-	SetConsoleWindowInfo(console_buffer_1, TRUE, &draw_region);
+	//SetConsoleWindowInfo(console_buffer_1, TRUE, &draw_region);
 	SetConsoleScreenBufferSize(console_buffer_2, console_buffer_area);
-	SetConsoleWindowInfo(console_buffer_2, TRUE, &draw_region);
+	//SetConsoleWindowInfo(console_buffer_2, TRUE, &draw_region);
 
 
 
@@ -153,7 +160,7 @@ int main(int argc, char* argv[])
 			&draw_region);
 
 		if (!SetConsoleActiveScreenBuffer(back_console_buffer)) {
-			printf("buffer change fail : %d\n", GetLastError());
+			printf("failed to change buffer : %d\n", GetLastError());
 			return 1;
 		}
 

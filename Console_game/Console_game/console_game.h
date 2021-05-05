@@ -1,4 +1,5 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -7,6 +8,6 @@
 #include"type_define.h"
 #include"windowing.h"
 
-#define WIDTH 200
-#define HEIGHT 50
+#define WIDTH 120
+#define HEIGHT 30
 

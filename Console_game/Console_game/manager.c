@@ -99,9 +99,9 @@ int ManagerQuit()
 	while (memmory_list != NULL)
 	{
 		MemmoryStorage* temp = memmory_list->next;
-		fclose(memmory_list->address);
-		free(file_list);
-		file_list = temp;
+		free(memmory_list->address);
+		free(memmory_list);
+		memmory_list = temp;
 	}
 
 	return 0;
