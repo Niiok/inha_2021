@@ -15,43 +15,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="title.c">
+    <ClCompile Include="i_am_fastest.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="game_base.c">
+    <ClCompile Include="i_am_fastest_title.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="windowing.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="object.cpp">
+    <ClCompile Include="main.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="manager.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="i_am_fastest_gameover.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="title.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="game_base.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="console_game.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="windowing.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="type_define.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="manager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="i_am_fastest.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="i_am_fastest_title.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="i_am_fastest_gameover.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\data\IAF_map.txt">
+      <Filter>리소스 파일</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,11 +1,13 @@
 #pragma once
-#include "console_game.h"
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
 
 int ManagerInit();
 
-FILE* FileLoad(char*);
+FILE* FileLoad(const char*);
 
-char* MemmoryAllocate(int);
+const char* MemmoryAllocate(int);
 
 int FileUnload();
 

@@ -13,8 +13,8 @@ int SetWindowSize(size_t width, size_t height)
 
 	printf("pass\n");
 	SMALL_RECT rect = {0,};
-	rect.Bottom = width;
-	rect.Right = height;
+	rect.Bottom = (SHORT)width;
+	rect.Right = (SHORT)height;
 	if (SetConsoleWindowInfo(output_handle, FALSE, &rect) == FALSE)
 		return 0;
 
@@ -37,9 +37,4 @@ int CheckConsoleBuffer(HANDLE buffer_handle)
 	printf("dwMaximumWindowSize = %d, %d\n", cur_screen.dwMaximumWindowSize.X, cur_screen.dwMaximumWindowSize.Y);
 
 	return 0;
-}
-
-int DoubleBufferSample(void)
-{
-
 }

@@ -29,31 +29,33 @@ int ManagerInit()
 {
 	//creating quit end point
 
-	file_list = malloc(sizeof(FileStorage));
+	file_list = (FileStorage*)malloc(sizeof(FileStorage));
 	if (file_list == NULL)
 		return -1;
 	file_list->address = NULL;
 	file_list->next = NULL;
 
 
-	memmory_list = malloc(sizeof(MemmoryStorage));
+	memmory_list = (MemmoryStorage*)malloc(sizeof(MemmoryStorage));
 	if (memmory_list == NULL)
 		return -2;
 	memmory_list->address = NULL;
 	memmory_list->next = NULL;
 	memmory_list->size = 0;
+
+	return 0;
 }
 
 
-FILE* FileLoad(char* file_name)
+FILE* FileLoad(const char* file_name)
 {
 	FILE* new_file;
 	FileStorage* temp;
 
 	new_file = fopen(file_name, "r");	//file open (main purpose of this function)
-	temp = malloc(sizeof(FileStorage));
+	temp = (FileStorage*)malloc(sizeof(FileStorage));
 	if (temp == NULL)
-		return -1;
+		return NULL;
 	temp->address = new_file;
 	temp->next = file_list;
 	file_list = temp;
@@ -62,15 +64,15 @@ FILE* FileLoad(char* file_name)
 }
 
 
-char* MemmoryAllocate(int size)
+const char* MemmoryAllocate(int size)
 {
 	char* new_memmory;
 	MemmoryStorage* temp;
 
-	new_memmory = malloc(size);	//memmory allocate (main purpose of this function)
-	temp = malloc(sizeof(MemmoryStorage));
+	new_memmory = (char*)malloc(size);	//memmory allocate (main purpose of this function)
+	temp = (MemmoryStorage*)malloc(sizeof(MemmoryStorage));
 	if (temp == NULL)
-		return -1;
+		return NULL;
 	temp->address = new_memmory;
 	temp->next = memmory_list;
 	temp->size = size;
@@ -82,7 +84,7 @@ char* MemmoryAllocate(int size)
 
 int FileUnload()
 {
-
+	return 0;
 }
 
 int ManagerQuit()
