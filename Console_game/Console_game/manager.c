@@ -93,7 +93,8 @@ int ManagerQuit()
 	while (file_list != NULL)
 	{
 		FileStorage* temp = file_list->next;
-		fclose(file_list->address);
+		if (file_list->address != NULL)
+			fclose(file_list->address);
 		free(file_list);
 		file_list = temp;
 	}

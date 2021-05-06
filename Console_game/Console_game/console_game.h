@@ -6,6 +6,8 @@
 #include<string.h>
 #include<windows.h>
 
+
+
 #define WIDTH 120
 #define HEIGHT 30
 
@@ -23,7 +25,7 @@ enum GameStage {
 
 #ifdef MAIN_DECLARE
 
-int _stage = GameStage_IamFastest;		//FSM based on State class to judge what to do on main loop
+int _stage = GameStage_Title_IAF;		//FSM based on State class to judge what to do on main loop
 int _score = 0;
 CHAR_INFO _char_canvas[WIDTH * HEIGHT];		//canvas to share abroad states
 #include"type_define.h"

@@ -61,6 +61,10 @@ int main(int argc, char* argv[])
 
 		switch (_stage)
 		{
+		case GameStage_Title_IAF:
+			GS_IAF_Title();
+			break;
+
 		case GameStage_IamFastest:
 			GS_IAF();
 			break;

@@ -127,17 +127,13 @@
     <ClCompile Include="i_am_fastest.c">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="i_am_fastest_title.c" />
     <ClCompile Include="manager.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="i_am_fastest_gameover.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="console_game.h" />
-    <ClInclude Include="i_am_fastest_gameover.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="i_am_fastest.h" />
-    <ClInclude Include="i_am_fastest_title.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\data\IAF_map.txt" />
