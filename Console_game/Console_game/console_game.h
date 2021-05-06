@@ -5,7 +5,10 @@
 #include<stdlib.h>
 #include<string.h>
 #include<windows.h>
+#include<mmsystem.h>
+#pragma comment (lib, "winmm.lib");
 
+//PlaySound(TEXT("../data/bgm.wav"),NULL,SND_ASYNC);
 
 
 #define WIDTH 120
@@ -31,7 +34,6 @@ CHAR_INFO _char_canvas[WIDTH * HEIGHT];		//canvas to share abroad states
 #include"type_define.h"
 #include"manager.h"
 #include"i_am_fastest.h"
-
 #undef MAIN_DECLARE
 
 #else

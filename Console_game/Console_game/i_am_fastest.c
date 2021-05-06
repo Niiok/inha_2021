@@ -91,6 +91,9 @@ int Stage_Init()
 
 	b_init_stage = 0;
 	b_quit_stage = 0;
+
+	PlaySound(TEXT("../data/IAF.wav"),NULL,SND_ASYNC | SND_LOOP);
+
 	return result;
 }
 
@@ -127,6 +130,7 @@ int Stage_Collision()
 	if (character_x + dx >= 1 && character_x + dx <= WIDTH - 1 && character_y + dy >= 1 && character_y + dy <= HEIGHT - 1)	// collision inside map
 	{
 		float bigger;
+		int beep = 0;
 
 		{		//choose bigger one
 			float dx_sample = dx;
@@ -161,13 +165,17 @@ int Stage_Collision()
 					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH*(int)character_y] == MapTile_Wall)
 					{
 						dx = -dx / 2;
+						beep = 1;
 						unit_d = bigger + 1;	//quit loops
 					}
 					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH*(int)character_y_new] == MapTile_Wall)
 					{
 						dy = -dy / 2;
+						beep = 1;
 						unit_d = bigger + 1;	//quit loops
 					}
+					if (beep == 1)
+						Beep(current_speed/2, 200);
 					break;
 				
 				case MapTile_Breakable:				// Breakable Wall case
@@ -175,14 +183,18 @@ int Stage_Collision()
 					{
 						dx = -dx / 2;
 						map_memmory[character_x_new + WIDTH * character_y_new] = MapTile_Blank;
+						beep = 1;
 						unit_d = bigger + 1;	//quit loops
 					}
 					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH * (int)character_y_new] == MapTile_Breakable)
 					{
 						dy = -dy / 2;
 						map_memmory[character_x_new + WIDTH * character_y_new] = MapTile_Blank;
+						beep = 1;
 						unit_d = bigger + 1;	//quit loops
 					}
+					if (beep == 1)
+						Beep(current_speed/2, 200);
 					break;
 
 				case MapTile_Ice:
@@ -202,6 +214,7 @@ int Stage_Collision()
 
 				case MapTile_Lava:
 					b_quit_stage = 1;
+					Beep(max_speed/10, 1500);
 					break;
 
 				case MapTile_Slime:				// Wall case
@@ -209,12 +222,16 @@ int Stage_Collision()
 					{
 						dx = -dx;
 						unit_d = bigger + 1;	//quit loops
+						beep = 1;
 					}
 					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH * (int)character_y_new] == MapTile_Wall)
 					{
 						dy = -dy;
 						unit_d = bigger + 1;	//quit loops
+						beep = 1;
 					}
+					if (beep == 1)
+						Beep(max_speed, 500);
 					break;
 
 				}
@@ -406,6 +423,9 @@ int Title_Init()
 
 	b_init_stage = 0;
 	b_quit_stage = 0;
+
+	PlaySound(TEXT("../data/IAF_Title.wav"),NULL,SND_ASYNC);
+
 	return result;
 }
 
