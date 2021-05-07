@@ -228,20 +228,20 @@ int Stage_Collision()
 				case MapTile_Ice:
 					if (current_speed < 50000)
 					{
-						if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(0x41) < 0) {
-							dx -= ECEL_POWER;
+						/*if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(0x41) < 0) {
+							dx -= ECEL_POWER/4;
 						}
 						if (GetAsyncKeyState(VK_RIGHT) < 0 || GetAsyncKeyState(0x44) < 0) {
-							dx += ECEL_POWER;
+							dx += ECEL_POWER/4;
 						}
 						if (GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(0x57) < 0) {
-							dy -= ECEL_POWER / 2;
+							dy -= ECEL_POWER / 8;
 						}
 						if (GetAsyncKeyState(VK_DOWN) < 0 || GetAsyncKeyState(0x53) < 0) {
-							dy += ECEL_POWER / 2;
-						}
-						dx *= 1.01;
-						dy *= 1.01;
+							dy += ECEL_POWER / 8;
+						}*/
+						dx *= 1.0001;
+						dy *= 1.0001;
 					}
 					break;
 
