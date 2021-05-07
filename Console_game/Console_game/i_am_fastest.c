@@ -64,7 +64,7 @@ int GS_IAF()
 
 	Stage_Collision();		//called on every frame
 	Stage_Draw();
-	IAF_Beep();
+	//IAF_Beep();
 	if (b_quit_stage)
 		if (Stage_Quit())	//called on stage quit
 			return -1;

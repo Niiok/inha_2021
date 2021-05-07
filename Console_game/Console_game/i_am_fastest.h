@@ -5,7 +5,7 @@
 #include<math.h>
 #include<conio.h>
 
-#define ECEL_POWER 0.05
+#define ECEL_POWER 0.1
 #define DECEL_POWER 1.001
 #define TIME_LIMIT (3600*3)
 #define ACCURACY 100;
