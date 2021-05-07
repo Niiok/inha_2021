@@ -6,7 +6,7 @@
 #include<string.h>
 #include<windows.h>
 #include<mmsystem.h>
-#pragma comment (lib, "winmm.lib");
+#pragma comment (lib, "winmm.lib")
 
 //PlaySound(TEXT("../data/bgm.wav"),NULL,SND_ASYNC);
 
@@ -19,7 +19,7 @@ enum GameStage {
 	GameStage_Entry,
 	GameStage_Title_IAF,
 	GameStage_IamFastest,
-	GameStage_GameOve_IAF,
+	GameStage_GameOver_IAF,
 	GameStage_Title_ED,
 	GameStage_EscapeDream,
 	GameStage_GameOver_ED,
@@ -30,6 +30,7 @@ enum GameStage {
 
 int _stage = GameStage_Title_IAF;		//FSM based on State class to judge what to do on main loop
 int _score = 0;
+const float _FPS = 120.0f;
 CHAR_INFO _char_canvas[WIDTH * HEIGHT];		//canvas to share abroad states
 #include"type_define.h"
 #include"manager.h"
@@ -40,6 +41,7 @@ CHAR_INFO _char_canvas[WIDTH * HEIGHT];		//canvas to share abroad states
 
 extern int _stage;
 extern int _score;
+extern float _FPS;
 extern CHAR_INFO _char_canvas[WIDTH * HEIGHT];
 
 #endif // !EXTERN_DECLARE

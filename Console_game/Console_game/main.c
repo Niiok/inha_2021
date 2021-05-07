@@ -13,8 +13,6 @@ int main(int argc, char* argv[])
 	
 	ManagerInit();	// memmory, file manager init
 
-	const float FPS = 120.0f;
-
 	{
 		HANDLE initial = GetStdHandle(STD_OUTPUT_HANDLE);
 		if (initial == INVALID_HANDLE_VALUE)
@@ -69,6 +67,10 @@ int main(int argc, char* argv[])
 			GS_IAF();
 			break;
 
+		case GameStage_GameOver_IAF:
+			GS_IAF_GameOver();
+			break;
+
 		}
 
 
@@ -94,7 +96,7 @@ int main(int argc, char* argv[])
 			return 1;
 		}
 
-		Sleep(1000 / FPS);
+		Sleep(1000 / _FPS);
 
 		i++;
 	}
