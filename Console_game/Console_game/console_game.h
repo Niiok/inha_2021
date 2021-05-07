@@ -10,6 +10,7 @@
 
 //PlaySound(TEXT("../data/bgm.wav"),NULL,SND_ASYNC);
 
+//#define WIDTH_ORIGIN 120
 
 #define WIDTH 120
 #define HEIGHT 30
