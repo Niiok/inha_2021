@@ -123,6 +123,20 @@ int Stage_Quit()
 
 int Stage_Collision()
 {
+	// input check
+
+	if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(0x41) < 0) {
+		dx -= ECEL_POWER;
+	}
+	if (GetAsyncKeyState(VK_RIGHT) < 0 || GetAsyncKeyState(0x44) < 0) {
+		dx += ECEL_POWER;
+	}
+	if (GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(0x57) < 0) {
+		dy -= ECEL_POWER/2;
+	}
+	if (GetAsyncKeyState(VK_DOWN) < 0 || GetAsyncKeyState(0x53) < 0) {
+		dy += ECEL_POWER/2;
+	}
 
 	if (character_x + dx >= 1 && character_x + dx <= WIDTH - 1 && character_y + dy >= 1 && character_y + dy <= HEIGHT - 1)	// collision inside map
 	{
@@ -143,7 +157,7 @@ int Stage_Collision()
 		if (bigger < 1)
 			bigger = 1;
 
-		bigger *= 10;
+		bigger *= ACCURACY;
 
 		for (int unit_d = 1; unit_d <= (int)bigger; unit_d++)
 		{
@@ -160,43 +174,59 @@ int Stage_Collision()
 				case MapTile_Wall:				// Wall case
 					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH*(int)character_y] == MapTile_Wall)
 					{
-						character_x = character_x_new;
+						//character_x = character_x_new;
 						dx = -(dx-unit_dx) / 2;
 						beep = MapTile_Wall;
-						unit_d = bigger + 1;	//quit loops
+						unit_d = bigger + 2;	//quit loops
 					}
 					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH*(int)character_y_new] == MapTile_Wall)
 					{
-						character_y = character_y_new;
+						//character_y = character_y_new;
 						dy = -(dy-unit_dy) / 2;
 						beep = MapTile_Wall;
 						unit_d = bigger + 1;	//quit loops
 					}
+					//if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH*(int)character_y] == MapTile_Wall && unit_d != bigger +2)
+					//{
+					//	character_x = character_x_new;
+					//	dx = -(dx-unit_dx) / 2;
+					//	beep = MapTile_Wall;
+					//	unit_d = bigger + 1;	//quit loops
+					//}
 					break;
 				
 				case MapTile_Breakable:				// Breakable Wall case
 					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH * (int)character_y] == MapTile_Breakable)
 					{
-						character_x = character_x_new;
+						//character_x = character_x_new;
 						dx = -(dx-unit_dx) / 2;
 						map_memmory[character_x_new + WIDTH * character_y_new] = MapTile_Blank;
 						broken_breakable++;
 						beep = MapTile_Breakable;
-						unit_d = bigger + 1;	//quit loops
+						unit_d = bigger + 2;	//quit loops
 					}
 					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH * (int)character_y_new] == MapTile_Breakable)
 					{
-						character_y = character_y_new;
+						//character_y = character_y_new;
 						dy = -(dy-unit_dy) / 2;
 						map_memmory[character_x_new + WIDTH * character_y_new] = MapTile_Blank;
 						broken_breakable++;
 						beep = MapTile_Breakable;
 						unit_d = bigger + 1;	//quit loops
 					}
+					//if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH * (int)character_y] == MapTile_Breakable && unit_d != bigger+2)
+					//{
+					//	character_x = character_x_new;
+					//	dx = -(dx - unit_dx) / 2;
+					//	map_memmory[character_x_new + WIDTH * character_y_new] = MapTile_Blank;
+					//	broken_breakable++;
+					//	beep = MapTile_Breakable;
+					//	unit_d = bigger + 1;	//quit loops
+					//}
 					break;
 
 				case MapTile_Ice:
-					if (current_speed < 10000)
+					if (current_speed < 50000)
 					{
 						if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(0x41) < 0) {
 							dx -= ECEL_POWER;
@@ -223,22 +253,67 @@ int Stage_Collision()
 				case MapTile_Slime:				// Wall case
 					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH * (int)character_y] == MapTile_Slime)
 					{
-						character_x = character_x_new;
+						//character_x = character_x_new;
 						dx = -(dx);
 						beep = MapTile_Slime;
-						unit_d = bigger + 1;	//quit loops
+						unit_d = bigger + 2;	//quit loops
 					}
 					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH * (int)character_y_new] == MapTile_Slime)
 					{
-						character_y = character_y_new;
+						//character_y = character_y_new;
 						dy = -(dy);
 						beep = MapTile_Slime;
 						unit_d = bigger + 1;	//quit loops
 					}
+					//if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH * (int)character_y] == MapTile_Slime && unit_d != bigger+2)
+					//{
+					//	character_x = character_x_new;
+					//	dx = -(dx);
+					//	beep = MapTile_Slime;
+					//	unit_d = bigger + 1;	//quit loops
+					//}
 			
 					break;
 
 				}
+
+				if (map_memmory[(int)character_x_new + WIDTH * (int)character_y_new] == MapTile_Wall ||
+					map_memmory[(int)character_x_new + WIDTH * (int)character_y_new] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new + WIDTH * (int)character_y_new] == MapTile_Slime
+					)
+				{
+					if (character_x > character_x_new)
+						character_x++;
+					else if (character_x < character_x_new)
+						character_x--;
+
+					if (character_y > character_y_new)
+						character_y++;
+					else if (character_y < character_y_new)
+						character_y--;
+				}
+
+				/*if (map_memmory[(int)character_x_new + 1 + WIDTH * (int)character_y_new] == MapTile_Wall ||
+					map_memmory[(int)character_x_new + 1 + WIDTH * (int)character_y_new] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new + 1 + WIDTH * (int)character_y_new] == MapTile_Slime
+					)
+					character_x--;
+				if (map_memmory[(int)character_x_new - 1 + WIDTH * (int)character_y_new] == MapTile_Wall ||
+					map_memmory[(int)character_x_new - 1 + WIDTH * (int)character_y_new] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new - 1 + WIDTH * (int)character_y_new] == MapTile_Slime
+					)
+					character_x++;
+				if (map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new + 1)] == MapTile_Wall ||
+					map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new + 1)] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new + 1)] == MapTile_Slime
+					)
+					character_y--;
+				if (map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new - 1)] == MapTile_Wall ||
+					map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new - 1)] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new - 1)] == MapTile_Slime
+					)
+					character_y++;*/
+
 			}
 		}
 	}
@@ -261,24 +336,8 @@ int Stage_Collision()
 			if (character_y > HEIGHT)
 				character_y--;
 		}
-
-
 	}
 
-	// input check
-
-	if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(0x41) < 0) {
-		dx -= ECEL_POWER;
-	}
-	if (GetAsyncKeyState(VK_RIGHT) < 0 || GetAsyncKeyState(0x44) < 0) {
-		dx += ECEL_POWER;
-	}
-	if (GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(0x57) < 0) {
-		dy -= ECEL_POWER/2;
-	}
-	if (GetAsyncKeyState(VK_DOWN) < 0 || GetAsyncKeyState(0x53) < 0) {
-		dy += ECEL_POWER/2;
-	}
 
 	character_x += dx;
 	character_y += dy;
