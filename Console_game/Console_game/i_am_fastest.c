@@ -54,7 +54,7 @@ static int menu_cursor = 0;
 
 int GS_IAF()
 {
-	current_speed = sqrt(((dx * 1000)*(dx * 1000)) + (dy * 1000)*(dy * 1000));
+	current_speed = (dx * 10)*(dx * 10) + (dy * 10)*(dy * 10);
 	if (current_speed > max_speed)
 		max_speed = current_speed;
 
