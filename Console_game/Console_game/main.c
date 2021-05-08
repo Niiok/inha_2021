@@ -7,8 +7,8 @@
 int main(int argc, char* argv[])
 {
 	HANDLE console_buffer_1, console_buffer_2;
-	SMALL_RECT draw_region = { 0, 0, WIDTH - 1,HEIGHT - 1 };
-	COORD console_buffer_area = {WIDTH, HEIGHT};
+	SMALL_RECT draw_region = { 0, 0, WIDTH_ORIGIN - 1,HEIGHT - 1 };
+	COORD console_buffer_area = {WIDTH_ORIGIN, HEIGHT};
 	COORD buffer_coord = {0, 0};
 	
 	ManagerInit();	// memmory, file manager init

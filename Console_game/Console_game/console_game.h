@@ -12,8 +12,11 @@
 
 //#define WIDTH_ORIGIN 120
 
-#define WIDTH 120
+#define WIDTH_ORIGIN 120
+
 #define HEIGHT 30
+
+#define WIDTH_EXTEND (WIDTH_ORIGIN * 2)
 
 enum GameStage {
 	GameStage_Quit,
@@ -32,7 +35,7 @@ enum GameStage {
 int _stage = GameStage_Title_IAF;		//FSM based on State class to judge what to do on main loop
 int _score = 0;
 const float _FPS = 120.0f;
-CHAR_INFO _char_canvas[WIDTH * HEIGHT];		//canvas to share abroad states
+CHAR_INFO _char_canvas[WIDTH_ORIGIN * HEIGHT];		//canvas to share abroad states
 #include"type_define.h"
 #include"manager.h"
 #include"i_am_fastest.h"
@@ -43,6 +46,6 @@ CHAR_INFO _char_canvas[WIDTH * HEIGHT];		//canvas to share abroad states
 extern int _stage;
 extern int _score;
 extern float _FPS;
-extern CHAR_INFO _char_canvas[WIDTH * HEIGHT];
+extern CHAR_INFO _char_canvas[WIDTH_ORIGIN * HEIGHT];
 
 #endif // !EXTERN_DECLARE

@@ -80,13 +80,13 @@ int Stage_Init()
 {
 	int result = 0;
 
-	map_memmory_origin = (char*)malloc(WIDTH*2*HEIGHT*2);
+	map_memmory_origin = (char*)malloc(WIDTH_ORIGIN * 2 * HEIGHT * 2);
 	if (map_memmory_origin == NULL)
 		result += -1;
 
-	memset(map_memmory_origin, MapTile_Wall, WIDTH * 2 * HEIGHT * 2);
+	memset(map_memmory_origin, MapTile_Wall, WIDTH_ORIGIN * 2 * HEIGHT * 2);
 
-	map_memmory = map_memmory_origin + (int)(WIDTH*0.5) + (int)(WIDTH*HEIGHT*0.5);
+	map_memmory = map_memmory_origin + (int)(WIDTH_ORIGIN/2) + (int)(WIDTH_EXTEND*HEIGHT/2);
 
 	result += MapRead();
 
@@ -138,7 +138,7 @@ int Stage_Collision()
 		dy += ECEL_POWER/2;
 	}
 
-	if (character_x + dx >= 1 && character_x + dx <= WIDTH - 1 && character_y + dy >= 1 && character_y + dy <= HEIGHT - 1)	// collision inside map
+	//if (character_x + dx >= 1 && character_x + dx <= WIDTH_ORIGIN - 1 && character_y + dy >= 1 && character_y + dy <= HEIGHT - 1)	// collision inside map
 	{
 		float bigger;
 
@@ -169,24 +169,24 @@ int Stage_Collision()
 
 			if (character_x_new != (int)character_x || character_y_new != (int)character_y)
 			{
-				switch (map_memmory[(int)character_x_new + WIDTH * (int)character_y_new])			//works to do depend on tile
+				switch (map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y_new])			//works to do depend on tile
 				{
 				case MapTile_Wall:				// Wall case
-					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH*(int)character_y] == MapTile_Wall)
+					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH_EXTEND *(int)character_y] == MapTile_Wall)
 					{
 						//character_x = character_x_new;
 						dx = -(dx-unit_dx) / 2;
 						beep = MapTile_Wall;
 						unit_d = bigger + 2;	//quit loops
 					}
-					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH*(int)character_y_new] == MapTile_Wall)
+					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH_EXTEND *(int)character_y_new] == MapTile_Wall)
 					{
 						//character_y = character_y_new;
 						dy = -(dy-unit_dy) / 2;
 						beep = MapTile_Wall;
 						unit_d = bigger + 1;	//quit loops
 					}
-					//if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH*(int)character_y] == MapTile_Wall && unit_d != bigger +2)
+					//if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH_EXTEND*(int)character_y] == MapTile_Wall && unit_d != bigger +2)
 					//{
 					//	character_x = character_x_new;
 					//	dx = -(dx-unit_dx) / 2;
@@ -196,29 +196,29 @@ int Stage_Collision()
 					break;
 				
 				case MapTile_Breakable:				// Breakable Wall case
-					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH * (int)character_y] == MapTile_Breakable)
+					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y] == MapTile_Breakable)
 					{
 						//character_x = character_x_new;
 						dx = -(dx-unit_dx) / 2;
-						map_memmory[character_x_new + WIDTH * character_y_new] = MapTile_Blank;
+						map_memmory[character_x_new + WIDTH_EXTEND * character_y_new] = MapTile_Blank;
 						broken_breakable++;
 						beep = MapTile_Breakable;
 						unit_d = bigger + 2;	//quit loops
 					}
-					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH * (int)character_y_new] == MapTile_Breakable)
+					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH_EXTEND * (int)character_y_new] == MapTile_Breakable)
 					{
 						//character_y = character_y_new;
 						dy = -(dy-unit_dy) / 2;
-						map_memmory[character_x_new + WIDTH * character_y_new] = MapTile_Blank;
+						map_memmory[character_x_new + WIDTH_EXTEND * character_y_new] = MapTile_Blank;
 						broken_breakable++;
 						beep = MapTile_Breakable;
 						unit_d = bigger + 1;	//quit loops
 					}
-					//if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH * (int)character_y] == MapTile_Breakable && unit_d != bigger+2)
+					//if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y] == MapTile_Breakable && unit_d != bigger+2)
 					//{
 					//	character_x = character_x_new;
 					//	dx = -(dx - unit_dx) / 2;
-					//	map_memmory[character_x_new + WIDTH * character_y_new] = MapTile_Blank;
+					//	map_memmory[character_x_new + WIDTH_EXTEND * character_y_new] = MapTile_Blank;
 					//	broken_breakable++;
 					//	beep = MapTile_Breakable;
 					//	unit_d = bigger + 1;	//quit loops
@@ -251,21 +251,21 @@ int Stage_Collision()
 					break;
 
 				case MapTile_Slime:				// Wall case
-					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH * (int)character_y] == MapTile_Slime)
+					if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y] == MapTile_Slime)
 					{
 						//character_x = character_x_new;
 						dx = -(dx);
 						beep = MapTile_Slime;
 						unit_d = bigger + 2;	//quit loops
 					}
-					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH * (int)character_y_new] == MapTile_Slime)
+					if (character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH_EXTEND * (int)character_y_new] == MapTile_Slime)
 					{
 						//character_y = character_y_new;
 						dy = -(dy);
 						beep = MapTile_Slime;
 						unit_d = bigger + 1;	//quit loops
 					}
-					//if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH * (int)character_y] == MapTile_Slime && unit_d != bigger+2)
+					//if (character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y] == MapTile_Slime && unit_d != bigger+2)
 					//{
 					//	character_x = character_x_new;
 					//	dx = -(dx);
@@ -277,9 +277,9 @@ int Stage_Collision()
 
 				}
 
-				if (map_memmory[(int)character_x_new + WIDTH * (int)character_y_new] == MapTile_Wall ||
-					map_memmory[(int)character_x_new + WIDTH * (int)character_y_new] == MapTile_Breakable ||
-					map_memmory[(int)character_x_new + WIDTH * (int)character_y_new] == MapTile_Slime
+				if (map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y_new] == MapTile_Wall ||
+					map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y_new] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y_new] == MapTile_Slime
 					)
 				{
 					if (character_x > character_x_new)
@@ -293,50 +293,50 @@ int Stage_Collision()
 						character_y--;
 				}
 
-				/*if (map_memmory[(int)character_x_new + 1 + WIDTH * (int)character_y_new] == MapTile_Wall ||
-					map_memmory[(int)character_x_new + 1 + WIDTH * (int)character_y_new] == MapTile_Breakable ||
-					map_memmory[(int)character_x_new + 1 + WIDTH * (int)character_y_new] == MapTile_Slime
+				/*if (map_memmory[(int)character_x_new + 1 + WIDTH_EXTEND * (int)character_y_new] == MapTile_Wall ||
+					map_memmory[(int)character_x_new + 1 + WIDTH_EXTEND * (int)character_y_new] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new + 1 + WIDTH_EXTEND * (int)character_y_new] == MapTile_Slime
 					)
 					character_x--;
-				if (map_memmory[(int)character_x_new - 1 + WIDTH * (int)character_y_new] == MapTile_Wall ||
-					map_memmory[(int)character_x_new - 1 + WIDTH * (int)character_y_new] == MapTile_Breakable ||
-					map_memmory[(int)character_x_new - 1 + WIDTH * (int)character_y_new] == MapTile_Slime
+				if (map_memmory[(int)character_x_new - 1 + WIDTH_EXTEND * (int)character_y_new] == MapTile_Wall ||
+					map_memmory[(int)character_x_new - 1 + WIDTH_EXTEND * (int)character_y_new] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new - 1 + WIDTH_EXTEND * (int)character_y_new] == MapTile_Slime
 					)
 					character_x++;
-				if (map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new + 1)] == MapTile_Wall ||
-					map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new + 1)] == MapTile_Breakable ||
-					map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new + 1)] == MapTile_Slime
+				if (map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)(character_y_new + 1)] == MapTile_Wall ||
+					map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)(character_y_new + 1)] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)(character_y_new + 1)] == MapTile_Slime
 					)
 					character_y--;
-				if (map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new - 1)] == MapTile_Wall ||
-					map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new - 1)] == MapTile_Breakable ||
-					map_memmory[(int)character_x_new + WIDTH * (int)(character_y_new - 1)] == MapTile_Slime
+				if (map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)(character_y_new - 1)] == MapTile_Wall ||
+					map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)(character_y_new - 1)] == MapTile_Breakable ||
+					map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)(character_y_new - 1)] == MapTile_Slime
 					)
 					character_y++;*/
 
 			}
 		}
 	}
-	else		//map border collision
-	{	
-		if (character_x < 0 || character_x > WIDTH)
-		{
-			dx = -dx;
-			if (character_x < 0)
-				character_x++;
-			if (character_x > WIDTH)
-				character_x--;
-		}
+	//else		//map border collision
+	//{	
+	//	if (character_x < 0 || character_x > WIDTH_ORIGIN)
+	//	{
+	//		dx = -dx;
+	//		if (character_x < 0)
+	//			character_x++;
+	//		if (character_x > WIDTH_ORIGIN)
+	//			character_x--;
+	//	}
 
-		if (character_y < 0 || character_y > HEIGHT)
-		{
-			dy = -dy;
-			if (character_y < 0)
-				character_y++;
-			if (character_y > HEIGHT)
-				character_y--;
-		}
-	}
+	//	if (character_y < 0 || character_y > HEIGHT)
+	//	{
+	//		dy = -dy;
+	//		if (character_y < 0)
+	//			character_y++;
+	//		if (character_y > HEIGHT)
+	//			character_y--;
+	//	}
+	//}
 
 
 	character_x += dx;
@@ -366,84 +366,84 @@ int Stage_Draw()
 
 	for (int y = 0; y < HEIGHT; y++)
 	{
-		for (int x = 0; x < WIDTH; x++)
+		for (int x = 0; x < WIDTH_ORIGIN; x++)
 		{
 			if (map_file != NULL)		//draw map first
 			{
-				char map_value = *(map_memmory + y * WIDTH + x);
+				char map_value = *(map_memmory + y * WIDTH_EXTEND + x);
 				switch (map_value)
 				{
 				case MapTile_Blank:
-					_char_canvas[x + WIDTH * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH * y].Attributes = BACKGROUND_INTENSITY;
+					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_INTENSITY;
 					break;
 
 				case MapTile_Wall:
-					_char_canvas[x + WIDTH * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH * y].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
+					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
 					break;
 
 				case MapTile_Breakable:
-					_char_canvas[x + WIDTH * y].Char.UnicodeChar = 'X';
-					_char_canvas[x + WIDTH * y].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
+					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = 'X';
+					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
 					break;
 
 				case MapTile_Ice:
-					_char_canvas[x + WIDTH * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH * y].Attributes = BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_BLUE | BACKGROUND_INTENSITY;
 					break;
 
 				case MapTile_Lava:
-					_char_canvas[x + WIDTH * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH * y].Attributes = BACKGROUND_RED;
+					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_RED;
 					break;
 
 				case MapTile_Slime:
-					_char_canvas[x + WIDTH * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH * y].Attributes = BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_GREEN | BACKGROUND_INTENSITY;
 					break;
 
 				}
 			}
 			else		//default map without map file
 			{
-				_char_canvas[x + WIDTH * y].Char.UnicodeChar = ' ';
-				_char_canvas[x + WIDTH * y].Attributes = BACKGROUND_INTENSITY;
+				_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_INTENSITY;
 			}
 
 			//score draw
-			if (y == 1 && x == WIDTH / 2 + strlen(arr)/2)
+			if (y == 1 && x == WIDTH_ORIGIN / 2 + strlen(arr)/2)
 			{
 				for (int i = 0; i < strlen(arr); i++)
 				{
-					_char_canvas[x - strlen(arr) + i + WIDTH * y].Char.UnicodeChar = arr[i];
+					_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr[i];
 				}
 			}
-			if (y == 2 && x == WIDTH / 2 + strlen(arr2) / 2)
+			if (y == 2 && x == WIDTH_ORIGIN / 2 + strlen(arr2) / 2)
 			{
 				for (int i = 0; i < strlen(arr2); i++)
 				{
-					_char_canvas[x - strlen(arr2) + i + WIDTH * y].Char.UnicodeChar = arr2[i];
+					_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr2[i];
 				}
 			}
-			if (y == 28 && x == WIDTH / 2 + strlen(arr3) / 2)
+			if (y == 28 && x == WIDTH_ORIGIN / 2 + strlen(arr3) / 2)
 			{
 				for (int i = 0; i < strlen(arr3); i++)
 				{
-					_char_canvas[x - strlen(arr3) + i + WIDTH * y].Char.UnicodeChar = arr3[i];
+					_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr3[i];
 				}
 			}
 
 			//character visual decoration
 			if (x > character_x - 3 && x <= character_x + 2 && y > character_y - 2 && y <= character_y + 1)
-				_char_canvas[x + WIDTH * y].Attributes = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
 		}
 	}
 
 	// draw character
-	int playerCoord = (int)(character_x)+WIDTH * (int)(character_y);
+	int playerCoord = (int)(character_x)+WIDTH_ORIGIN * (int)(character_y);
 
-	if (0 < playerCoord && playerCoord < WIDTH * HEIGHT) {
+	if (0 < playerCoord && playerCoord < WIDTH_ORIGIN * HEIGHT) {
 		_char_canvas[playerCoord].Char.UnicodeChar = '@';
 		_char_canvas[playerCoord].Attributes = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
 	}
@@ -463,10 +463,10 @@ int MapRead()
 
 	for (int y = 0; y < HEIGHT; y++)
 	{
-		for (int x = 0; x < WIDTH; x++)
+		for (int x = 0; x < WIDTH_ORIGIN; x++)
 		{
 			fscanf(map_file, "%d", &character);
-			*(map_memmory + y * WIDTH + x) = character;
+			*(map_memmory + y * WIDTH_EXTEND + x) = character;
 		}
 	}
 
@@ -479,7 +479,7 @@ int IAF_Beep()
 	if(beep != 0)
 	for (int i = -1; i <= 1; i++)
 		for (int j = -2; j <= 2; j++)
-			_char_canvas[(int)(character_x + j) + WIDTH * (int)(character_y + i)].Attributes = BACKGROUND_RED | BACKGROUND_INTENSITY;
+			_char_canvas[(int)(character_x + j) + WIDTH_ORIGIN * (int)(character_y + i)].Attributes = BACKGROUND_RED | BACKGROUND_INTENSITY;
 
 	switch (beep)
 	{
@@ -616,47 +616,47 @@ int Title_Draw()
 	static int frame = 0;
 	frame++;
 
-	for (int y = 0; y < 30; y++)
+	for (int y = 0; y < HEIGHT; y++)
 	{
-		for (int x = 0; x < 120; x++)
+		for (int x = 0; x < WIDTH_ORIGIN; x++)
 		{
-			_char_canvas[x + WIDTH * y].Char.UnicodeChar = title_image[y][x];
+			_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = title_image[y][x];
 			if (y < 12)
-				_char_canvas[x + WIDTH * y].Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
 			else if(y < 19)
-				_char_canvas[x + WIDTH * y].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE;
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE;
 			else
-				_char_canvas[x + WIDTH * y].Attributes = 0;
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = 0;
 
 
 			if (menu_cursor < MenuButton_TotalMenuButton && menu_cursor >= MenuButton_GameStart)
 			{
-				if (y == 24 && x == WIDTH / 2 + strlen(arr) / 2)		// Game Start Button
+				if (y == 24 && x == WIDTH_ORIGIN / 2 + strlen(arr) / 2)		// Game Start Button
 				{
 					for (int i = 0; i < strlen(arr); i++)
 					{
-						_char_canvas[x - strlen(arr) + i + WIDTH * y].Char.UnicodeChar = arr[i];
-						_char_canvas[x - strlen(arr) + i + WIDTH * y].Attributes = FOREGROUND_INTENSITY;
+						_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr[i];
+						_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY;
 					}
 				}
 
-				if (y == 26 && x == WIDTH / 2 + strlen(arr2) / 2)		// Exit Button
+				if (y == 26 && x == WIDTH_ORIGIN / 2 + strlen(arr2) / 2)		// Exit Button
 				{
 					for (int i = 0; i < strlen(arr2); i++)
 					{
-						_char_canvas[x - strlen(arr2) + i + WIDTH * y].Char.UnicodeChar = arr2[i];
-						_char_canvas[x - strlen(arr2) + i + WIDTH * y].Attributes = FOREGROUND_INTENSITY;
+						_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr2[i];
+						_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY;
 					}
 				}
 			}
 			else if (menu_cursor == 100)
 			{
-				if (y == 23 && x == WIDTH / 2 + strlen(arr3) / 2 && frame % 100 >20)
+				if (y == 23 && x == WIDTH_ORIGIN / 2 + strlen(arr3) / 2 && frame % 100 >20)
 				{
 					for (int i = 0; i < strlen(arr3); i++)
 					{
-						_char_canvas[x - strlen(arr3) + i + WIDTH * y].Char.UnicodeChar = arr3[i];
-						_char_canvas[x - strlen(arr3) + i + WIDTH * y].Attributes = FOREGROUND_INTENSITY;
+						_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr3[i];
+						_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY;
 					}
 				}
 			}
@@ -664,12 +664,12 @@ int Title_Draw()
 		}
 		if (menu_cursor < MenuButton_TotalMenuButton && menu_cursor >= MenuButton_GameStart)
 		{
-			_char_canvas[40 + WIDTH * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN |BACKGROUND_BLUE;
-			_char_canvas[41 + WIDTH * (24 + menu_cursor * 2)].Char.UnicodeChar = '-';
-			_char_canvas[41 + WIDTH * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-			_char_canvas[42 + WIDTH * (24 + menu_cursor * 2)].Char.UnicodeChar = '>';
-			_char_canvas[42 + WIDTH * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-			_char_canvas[43 + WIDTH * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+			_char_canvas[40 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN |BACKGROUND_BLUE;
+			_char_canvas[41 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Char.UnicodeChar = '-';
+			_char_canvas[41 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+			_char_canvas[42 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Char.UnicodeChar = '>';
+			_char_canvas[42 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+			_char_canvas[43 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 
 		}
 	}
@@ -750,49 +750,49 @@ int GameOver_Draw()
 
 	char arr4[32] = " Press Space to go Title ";
 
-	for (int y = 0; y < 30; y++)
+	for (int y = 0; y < HEIGHT; y++)
 	{
-		for (int x = 0; x < 120; x++)
+		for (int x = 0; x < WIDTH_ORIGIN; x++)
 		{
 			if (menu_cursor == 100)
 			{
-				//_char_canvas[x + WIDTH * y].Char.UnicodeChar = title_image[y][x];
-				//_char_canvas[x + WIDTH * y].Attributes = -_char_canvas[x + WIDTH * y].Attributes;
-				_char_canvas[x + WIDTH * y].Attributes ^= BACKGROUND_INTENSITY;
+				//_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = title_image[y][x];
+				//_char_canvas[x + WIDTH_ORIGIN * y].Attributes = -_char_canvas[x + WIDTH_ORIGIN * y].Attributes;
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes ^= BACKGROUND_INTENSITY;
 			}
 
-			if (y == 10 && x == WIDTH / 2 + strlen(arr) / 2)		// Speed Score
+			if (y == 10 && x == WIDTH_ORIGIN / 2 + strlen(arr) / 2)		// Speed Score
 			{
 				for (int i = 0; i < strlen(arr); i++)
 				{
-					_char_canvas[x - strlen(arr) + i + WIDTH * y].Char.UnicodeChar = arr[i];
-					_char_canvas[x - strlen(arr) + i + WIDTH * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
+					_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr[i];
+					_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
 				}
 			}
 
-			if (y == 12 && x == WIDTH / 2 + strlen(arr2) / 2)		// Time Left
+			if (y == 12 && x == WIDTH_ORIGIN / 2 + strlen(arr2) / 2)		// Time Left
 			{
 				for (int i = 0; i < strlen(arr2); i++)
 				{
-					_char_canvas[x - strlen(arr2) + i + WIDTH * y].Char.UnicodeChar = arr2[i];
-					_char_canvas[x - strlen(arr2) + i + WIDTH * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
+					_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr2[i];
+					_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
 				}
 			}
 
-			if (y == 14 && x == WIDTH / 2 + strlen(arr3) / 2)		// Time Left
+			if (y == 14 && x == WIDTH_ORIGIN / 2 + strlen(arr3) / 2)		// Time Left
 			{
 				for (int i = 0; i < strlen(arr3); i++)
 				{
-					_char_canvas[x - strlen(arr3) + i + WIDTH * y].Char.UnicodeChar = arr3[i];
-					_char_canvas[x - strlen(arr3) + i + WIDTH * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
+					_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr3[i];
+					_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
 				}
 			}
-			if (y == 20 && x == WIDTH / 2 + strlen(arr4) / 2)		// Time Left
+			if (y == 20 && x == WIDTH_ORIGIN / 2 + strlen(arr4) / 2)		// Time Left
 			{
 				for (int i = 0; i < strlen(arr4); i++)
 				{
-					_char_canvas[x - strlen(arr4) + i + WIDTH * y].Char.UnicodeChar = arr4[i];
-					_char_canvas[x - strlen(arr4) + i + WIDTH * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
+					_char_canvas[x - strlen(arr4) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr4[i];
+					_char_canvas[x - strlen(arr4) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
 				}
 			}
 		}
