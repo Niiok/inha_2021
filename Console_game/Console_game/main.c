@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 	COORD console_buffer_area = {WIDTH_ORIGIN, HEIGHT};
 	COORD buffer_coord = {0, 0};
 	
-	ManagerInit();	// memmory, file manager init
+	Manager_ManagerInit();	// memmory, file manager init
 
 	{
 		HANDLE initial = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 		i++;
 	}
 
-	ManagerQuit();		// memmory, file manager quit
+	Manager_ManagerQuit();		// memmory, file manager quit
 
 	return 0;
 }

@@ -35,6 +35,7 @@ enum GameStage {
 int _stage = GameStage_Title_IAF;		//FSM based on State class to judge what to do on main loop
 int _score = 0;
 const float _FPS = 120.0f;
+char* _map_name_string = NULL;
 CHAR_INFO _char_canvas[WIDTH_ORIGIN * HEIGHT];		//canvas to share abroad states
 #include"type_define.h"
 #include"manager.h"
@@ -46,6 +47,7 @@ CHAR_INFO _char_canvas[WIDTH_ORIGIN * HEIGHT];		//canvas to share abroad states
 extern int _stage;
 extern int _score;
 extern float _FPS;
+extern char* _map_name_string;
 extern CHAR_INFO _char_canvas[WIDTH_ORIGIN * HEIGHT];
 
 #endif // !EXTERN_DECLARE
