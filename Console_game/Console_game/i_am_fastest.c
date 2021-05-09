@@ -17,22 +17,12 @@ enum MenuButton {
 };
 
 
-// global variables
+// general variables
+		//state_control
 static int b_init_stage = 1;
 static int b_quit_stage = 0;
-
-
-// game variables
-		//character variables
-static float character_x = 2;
-static float character_y = 2;
-static float dx = 0, dy = 0;
-		//setting variables
-static float ecel_power = ECEL_POWER;
-static float decel_power = DECEL_POWER;
-static float time_limit = TIME_LIMIT;
-static int collision_accuracy = COLLISION_ACCURACY;
 		//map variables
+static char* map_path = NULL;
 static FILE* map_file = NULL;
 static char* map_memmory_origin = NULL;
 static char* map_memmory = NULL;
@@ -41,10 +31,21 @@ static int current_speed = 0;
 static int max_speed = 0;
 static int time_count = 0;
 static int broken_breakable = 0;
-
 static int b_gameover_speed_score = 1;
 static int b_gameover_time_score = 1;
 static int b_gameover_break_score = 1;
+
+
+// game variables
+		//character variables
+static float character_x = 3;
+static float character_y = 2;
+static float dx = 0, dy = 0;
+		//setting variables
+static float ecel_power = ECEL_POWER;
+static float decel_power = DECEL_POWER;
+static float time_limit = TIME_LIMIT;
+static int collision_accuracy = COLLISION_ACCURACY;
 		//sound variable
 static int beep = 0;
 
@@ -105,7 +106,7 @@ int Stage_Init()
 	
 	///////////////////////////////////////// reset values into default
 
-	character_x = 2;
+	character_x = 3;
 	character_y = 2;
 	dx = 0, dy = 0;
 
@@ -223,7 +224,7 @@ int Stage_Collision()
 
 					if ((int)character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y] == MapTile_Breakable)
 					{						// Breakable X act
-						dx = -(dx-unit_dx) / 2;
+						dx = -(dx) / 2;
 						map_memmory[(int)character_x_new + WIDTH_EXTEND * (int)character_y] = MapTile_Blank;
 						broken_breakable++;
 						beep = MapTile_Breakable;
@@ -231,7 +232,7 @@ int Stage_Collision()
 					}
 					if ((int)character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH_EXTEND * (int)character_y_new] == MapTile_Breakable)
 					{						// Breakable Y act
-						dy = -(dy - unit_dy) / 2;
+						dy = -(dy) / 2;
 						map_memmory[(int)character_x + WIDTH_EXTEND * (int)character_y_new] = MapTile_Blank;
 						broken_breakable++;
 						beep = MapTile_Breakable;
@@ -252,13 +253,13 @@ int Stage_Collision()
 					}
 					if ((int)character_x_new != (int)character_x && map_memmory[(int)character_x_new + WIDTH_EXTEND *(int)character_y] == MapTile_Wall)
 					{							// Wall X act
-						dx = -(dx-unit_dx) / 2;
+						dx = -(dx) / 2;
 						beep = MapTile_Wall;
 						unit_d = bigger_d + 2;	//quit loops
 					}
 					if ((int)character_y_new != (int)character_y && map_memmory[(int)character_x + WIDTH_EXTEND *(int)character_y_new] == MapTile_Wall)
 					{							// Wall Y act
-						dy = -(dy-unit_dy) / 2;
+						dy = -(dy) / 2;
 						beep = MapTile_Wall;
 						unit_d = bigger_d + 1;	//quit loops
 					}
@@ -456,19 +457,35 @@ int Stage_Draw()
 }
 
 
-int MapRead()
+int MapRead(const char* map_path)
 {
 	int character = 0;
 
-	map_file = fopen("../data/IAF_map.txt", "r");
-	if (map_file == NULL)
+	if (map_path == NULL)		// default map
 	{
-		for (int y = 0; y < HEIGHT; y++)
-			for (int x = 0; x < WIDTH_ORIGIN; x++)
-				*(map_memmory + y * WIDTH_EXTEND + x) = 0;
+		map_file = fopen("../data/IAF_map.txt", "r");
+		if (map_file == NULL)		// error map
+		{
+			for (int y = 0; y < HEIGHT; y++)
+				for (int x = 0; x < WIDTH_ORIGIN; x++)
+					*(map_memmory + y * WIDTH_EXTEND + x) = 0;
 
-		return -1;
+			return -3;
+		}
 	}
+	else		// custom map
+	{
+		map_file = fopen(map_path, "r");
+		if (map_file == NULL)		// error map
+		{
+			for (int y = 0; y < HEIGHT; y++)
+				for (int x = 0; x < WIDTH_ORIGIN; x++)
+					*(map_memmory + y * WIDTH_EXTEND + x) = 0;
+
+			return -1;
+		}
+	}
+	Manager_MemmoryFree(map_path);
 
 	/////////////////////////////////////////////////// rule tag parse
 	for (char arr[64] = { 1 }; !(arr[0] == 'm' || arr[0] == 'M'); )		// simple rule parser
@@ -629,6 +646,7 @@ int GS_IAF_Title()
 int Title_Init()
 {
 	int result = 0;
+	map_path = Manager_MemmoryAllocate(256);
 
 	menu_cursor = 100;
 
@@ -644,6 +662,7 @@ int Title_Quit()
 {
 	b_init_stage = 1;
 	b_quit_stage = 0;
+	if(_stage == GameStage_Title_IAF)
 	_stage = GameStage_IamFastest;		// transition to game play
 
 	return 0;
@@ -652,26 +671,26 @@ int Title_Quit()
 
 int Title_Select()
 {
-	static int rest = 0;
+	static int key_rest = 0;
 	/*if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(0x41) < 0) {
 		dx -= ecel_power;
 	}*/
 	/*if (GetAsyncKeyState(VK_RIGHT) < 0 || GetAsyncKeyState(0x44) < 0) {
 		dx += ecel_power;
 	}*/
-	if (rest == 0)
+	if (key_rest == 0)
 	{
 
 		if (GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(0x57) < 0) {
 			menu_cursor--;
-			rest = 10;
+			key_rest = _FPS/10;
 			menu_cursor = menu_cursor % MenuButton_TotalMenuButton;
 			if (menu_cursor < 0)
 				menu_cursor = MenuButton_TotalMenuButton-1;
 		}
 		if (GetAsyncKeyState(VK_DOWN) < 0 || GetAsyncKeyState(0x53) < 0) {
 			menu_cursor++;
-			rest = 10;
+			key_rest = _FPS/10;
 			menu_cursor = menu_cursor % MenuButton_TotalMenuButton;
 			if (menu_cursor < 0)
 				menu_cursor = MenuButton_TotalMenuButton-1;
@@ -681,21 +700,21 @@ int Title_Select()
 			if (menu_cursor == MenuButton_GameStart)
 				b_quit_stage = 1;
 			if (menu_cursor == MenuButton_GameEnd) {
-				_stage = -1;
+				_stage = GameStage_Quit;
 				b_quit_stage = 1;
 			}
-			rest = 10;
+			key_rest = _FPS/10;
 		}
 
 		if (_kbhit() && menu_cursor == 100)
 		{
 			menu_cursor = 0;
-			rest = 10;
+			key_rest = _FPS/10;
 		}
 	}
-	rest--;
-	if (rest < 0)
-		rest = 0;
+	key_rest--;
+	if (key_rest < 0)
+		key_rest = 0;
 	return 0;
 }
 
@@ -713,15 +732,18 @@ int Title_Draw()
 		for (int x = 0; x < WIDTH_ORIGIN; x++)
 		{
 			_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = title_image[y][x];
-			if (y < 12)
+			if (y >= 4 && y <= 10)
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-			else if(y < 19)
+			else if(y >= 14 && y <= 16)
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE;
 			else
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = 0;
 
 
-			if (menu_cursor < MenuButton_TotalMenuButton && menu_cursor >= MenuButton_GameStart)
+			switch (menu_cursor)
+			{
+			case MenuButton_GameStart:
+			case MenuButton_GameEnd:
 			{
 				if (y == 24 && x == WIDTH_ORIGIN / 2 + strlen(arr) / 2)		// Game Start Button
 				{
@@ -740,10 +762,16 @@ int Title_Draw()
 						_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY;
 					}
 				}
-			}
-			else if (menu_cursor == 100)
+			} break;
+
+			case 50:
 			{
-				if (y == 23 && x == WIDTH_ORIGIN / 2 + strlen(arr3) / 2 && frame % 100 >20)
+
+			} break;
+
+			case 100:
+			{
+				if (y == 23 && x == WIDTH_ORIGIN / 2 + strlen(arr3) / 2 && frame % 100 > 20)
 				{
 					for (int i = 0; i < strlen(arr3); i++)
 					{
@@ -751,7 +779,10 @@ int Title_Draw()
 						_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY;
 					}
 				}
+			} break;
+
 			}
+
 
 		}
 		if (menu_cursor < MenuButton_TotalMenuButton && menu_cursor >= MenuButton_GameStart)
