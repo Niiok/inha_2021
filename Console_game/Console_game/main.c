@@ -1,4 +1,4 @@
-#define MAIN_DECLARE
+#define _MAIN_DECLARE
 #include "console_game.h"
 
 /**
@@ -6,10 +6,10 @@
  */
 int main(int argc, char* argv[])
 {
-	HANDLE console_buffer_1, console_buffer_2;
 	SMALL_RECT draw_region = { 0, 0, WIDTH_ORIGIN - 1,HEIGHT - 1 };
 	COORD console_buffer_area = {WIDTH_ORIGIN, HEIGHT};
 	COORD buffer_coord = {0, 0};
+	HANDLE console_buffer_1, console_buffer_2;
 	
 	Manager_ManagerInit();	// memmory, file manager init
 
@@ -59,15 +59,15 @@ int main(int argc, char* argv[])
 
 		switch (_stage)
 		{
-		case GameStage_Title_IAF:
+		case GameStage_IAF_Title:
 			GS_IAF_Title();
 			break;
 
 		case GameStage_IamFastest:
-			GS_IAF();
+			GS_IAF_Game();
 			break;
 
-		case GameStage_GameOver_IAF:
+		case GameStage_IAF_GameOver:
 			GS_IAF_GameOver();
 			break;
 

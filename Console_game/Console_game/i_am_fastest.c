@@ -11,9 +11,14 @@ enum MapTile {		//please write stage txt with this value (%d)
 };
 
 enum MenuButton {
-	MenuButton_GameStart = 0,
-	MenuButton_GameEnd = 1,
-	MenuButton_TotalMenuButton
+	MenuButton_GameStart,
+	MenuButton_CustomMap,
+	MenuButton_GameEnd,
+	MenuButton_TotalMenuButton,
+
+	//extra states
+	MenuButton_MapPath,
+	MenuButton_PressToStart
 };
 
 
@@ -36,6 +41,8 @@ static int b_gameover_break_score = 1;
 
 // game variables
 		//character variables
+static int start_x = 3;
+static int start_y = 2;
 static float character_x = 3;
 static float character_y = 2;
 static float dx = 0, dy = 0;
@@ -50,7 +57,8 @@ static int beep = 0;
 
 // title variables, gameover variables
 static int menu_cursor = 0;
-
+static char map_path[256] = { 0 };
+static int b_map_path = 0;
 
 
 
@@ -60,24 +68,24 @@ static int menu_cursor = 0;
 //	Main Game Logics
 //
 
-int GS_IAF()
+int GS_IAF_Game()
 {
 		//called on stage init
 
 	if (b_init_stage)
-		if (Stage_Init())
+		if (Game_Init())
 			return -1;
 
 
 		//called on every frame
 
-	Stage_Collision();
+	Game_Collision();
 
 	current_speed = (int)(  (dx * 10)*(dx * 10) + (dy * 10)*(dy * 10)  );
 	if (current_speed > max_speed)
 		max_speed = current_speed;
 
-	Stage_Draw();
+	Game_Draw();
 
 	//IAF_Beep();
 
@@ -91,14 +99,14 @@ int GS_IAF()
 		//called on stage quit
 
 	if (b_quit_stage)
-		if (Stage_Quit())
+		if (Game_Quit())
 			return -1;
 
 	return 0;
 }
 
 
-int Stage_Init()
+int Game_Init()
 {
 	int result = 0;	// return value
 
@@ -112,19 +120,19 @@ int Stage_Init()
 	return result;
 }
 
-int Stage_Quit()
+int Game_Quit()
 {
 	free(map_memmory_origin);
 
 	b_init_stage = 1;
 	b_quit_stage = 0;		
-	_stage = GameStage_GameOver_IAF;		// transition to game over
+	_stage = GameStage_IAF_GameOver;		// transition to game over
 
 	return 0;
 }
 
 
-int Stage_Collision()
+int Game_Collision()
 {
 	// input check
 
@@ -296,8 +304,8 @@ int Stage_Collision()
 		}*/
 		dx = 0;
 		dy = 0;
-		character_x = WIDTH_ORIGIN / 2;
-		character_y = HEIGHT / 2;
+		character_x = start_x;
+		character_y = start_y;
 	}
 
 
@@ -312,7 +320,7 @@ int Stage_Collision()
 }
 
 
-int Stage_Draw()
+int Game_Draw()
 {
 	char arr[32] = " Max Speed : ";
 	sprintf(arr + strlen(arr), "%d ", max_speed);
@@ -478,6 +486,8 @@ int Title_Init()
 	b_gameover_break_score = 1;
 
 	beep = 0;
+	memset(map_path, 0, strlen(map_path));
+	b_map_path = 0;
 
 	//////////////////////////////////////////////// map memmory call
 
@@ -491,10 +501,8 @@ int Title_Init()
 
 	///////////////////////////////////////////////// map read
 
-	result += MapRead(NULL);		// IMPORTANT : read rules, properties, map data.
 
-
-	menu_cursor = 100;
+	menu_cursor = MenuButton_PressToStart;
 
 	b_init_stage = 0;
 	b_quit_stage = 0;
@@ -508,7 +516,7 @@ int Title_Quit()
 {
 	b_init_stage = 1;
 	b_quit_stage = 0;
-	if(_stage == GameStage_Title_IAF)
+	if(_stage == GameStage_IAF_Title)
 	_stage = GameStage_IamFastest;		// transition to game play
 
 	return 0;
@@ -518,22 +526,24 @@ int Title_Quit()
 int Title_Select()
 {
 	static int key_rest = 0;
-	char map_path[256] = {0};
 	
 	if (key_rest == 0)
 	{
 		switch (menu_cursor)
 		{
-		case MenuButton_GameStart: case MenuButton_GameEnd:
+		case MenuButton_GameStart: case MenuButton_CustomMap:case MenuButton_GameEnd:
 		{
-			if (GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(0x57) < 0) {
+			if (GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(0x57) < 0) 
+			{
 				menu_cursor--;
 				key_rest = _FPS / 10;
 				menu_cursor = menu_cursor % MenuButton_TotalMenuButton;
 				if (menu_cursor < 0)
 					menu_cursor = MenuButton_TotalMenuButton - 1;
 			}
-			if (GetAsyncKeyState(VK_DOWN) < 0 || GetAsyncKeyState(0x53) < 0) {
+
+			if (GetAsyncKeyState(VK_DOWN) < 0 || GetAsyncKeyState(0x53) < 0) 
+			{
 				menu_cursor++;
 				key_rest = _FPS / 10;
 				menu_cursor = menu_cursor % MenuButton_TotalMenuButton;
@@ -541,18 +551,82 @@ int Title_Select()
 					menu_cursor = MenuButton_TotalMenuButton - 1;
 			}
 
-			if (GetAsyncKeyState(VK_RETURN) < 0 || GetAsyncKeyState(VK_SPACE)) {
-				if (menu_cursor == MenuButton_GameStart)
+			if (GetAsyncKeyState(VK_RETURN) < 0 || GetAsyncKeyState(VK_SPACE))
+			{
+				switch (menu_cursor)
+				{
+				case MenuButton_GameStart:
 					b_quit_stage = 1;
-				if (menu_cursor == MenuButton_GameEnd) {
+					MapRead(NULL);		// IMPORTANT : read rules, properties, map data.
+					break;
+				case MenuButton_CustomMap:
+					menu_cursor = MenuButton_MapPath;
+					FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+					break;
+				case MenuButton_GameEnd:
 					_stage = GameStage_Quit;
 					b_quit_stage = 1;
+					break;
 				}
 				key_rest = _FPS / 10;
 			}
 		}break;
 
-		case 100:
+		case MenuButton_MapPath:
+		{
+			if (_kbhit())
+			{
+				rewind(stdin);
+				//FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+				int character = _getch();
+
+				switch (character)
+				{
+				case '\r':   case '\n':
+					if (b_map_path)
+					{
+						b_quit_stage = 1;
+					}
+					else if(map_path[0] != 0)
+					{
+						menu_cursor = 0;
+						memset(map_path, 0, strlen(map_path));
+					}
+					break;
+
+				case '\b':
+					if (strlen(map_path) > 0)
+						map_path[strlen(map_path) - 1] = '\0';
+					break;
+
+				case -1: case 0:
+					//exit(999);
+					menu_cursor = 0;
+					memset(map_path, 0, strlen(map_path));
+					break;
+
+				case 224:
+					_getch();
+					break;
+
+				default:
+					if (((character >= '0' && character <= '9') ||
+						 (character >= 'a' && character <= 'z') ||
+						 (character >= 'A' && character <= 'Z') ||
+						  character == '_' || character == '.' || character == '/')
+						&& strlen(map_path) < sizeof(map_path) - 1)
+					{
+						map_path[strlen(map_path) + 1] = '\0';
+						map_path[strlen(map_path)] = character;
+					}
+					break;
+				}
+
+				key_rest = _FPS / 10;
+			}
+		} break;
+
+		case MenuButton_PressToStart:
 		{
 			if (_kbhit())
 			{
@@ -571,10 +645,6 @@ int Title_Select()
 
 int Title_Draw()
 {
-	char arr[32] = "Game Start";
-	char arr2[32] = "Exit";
-	char arr3[32] = "- Press any key -";
-
 	static int frame = 0;
 	frame++;
 
@@ -589,41 +659,99 @@ int Title_Draw()
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE;
 			else
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = 0;
-
 		}
 	}
 
 	switch (menu_cursor)		// Buttons
 	{
 	case MenuButton_GameStart:
+	case MenuButton_CustomMap:
 	case MenuButton_GameEnd:
 	{
-		DrawStringOnCanvas_Center(24, arr, FOREGROUND_INTENSITY);
-		DrawStringOnCanvas_Center(26, arr2, FOREGROUND_INTENSITY);
+		char arr[32] = "Game Start";
+		char arr2[32] = "Custom Map";
+		char arr3[32] = "Exit";
+
+		DrawStringOnCanvas_Center(22, arr, FOREGROUND_INTENSITY);
+		DrawStringOnCanvas_Center(24, arr2, FOREGROUND_INTENSITY);
+		DrawStringOnCanvas_Center(26, arr3, FOREGROUND_INTENSITY);
 	} break;
 
-	case 50:
+	case MenuButton_MapPath:
 	{
+		char* arr = "Type Map File's path";
 
-	} break;
+		DrawStringOnCanvas_Center(20, arr, FOREGROUND_INTENSITY);
+		DrawStringOnCanvas_Center(22, map_path, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED | COMMON_LVB_UNDERSCORE);
 
-	case 100:
+		switch (MapRead(map_path))		// can't find file
+		{
+		case -1:
+		{
+			char* arr2 = "file doesn't exist";
+			DrawStringOnCanvas_Center(27, arr2, FOREGROUND_RED);
+			b_map_path = 0;
+		} break;
+
+		case -4:
+		{
+			char* arr2 = "file format isn't correct";
+			DrawStringOnCanvas_Center(27, arr2, FOREGROUND_RED);
+			b_map_path = 0;
+		} break;
+
+		default:
+		{
+			int rule_align = 26;
+
+			char* arr2 = "map file exist in path!";
+			DrawStringOnCanvas_Center(24, arr2, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			b_map_path = 1;
+
+			if (b_gameover_speed_score)
+			{
+				char* arr3 = "Move your character as FAST as possible.";
+				DrawStringOnCanvas_Center(rule_align, arr3, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+				rule_align++;
+			}
+			if (b_gameover_time_score)
+			{
+				char* arr3 = "Time will be counted so you'd be better to move rapidly.";
+				DrawStringOnCanvas_Center(rule_align, arr3, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+				rule_align++;
+			}
+			if (b_gameover_break_score)
+			{
+				char* arr3 = "Broken blocks during game is important in scoring this time.";
+				DrawStringOnCanvas_Center(rule_align, arr3, FOREGROUND_RED | FOREGROUND_INTENSITY);
+				rule_align++;
+			}
+
+		} break;
+
+		}
+	}break;
+
+	case MenuButton_PressToStart:
 	{
 		if (frame % 100 > 20)
 		{
-			DrawStringOnCanvas_Center(23, arr3, FOREGROUND_INTENSITY);
+			char arr[32] = "- Press any key -";
+
+			DrawStringOnCanvas_Center(23, arr, FOREGROUND_INTENSITY);
 		}
 	} break;
 
 	}
+
 	if (menu_cursor < MenuButton_TotalMenuButton && menu_cursor >= MenuButton_GameStart)
 	{
-		_char_canvas[40 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-		_char_canvas[41 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Char.UnicodeChar = '=';
-		_char_canvas[41 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-		_char_canvas[42 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Char.UnicodeChar = '>';
-		_char_canvas[42 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-		_char_canvas[43 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+		_char_canvas[40 + WIDTH_ORIGIN * (22 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+		_char_canvas[41 + WIDTH_ORIGIN * (22 + menu_cursor * 2)].Char.UnicodeChar = '=';
+		_char_canvas[41 + WIDTH_ORIGIN * (22 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+		_char_canvas[42 + WIDTH_ORIGIN * (22 + menu_cursor * 2)].Char.UnicodeChar = '>';
+		_char_canvas[42 + WIDTH_ORIGIN * (22 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+		_char_canvas[43 + WIDTH_ORIGIN * (22 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
 
 	}
 
@@ -657,7 +785,7 @@ int GameOver_Init()
 {
 	int result = 0;
 
-	menu_cursor = 100;
+	menu_cursor = MenuButton_PressToStart;
 
 	b_init_stage = 0;
 	b_quit_stage = 0;
@@ -668,7 +796,7 @@ int GameOver_Quit()
 {
 	b_init_stage = 1;
 	b_quit_stage = 0;
-	_stage = GameStage_Title_IAF;		// transition to title
+	_stage = GameStage_IAF_Title;		// transition to title
 
 	return 0;
 }
@@ -707,7 +835,7 @@ int GameOver_Draw()
 	{
 		for (int x = 0; x < WIDTH_ORIGIN; x++)
 		{
-			if (menu_cursor == 100)
+			if (menu_cursor == MenuButton_PressToStart)
 			{
 				//_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = title_image[y][x];
 				//_char_canvas[x + WIDTH_ORIGIN * y].Attributes = -_char_canvas[x + WIDTH_ORIGIN * y].Attributes;
@@ -764,7 +892,7 @@ int MapRead(const char* map_path)
 	else		// custom map
 	{
 		map_file = fopen(map_path, "r");
-		if (map_file == NULL)		// error map
+		if (map_file == NULL)		// no file exiat
 		{
 			for (int y = 0; y < HEIGHT; y++)
 				for (int x = 0; x < WIDTH_ORIGIN; x++)
@@ -834,7 +962,9 @@ int MapRead(const char* map_path)
 					break;
 
 				default:
-					MapReadError(arr[0]);
+					//MapReadError(arr[0]);
+					fclose(map_file);
+					return -4;
 					break;
 				}
 			}
@@ -845,7 +975,9 @@ int MapRead(const char* map_path)
 			break;
 
 		default:
-			MapReadError(arr[0]);
+			//MapReadError(arr[0]);
+			fclose(map_file);
+			return -4;
 			break;
 		}
 	}
@@ -855,6 +987,11 @@ int MapRead(const char* map_path)
 	{
 		for (int x = 0; x < WIDTH_ORIGIN; x++)
 		{
+			if (feof(map_file))
+			{
+				fclose(map_file);
+				return -4;
+			}
 			fscanf(map_file, "%d", &character);
 			*(map_memmory + y * WIDTH_EXTEND + x) = (char)character;
 		}

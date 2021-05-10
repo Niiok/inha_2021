@@ -10,11 +10,11 @@
 #define TIME_LIMIT (3600*3)
 #define COLLISION_ACCURACY 100;
 
-int GS_IAF();
-static int Stage_Init();
-static int Stage_Quit();
-static int Stage_Collision();
-static int Stage_Draw();
+int GS_IAF_Game();
+static int Game_Init();
+static int Game_Quit();
+static int Game_Collision();
+static int Game_Draw();
 static int IAF_Beep();
 
 int GS_IAF_Title();
