@@ -105,3 +105,14 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
+
+
+int DrawStringOnCanvas_Center(int line, char* string, WORD Attributes)
+{
+	for (int i = 0; i < strlen(string); i++)
+	{
+		_char_canvas[WIDTH_ORIGIN / 2 - strlen(string) / 2 + i + WIDTH_ORIGIN * line].Char.UnicodeChar = string[i];
+		if (Attributes != (WORD)-1)
+			_char_canvas[WIDTH_ORIGIN / 2 - strlen(string) / 2 + i + WIDTH_ORIGIN * line].Attributes = Attributes;
+	}
+}

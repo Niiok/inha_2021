@@ -11,7 +11,7 @@ enum MapTile {		//please write stage txt with this value (%d)
 };
 
 enum MenuButton {
-	MenuButton_GameStart = 0, MenuButton_GoToMenu = 0,
+	MenuButton_GameStart = 0,
 	MenuButton_GameEnd = 1,
 	MenuButton_TotalMenuButton
 };
@@ -22,8 +22,6 @@ enum MenuButton {
 static int b_init_stage = 1;
 static int b_quit_stage = 0;
 		//map variables
-static char* map_path = NULL;
-static FILE* map_file = NULL;
 static char* map_memmory_origin = NULL;
 static char* map_memmory = NULL;
 		//score variables
@@ -42,8 +40,8 @@ static float character_x = 3;
 static float character_y = 2;
 static float dx = 0, dy = 0;
 		//setting variables
-static float ecel_power = ECEL_POWER;
-static float decel_power = DECEL_POWER;
+static float ecel_power = (float)ECEL_POWER;
+static float decel_power = (float)DECEL_POWER;
 static float time_limit = TIME_LIMIT;
 static int collision_accuracy = COLLISION_ACCURACY;
 		//sound variable
@@ -75,7 +73,7 @@ int GS_IAF()
 
 	Stage_Collision();
 
-	current_speed = (dx * 10)*(dx * 10) + (dy * 10)*(dy * 10);
+	current_speed = (int)(  (dx * 10)*(dx * 10) + (dy * 10)*(dy * 10)  );
 	if (current_speed > max_speed)
 		max_speed = current_speed;
 
@@ -86,7 +84,7 @@ int GS_IAF()
 	if (++time_count >= time_limit)
 	{
 		b_quit_stage = 1;
-		time_count = time_limit;
+		time_count = (int)time_limit;
 	}
 
 
@@ -103,46 +101,6 @@ int GS_IAF()
 int Stage_Init()
 {
 	int result = 0;	// return value
-	
-	///////////////////////////////////////// reset values into default
-
-	character_x = 3;
-	character_y = 2;
-	dx = 0, dy = 0;
-
-	ecel_power = ECEL_POWER;
-	decel_power = DECEL_POWER;
-	time_limit = TIME_LIMIT;
-	collision_accuracy = COLLISION_ACCURACY;
-	
-	map_file = NULL;
-	map_memmory_origin = NULL;
-	map_memmory = NULL;
-	
-	current_speed = 0;
-	max_speed = 0;
-	time_count = 0;
-	broken_breakable = 0;
-
-	b_gameover_speed_score = 1;
-	b_gameover_time_score = 1;
-	b_gameover_break_score = 1;
-	
-	beep = 0;
-
-	//////////////////////////////////////////////// map memmory call
-
-	map_memmory_origin = (char*)malloc(WIDTH_ORIGIN * 2 * HEIGHT * 2);
-	if (map_memmory_origin == NULL)
-		result += -1;
-
-	memset(map_memmory_origin, MapTile_Wall, WIDTH_ORIGIN * 2 * HEIGHT * 2);
-
-	map_memmory = map_memmory_origin + (int)(WIDTH_ORIGIN/2) + (int)(WIDTH_EXTEND*HEIGHT/2);
-
-	///////////////////////////////////////////////// map read
-
-	result += MapRead(NULL);		// IMPORTANT : read rules, properties, map data.
 
 	_score = 0;
 
@@ -195,9 +153,9 @@ int Stage_Collision()
 			if (dy < 0)
 				dy_sample = -dy;
 			if (dx_sample > dy_sample)
-				bigger_d = dx_sample;
+				bigger_d = (int)dx_sample;
 			else
-				bigger_d = dy_sample;
+				bigger_d = (int)dy_sample;
 
 			bigger_d += 1;
 		}
@@ -299,8 +257,8 @@ int Stage_Collision()
 						if (GetAsynckeystate(VK_DOWN) < 0 || GetAsyncKeyState(0x53) < 0) {
 							dy += ecel_power / 8;
 						}*/
-						dx *= 1.0001;
-						dy *= 1.0001;
+						dx *= (float)1.0001;
+						dy *= (float)1.0001;
 						ice_once = 1;
 					}
 					break;
@@ -356,232 +314,81 @@ int Stage_Collision()
 
 int Stage_Draw()
 {
-	char arr[32] = "Max Speed : ";
-	sprintf(arr+12, "%d", max_speed);
+	char arr[32] = " Max Speed : ";
+	sprintf(arr + strlen(arr), "%d ", max_speed);
 	arr[31] = 0;
 
-	char arr2[32] = "Current Speed : ";
-	sprintf(arr2 + 16, "%d", current_speed);
+	char arr2[32] = " Current Speed : ";
+	sprintf(arr2 + strlen(arr2), "%d ", current_speed);
 	arr2[31] = 0;
 
-	char arr3[32] = "Time Left : ";
-	sprintf(arr3 + 12, "%.1f", (float)(time_limit - time_count)/_FPS);
+	char arr3[32] = " Time Left : ";
+	sprintf(arr3 + strlen(arr3), "%.1f ", (float)(time_limit - time_count)/_FPS);
 	arr3[31] = 0;
 
 	for (int y = 0; y < HEIGHT; y++)
 	{
 		for (int x = 0; x < WIDTH_ORIGIN; x++)
 		{
-			if (map_file != NULL)		//draw map first
+			char map_value = *(map_memmory + y * WIDTH_EXTEND + x);
+			switch (map_value)
 			{
-				char map_value = *(map_memmory + y * WIDTH_EXTEND + x);
-				switch (map_value)
-				{
-				case MapTile_Blank:
-					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_INTENSITY;
-					break;
-
-				case MapTile_Wall:
-					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
-					break;
-
-				case MapTile_Breakable:
-					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = 'X';
-					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
-					break;
-
-				case MapTile_Ice:
-					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_BLUE | BACKGROUND_INTENSITY;
-					break;
-
-				case MapTile_Lava:
-					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_RED;
-					break;
-
-				case MapTile_Slime:
-					_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
-					_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-					break;
-
-				}
-			}
-			else		//default map without map file
-			{
+			case MapTile_Blank:
 				_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_INTENSITY;
+				break;
+
+			case MapTile_Wall:
+				_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
+				break;
+
+			case MapTile_Breakable:
+				_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = 'X';
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED;
+				break;
+
+			case MapTile_Ice:
+				_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_BLUE | BACKGROUND_INTENSITY;
+				break;
+
+			case MapTile_Lava:
+				_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_RED;
+				break;
+
+			case MapTile_Slime:
+				_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = ' ';
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+				break;
 			}
 
-			//score draw
-			if (y == 1 && x == WIDTH_ORIGIN / 2 + strlen(arr)/2)
-			{
-				for (int i = 0; i < strlen(arr); i++)
-				{
-					_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr[i];
-				}
-			}
-			if (y == 2 && x == WIDTH_ORIGIN / 2 + strlen(arr2) / 2)
-			{
-				for (int i = 0; i < strlen(arr2); i++)
-				{
-					_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr2[i];
-				}
-			}
-			if (y == 28 && x == WIDTH_ORIGIN / 2 + strlen(arr3) / 2)
-			{
-				for (int i = 0; i < strlen(arr3); i++)
-				{
-					_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr3[i];
-				}
-			}
-
-			//character visual decoration
+			//character visual highlight
 			if (x > character_x - 3 && x <= character_x + 2 && y > character_y - 2 && y <= character_y + 1)
-				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+				_char_canvas[x + WIDTH_ORIGIN * y].Attributes ^= BACKGROUND_INTENSITY;
 		}
 	}
+
+	//score draw
+	DrawStringOnCanvas_Center(1, arr, -1);
+	DrawStringOnCanvas_Center(2, arr2, -1);		
+	DrawStringOnCanvas_Center(28, arr3, -1);
+
 
 	// draw character
-	int character_xy = (int)(character_x)+WIDTH_ORIGIN * (int)(character_y);
+	{
+		int character_xy = (int)(character_x)+WIDTH_ORIGIN * (int)(character_y);
 
-	if (0 < character_xy && character_xy < WIDTH_ORIGIN * HEIGHT) {
-		_char_canvas[character_xy].Char.UnicodeChar = '@';
-		_char_canvas[character_xy].Attributes = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+		if (0 < character_xy && character_xy < WIDTH_ORIGIN * HEIGHT) {
+			_char_canvas[character_xy].Char.UnicodeChar = '@';
+			_char_canvas[character_xy].Attributes |= FOREGROUND_RED;
+		}
 	}
-
 
 	return 0;
 }
 
-
-int MapRead(const char* map_path)
-{
-	int character = 0;
-
-	if (map_path == NULL)		// default map
-	{
-		map_file = fopen("../data/IAF_map.txt", "r");
-		if (map_file == NULL)		// error map
-		{
-			for (int y = 0; y < HEIGHT; y++)
-				for (int x = 0; x < WIDTH_ORIGIN; x++)
-					*(map_memmory + y * WIDTH_EXTEND + x) = 0;
-
-			return -3;
-		}
-	}
-	else		// custom map
-	{
-		map_file = fopen(map_path, "r");
-		if (map_file == NULL)		// error map
-		{
-			for (int y = 0; y < HEIGHT; y++)
-				for (int x = 0; x < WIDTH_ORIGIN; x++)
-					*(map_memmory + y * WIDTH_EXTEND + x) = 0;
-
-			return -1;
-		}
-	}
-	Manager_MemmoryFree(map_path);
-
-	/////////////////////////////////////////////////// rule tag parse
-	for (char arr[64] = { 1 }; !(arr[0] == 'm' || arr[0] == 'M'); )		// simple rule parser
-	{
-		fscanf(map_file, "%s", arr);
-
-		switch (arr[0])
-		{
-		case 'c': case 'C':
-			fscanf(map_file, "%d", &collision_accuracy);
-			if (collision_accuracy < 1)
-				collision_accuracy = 1;
-			break;
-		case 'd': case 'D':
-			fscanf(map_file, "%f", &decel_power);
-			decel_power /= 100000;
-			decel_power += 1;
-			break;
-		case 'e': case 'E':
-			fscanf(map_file, "%f", &ecel_power);
-			ecel_power /= 1000;
-			break;
-		case 't': case 'T':
-			fscanf(map_file, "%f", &time_limit);
-			time_limit *= _FPS;
-			break;
-
-		case 'r': case 'R':
-		{
-			int count = 0;
-			fscanf(map_file, "%d", &count);
-			for (; count > 0; count--)
-			{
-				fscanf(map_file, "%s", arr);
-				switch (arr[0])
-				{
-				case 's': case 'S':
-					fscanf(map_file, "%s", arr);
-					if (arr[0] == '0' || arr[0] == 'f' || arr[0] == 'F')
-						b_gameover_speed_score = 0;
-					else if (arr[0] == '1' || arr[0] == 't' || arr[0] == 'T')
-						b_gameover_speed_score = 1;
-					break;
-					
-				case 't': case 'T':
-					fscanf(map_file, "%s", arr);
-					if (arr[0] == '0' || arr[0] == 'f' || arr[0] == 'F')
-						b_gameover_time_score = 0;
-					else if (arr[0] == '1' || arr[0] == 't' || arr[0] == 'T')
-						b_gameover_time_score = 1;
-					break;
-
-				case 'b': case 'B':
-					fscanf(map_file, "%s", arr);
-					if (arr[0] == '0' || arr[0] == 'f' || arr[0] == 'F')
-						b_gameover_speed_score = 0;
-					else if (arr[0] == '1' || arr[0] == 't' || arr[0] == 'T')
-						b_gameover_speed_score = 1;
-					break;
-
-				default:
-					MapReadError(arr[0]);
-					break;
-				}
-			}
-			break; 
-		}
-
-		case 'm': case 'M':
-			break;
-
-		default:
-			MapReadError(arr[0]);
-			break;
-		}
-	}
-
-	/////////////////////////////////////////////////////  map tile read
-	for (int y = 0; y < HEIGHT; y++)
-	{
-		for (int x = 0; x < WIDTH_ORIGIN; x++)
-		{
-			fscanf(map_file, "%d", &character);
-			*(map_memmory + y * WIDTH_EXTEND + x) = (char)character;
-		}
-	}
-
-	fclose(map_file);
-	return 0;
-}
-
-int MapReadError(char i)
-{
-	exit(i);
-	return 0;
-}
 
 int IAF_Beep()
 {
@@ -646,7 +453,46 @@ int GS_IAF_Title()
 int Title_Init()
 {
 	int result = 0;
-	map_path = Manager_MemmoryAllocate(256);
+
+	///////////////////////////////////////// reset values into default
+
+	character_x = 3;
+	character_y = 2;
+	dx = 0, dy = 0;
+
+	ecel_power = (float)ECEL_POWER;
+	decel_power = (float)DECEL_POWER;
+	time_limit = (float)TIME_LIMIT;
+	collision_accuracy = COLLISION_ACCURACY;
+
+	map_memmory_origin = NULL;
+	map_memmory = NULL;
+
+	current_speed = 0;
+	max_speed = 0;
+	time_count = 0;
+	broken_breakable = 0;
+
+	b_gameover_speed_score = 1;
+	b_gameover_time_score = 1;
+	b_gameover_break_score = 1;
+
+	beep = 0;
+
+	//////////////////////////////////////////////// map memmory call
+
+	map_memmory_origin = (char*)malloc(WIDTH_ORIGIN * 2 * HEIGHT * 2);
+	if (map_memmory_origin == NULL)
+		result += -1;
+
+	memset(map_memmory_origin, MapTile_Wall, WIDTH_ORIGIN * 2 * HEIGHT * 2);
+
+	map_memmory = map_memmory_origin + (int)(WIDTH_ORIGIN / 2) + (int)(WIDTH_EXTEND*HEIGHT / 2);
+
+	///////////////////////////////////////////////// map read
+
+	result += MapRead(NULL);		// IMPORTANT : read rules, properties, map data.
+
 
 	menu_cursor = 100;
 
@@ -672,44 +518,49 @@ int Title_Quit()
 int Title_Select()
 {
 	static int key_rest = 0;
-	/*if (GetAsyncKeyState(VK_LEFT) < 0 || GetAsyncKeyState(0x41) < 0) {
-		dx -= ecel_power;
-	}*/
-	/*if (GetAsyncKeyState(VK_RIGHT) < 0 || GetAsyncKeyState(0x44) < 0) {
-		dx += ecel_power;
-	}*/
+	char map_path[256] = {0};
+	
 	if (key_rest == 0)
 	{
-
-		if (GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(0x57) < 0) {
-			menu_cursor--;
-			key_rest = _FPS/10;
-			menu_cursor = menu_cursor % MenuButton_TotalMenuButton;
-			if (menu_cursor < 0)
-				menu_cursor = MenuButton_TotalMenuButton-1;
-		}
-		if (GetAsyncKeyState(VK_DOWN) < 0 || GetAsyncKeyState(0x53) < 0) {
-			menu_cursor++;
-			key_rest = _FPS/10;
-			menu_cursor = menu_cursor % MenuButton_TotalMenuButton;
-			if (menu_cursor < 0)
-				menu_cursor = MenuButton_TotalMenuButton-1;
-		}
-
-		if (GetAsyncKeyState(VK_RETURN) < 0 || GetAsyncKeyState(VK_SPACE)) {
-			if (menu_cursor == MenuButton_GameStart)
-				b_quit_stage = 1;
-			if (menu_cursor == MenuButton_GameEnd) {
-				_stage = GameStage_Quit;
-				b_quit_stage = 1;
-			}
-			key_rest = _FPS/10;
-		}
-
-		if (_kbhit() && menu_cursor == 100)
+		switch (menu_cursor)
 		{
-			menu_cursor = 0;
-			key_rest = _FPS/10;
+		case MenuButton_GameStart: case MenuButton_GameEnd:
+		{
+			if (GetAsyncKeyState(VK_UP) < 0 || GetAsyncKeyState(0x57) < 0) {
+				menu_cursor--;
+				key_rest = _FPS / 10;
+				menu_cursor = menu_cursor % MenuButton_TotalMenuButton;
+				if (menu_cursor < 0)
+					menu_cursor = MenuButton_TotalMenuButton - 1;
+			}
+			if (GetAsyncKeyState(VK_DOWN) < 0 || GetAsyncKeyState(0x53) < 0) {
+				menu_cursor++;
+				key_rest = _FPS / 10;
+				menu_cursor = menu_cursor % MenuButton_TotalMenuButton;
+				if (menu_cursor < 0)
+					menu_cursor = MenuButton_TotalMenuButton - 1;
+			}
+
+			if (GetAsyncKeyState(VK_RETURN) < 0 || GetAsyncKeyState(VK_SPACE)) {
+				if (menu_cursor == MenuButton_GameStart)
+					b_quit_stage = 1;
+				if (menu_cursor == MenuButton_GameEnd) {
+					_stage = GameStage_Quit;
+					b_quit_stage = 1;
+				}
+				key_rest = _FPS / 10;
+			}
+		}break;
+
+		case 100:
+		{
+			if (_kbhit())
+			{
+				menu_cursor = 0;
+				key_rest = _FPS / 10;
+			}
+		} break;
+
 		}
 	}
 	key_rest--;
@@ -727,74 +578,53 @@ int Title_Draw()
 	static int frame = 0;
 	frame++;
 
-	for (int y = 0; y < HEIGHT; y++)
+	for (int y = 0; y < HEIGHT; y++)		// TItle Screen
 	{
 		for (int x = 0; x < WIDTH_ORIGIN; x++)
 		{
 			_char_canvas[x + WIDTH_ORIGIN * y].Char.UnicodeChar = title_image[y][x];
 			if (y >= 4 && y <= 10)
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-			else if(y >= 14 && y <= 16)
+			else if (y >= 14 && y <= 16)
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE;
 			else
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes = 0;
 
-
-			switch (menu_cursor)
-			{
-			case MenuButton_GameStart:
-			case MenuButton_GameEnd:
-			{
-				if (y == 24 && x == WIDTH_ORIGIN / 2 + strlen(arr) / 2)		// Game Start Button
-				{
-					for (int i = 0; i < strlen(arr); i++)
-					{
-						_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr[i];
-						_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY;
-					}
-				}
-
-				if (y == 26 && x == WIDTH_ORIGIN / 2 + strlen(arr2) / 2)		// Exit Button
-				{
-					for (int i = 0; i < strlen(arr2); i++)
-					{
-						_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr2[i];
-						_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY;
-					}
-				}
-			} break;
-
-			case 50:
-			{
-
-			} break;
-
-			case 100:
-			{
-				if (y == 23 && x == WIDTH_ORIGIN / 2 + strlen(arr3) / 2 && frame % 100 > 20)
-				{
-					for (int i = 0; i < strlen(arr3); i++)
-					{
-						_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr3[i];
-						_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY;
-					}
-				}
-			} break;
-
-			}
-
-
 		}
-		if (menu_cursor < MenuButton_TotalMenuButton && menu_cursor >= MenuButton_GameStart)
+	}
+
+	switch (menu_cursor)		// Buttons
+	{
+	case MenuButton_GameStart:
+	case MenuButton_GameEnd:
+	{
+		DrawStringOnCanvas_Center(24, arr, FOREGROUND_INTENSITY);
+		DrawStringOnCanvas_Center(26, arr2, FOREGROUND_INTENSITY);
+	} break;
+
+	case 50:
+	{
+
+	} break;
+
+	case 100:
+	{
+		if (frame % 100 > 20)
 		{
-			_char_canvas[40 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN |BACKGROUND_BLUE;
-			_char_canvas[41 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Char.UnicodeChar = '=';
-			_char_canvas[41 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-			_char_canvas[42 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Char.UnicodeChar = '>';
-			_char_canvas[42 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-			_char_canvas[43 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-
+			DrawStringOnCanvas_Center(23, arr3, FOREGROUND_INTENSITY);
 		}
+	} break;
+
+	}
+	if (menu_cursor < MenuButton_TotalMenuButton && menu_cursor >= MenuButton_GameStart)
+	{
+		_char_canvas[40 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+		_char_canvas[41 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Char.UnicodeChar = '=';
+		_char_canvas[41 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+		_char_canvas[42 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Char.UnicodeChar = '>';
+		_char_canvas[42 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+		_char_canvas[43 + WIDTH_ORIGIN * (24 + menu_cursor * 2)].Attributes = FOREGROUND_RED | BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
+
 	}
 
 	return 0;
@@ -845,15 +675,15 @@ int GameOver_Quit()
 
 int GameOver_Select()
 {
-	static int rest = 10;
+	static int key_rest = 30;
 
-	if ((GetAsyncKeyState(VK_SPACE) || GetAsyncKeyState(VK_RETURN)) && rest <= 0)
+	if ((GetAsyncKeyState(VK_SPACE) || GetAsyncKeyState(VK_RETURN)) && key_rest <= 0)
 	{
 		b_quit_stage = 1;
-		rest = 10;
+		key_rest = _FPS/10;
 	}
 
-	rest--;
+	key_rest--;
 }
 
 int GameOver_Draw()
@@ -883,52 +713,159 @@ int GameOver_Draw()
 				//_char_canvas[x + WIDTH_ORIGIN * y].Attributes = -_char_canvas[x + WIDTH_ORIGIN * y].Attributes;
 				_char_canvas[x + WIDTH_ORIGIN * y].Attributes ^= BACKGROUND_INTENSITY;
 			}
-
-			if (y == 20 && x == WIDTH_ORIGIN / 2 + strlen(arr4) / 2)		// Prompt
-			{
-				for (int i = 0; i < strlen(arr4); i++)
-				{
-					_char_canvas[x - strlen(arr4) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr4[i];
-					_char_canvas[x - strlen(arr4) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
-				}
-			}
-
-			if(y == result_align && x == WIDTH_ORIGIN / 2 + strlen(arr) / 2)
-			{
-				if (b_gameover_speed_score)									// Speed Score
-				{
-					for (int i = 0; i < strlen(arr); i++)
-					{
-						_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr[i];
-						_char_canvas[x - strlen(arr) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
-					}
-					b_gameover_speed_score = 0;
-					result_align += 2;
-				}
-				else if (b_gameover_time_score)								// Time Score
-				{
-					for (int i = 0; i < strlen(arr2); i++)
-					{
-						_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr2[i];
-						_char_canvas[x - strlen(arr2) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
-					}
-					b_gameover_time_score = 0;
-					result_align += 2;
-				}
-				else if (b_gameover_break_score)
-				{
-					for (int i = 0; i < strlen(arr3); i++)					// Break Score
-					{
-						_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Char.UnicodeChar = arr3[i];
-						_char_canvas[x - strlen(arr3) + i + WIDTH_ORIGIN * y].Attributes = FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
-					}
-					b_gameover_break_score = 0;
-					result_align += 2;
-				}
-			}
 		}
 	}
+
+	DrawStringOnCanvas_Center(20, arr4, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);		// Prompt
+
+	if (b_gameover_speed_score)								// Speed Score
+	{
+		DrawStringOnCanvas_Center(result_align, arr, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		b_gameover_speed_score = 0;
+		result_align += 2;
+	}
+	if (b_gameover_time_score)								// Time Score
+	{
+		DrawStringOnCanvas_Center(result_align, arr2, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		b_gameover_time_score = 0;
+		result_align += 2;
+	}
+	if (b_gameover_break_score)								// Break Score
+	{
+		DrawStringOnCanvas_Center(result_align, arr3, FOREGROUND_INTENSITY | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
+		b_gameover_break_score = 0;
+		result_align += 2;
+	}
+
 	menu_cursor = 0;
 
+	return 0;
+}
+
+
+
+int MapRead(const char* map_path)
+{
+	FILE* map_file = NULL;
+	int character = 0;
+
+	if (map_path == NULL)		// default map
+	{
+		map_file = fopen("../data/IAF_map.txt", "r");
+		if (map_file == NULL)		// error map
+		{
+			for (int y = 0; y < HEIGHT; y++)
+				for (int x = 0; x < WIDTH_ORIGIN; x++)
+					*(map_memmory + y * WIDTH_EXTEND + x) = 0;
+
+			return -3;
+		}
+	}
+	else		// custom map
+	{
+		map_file = fopen(map_path, "r");
+		if (map_file == NULL)		// error map
+		{
+			for (int y = 0; y < HEIGHT; y++)
+				for (int x = 0; x < WIDTH_ORIGIN; x++)
+					*(map_memmory + y * WIDTH_EXTEND + x) = 0;
+
+			return -1;
+		}
+	}
+
+	/////////////////////////////////////////////////// rule tag parse
+	for (char arr[64] = { 1 }; !(arr[0] == 'm' || arr[0] == 'M'); )		// simple rule parser
+	{
+		fscanf(map_file, "%s", arr);
+
+		switch (arr[0])
+		{
+		case 'c': case 'C':
+			fscanf(map_file, "%d", &collision_accuracy);
+			if (collision_accuracy < 1)
+				collision_accuracy = 1;
+			break;
+		case 'd': case 'D':
+			fscanf(map_file, "%f", &decel_power);
+			decel_power /= 100000;
+			decel_power += 1;
+			break;
+		case 'e': case 'E':
+			fscanf(map_file, "%f", &ecel_power);
+			ecel_power /= 1000;
+			break;
+		case 't': case 'T':
+			fscanf(map_file, "%f", &time_limit);
+			time_limit *= _FPS;
+			break;
+
+		case 'r': case 'R':
+		{
+			int count = 0;
+			fscanf(map_file, "%d", &count);
+			for (; count > 0; count--)
+			{
+				fscanf(map_file, "%s", arr);
+				switch (arr[0])
+				{
+				case 's': case 'S':
+					fscanf(map_file, "%s", arr);
+					if (arr[0] == '0' || arr[0] == 'f' || arr[0] == 'F')
+						b_gameover_speed_score = 0;
+					else if (arr[0] == '1' || arr[0] == 't' || arr[0] == 'T')
+						b_gameover_speed_score = 1;
+					break;
+					
+				case 't': case 'T':
+					fscanf(map_file, "%s", arr);
+					if (arr[0] == '0' || arr[0] == 'f' || arr[0] == 'F')
+						b_gameover_time_score = 0;
+					else if (arr[0] == '1' || arr[0] == 't' || arr[0] == 'T')
+						b_gameover_time_score = 1;
+					break;
+
+				case 'b': case 'B':
+					fscanf(map_file, "%s", arr);
+					if (arr[0] == '0' || arr[0] == 'f' || arr[0] == 'F')
+						b_gameover_break_score = 0;
+					else if (arr[0] == '1' || arr[0] == 't' || arr[0] == 'T')
+						b_gameover_break_score = 1;
+					break;
+
+				default:
+					MapReadError(arr[0]);
+					break;
+				}
+			}
+			break; 
+		}
+
+		case 'm': case 'M':
+			break;
+
+		default:
+			MapReadError(arr[0]);
+			break;
+		}
+	}
+
+	/////////////////////////////////////////////////////  map tile read
+	for (int y = 0; y < HEIGHT; y++)
+	{
+		for (int x = 0; x < WIDTH_ORIGIN; x++)
+		{
+			fscanf(map_file, "%d", &character);
+			*(map_memmory + y * WIDTH_EXTEND + x) = (char)character;
+		}
+	}
+
+	fclose(map_file);
+	return 0;
+}
+
+int MapReadError(char i)
+{
+	exit(i);
 	return 0;
 }

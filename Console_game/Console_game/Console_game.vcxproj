@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\data\IAF_map.txt" />
+    <Text Include="..\data\IAF_map_maze.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

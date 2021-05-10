@@ -15,8 +15,6 @@ static int Stage_Init();
 static int Stage_Quit();
 static int Stage_Collision();
 static int Stage_Draw();
-static int MapRead(const char*);
-static int MapReadError(char i);
 static int IAF_Beep();
 
 int GS_IAF_Title();
@@ -31,6 +29,9 @@ static int GameOver_Quit();
 static int GameOver_Select();
 static int GameOver_Draw();
 
+
+static int MapRead(const char*);
+static int MapReadError(char i);
 
 
 
