@@ -1,4 +1,4 @@
-#define MAIN_DECLARE
+#define _MAIN_DECLARE
 #include "console_game.h"
 
 /**
@@ -6,12 +6,12 @@
  */
 int main(int argc, char* argv[])
 {
-	HANDLE console_buffer_1, console_buffer_2;
 	SMALL_RECT draw_region = { 0, 0, WIDTH_ORIGIN - 1,HEIGHT - 1 };
 	COORD console_buffer_area = {WIDTH_ORIGIN, HEIGHT};
 	COORD buffer_coord = {0, 0};
+	HANDLE console_buffer_1, console_buffer_2;
 	
-	ManagerInit();	// memmory, file manager init
+	Manager_ManagerInit();	// memmory, file manager init
 
 	{
 		HANDLE initial = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -59,15 +59,15 @@ int main(int argc, char* argv[])
 
 		switch (_stage)
 		{
-		case GameStage_Title_IAF:
+		case GameStage_IAF_Title:
 			GS_IAF_Title();
 			break;
 
 		case GameStage_IamFastest:
-			GS_IAF();
+			GS_IAF_Game();
 			break;
 
-		case GameStage_GameOver_IAF:
+		case GameStage_IAF_GameOver:
 			GS_IAF_GameOver();
 			break;
 
@@ -101,7 +101,18 @@ int main(int argc, char* argv[])
 		i++;
 	}
 
-	ManagerQuit();		// memmory, file manager quit
+	Manager_ManagerQuit();		// memmory, file manager quit
 
 	return 0;
+}
+
+
+int DrawStringOnCanvas_Center(int line, char* string, WORD Attributes)
+{
+	for (int i = 0; i < strlen(string); i++)
+	{
+		_char_canvas[WIDTH_ORIGIN / 2 - strlen(string) / 2 + i + WIDTH_ORIGIN * line].Char.UnicodeChar = string[i];
+		if (Attributes != (WORD)-1)
+			_char_canvas[WIDTH_ORIGIN / 2 - strlen(string) / 2 + i + WIDTH_ORIGIN * line].Attributes = Attributes;
+	}
 }

@@ -3,12 +3,15 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int ManagerInit();
+int Manager_ManagerInit();
 
-FILE* FileLoad(const char*);
+FILE* Manager_FileLoad(const char* file_name);
 
-const char* MemmoryAllocate(int);
+const char* Manager_MemmoryAllocate(int size);
 
-int FileUnload();
+int Manager_FileUnload(FILE* file_address);
 
-int ManagerQuit();
+int Manager_MemmoryFree(const char* memmory_address);
+
+
+int Manager_ManagerQuit();
