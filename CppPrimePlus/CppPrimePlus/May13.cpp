@@ -1,5 +1,6 @@
 #include <iostream>
 #include<string>
+#include<cstring>8
 #include<vector>
 #include<array>
 
@@ -14,7 +15,7 @@ char* number_trans(int num, int trans);
 
 int main()
 {
-	number_trans(1000, 16);
+	c5q8();
 
 	return 0;
 }
@@ -238,6 +239,18 @@ int c5q7()
 
 int c5q8()
 {
+	int count = 0;
+	char arr[128];
+	
+	std::cout << "영어 단어들을 입력하십시오. (끝내려면 done을 입력) :\n";
+	while (strcmp(arr, "done"))
+	{
+		std::cin >> arr;
+		++count;
+	}
+
+	--count;
+	std::cout << "총 " << count << "  단어가 입력되었습니다.";
 
 	return 0;
 }
@@ -275,22 +288,5 @@ char* number_trans(int num, int trans)
 	
 
 	printf("%s", string);
-	//return string;
-}
-
-char* numeral_translator(char* num_from, int numeral_from, int numeral_to)
-{
-
-	if (numeral_from > 36 || numeral_to > 36)
-		return NULL;
-
-	double num_dec;
-	int num_len = strlen(num_from);
-	for (int i = 0; i < num_len; ++i)
-	{
-		if(num_from[i] < )
-		num_from[]
-	}
-
 	//return string;
 }

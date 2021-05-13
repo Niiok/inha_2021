@@ -14,18 +14,24 @@ string dec_to_numeral(int dec, int numeral)
 	int count;
 	int i;
 
+	if (numeral > 36)
+		return "error";
+
 	count = 0;
-	string num_string = "";
+	static string num_string;
+	num_string = "";
+
 	while (1)
 	{
 		count = count + 1;
 		if (!(pow(numeral, count) <= dec)) break;
 	}
+
 	i = count - 1;
 
 	while (1)
 	{
-		num_string[count - i] = num_to_char(dec / pow(numeral, i));
+		num_string/*[count - i-1]*/ += num_to_char(dec / pow(numeral, i));
 		dec = dec % (int)pow(numeral, i);
 		i = i - 1;
 		if (!(i >= 0)) break;
@@ -58,12 +64,15 @@ int numeral_to_dec(string num_string, int numeral)
 	int length;
 	int i;
 
+	if (numeral > 36)
+		return -1;
+
 	length = num_string.length();
 	i = 1;
 	int dec = 0;
 	while (1)
 	{
-		dec = dec + pow(numeral, (i - 1))*char_to_num(num_string[length - i + 1]);
+		dec = dec + pow(numeral, (i - 1))*char_to_num(num_string[length - i]);
 		i = i + 1;
 		if (!(i <= length)) break;
 	}
