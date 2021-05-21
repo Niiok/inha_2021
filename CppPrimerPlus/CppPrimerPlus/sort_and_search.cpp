@@ -5,6 +5,8 @@
 #include <cstring>
 #include <cstdlib>
 
+#define ARRAY_SIZE 128
+
 int Input_AtTail(int value);
 int Search_Linear(int value);
 int Search_LinearVisual(int value);
@@ -18,11 +20,15 @@ int compar_sample(const void* key, const void* compare);
 
 
 static std::vector<int> _vector_integer;
+static int _array_integer[ARRAY_SIZE];
+
 
 int main()
 {
 	for (int i = 1; i < 39; ++i)
 		_vector_integer.push_back(i);
+	for (int i = 0; i < ARRAY_SIZE; ++i)
+		_array_integer[i] = i;
 
 	while (1)
 	{
@@ -78,8 +84,8 @@ int main()
 			std::cout << "\n search : ";
 			int num;
 			std::cin >> num;
-			std::cout << bsearchx(&num, (void*)&_vector_integer[0], _vector_integer.size(), sizeof(std::vector<int>), compar_sample) << std::endl;
-		}
+			std::cout << *(int*)bsearchx(&num, (void*)&_array_integer, ARRAY_SIZE, sizeof(int), compar_sample) << std::endl;
+		} break;
 
 		default :
 			system("cls");
