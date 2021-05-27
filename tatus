@@ -1,0 +1,491 @@
+[1mdiff --git a/Algorithm/Raptor/Raptor.sln b/Algorithm/Raptor/Raptor.sln[m
+[1mdeleted file mode 100644[m
+[1mindex 1c1554c..0000000[m
+[1m--- a/Algorithm/Raptor/Raptor.sln[m
+[1m+++ /dev/null[m
+[36m@@ -1,31 +0,0 @@[m
+[31m-﻿[m
+[31m-Microsoft Visual Studio Solution File, Format Version 12.00[m
+[31m-# Visual Studio 15[m
+[31m-VisualStudioVersion = 15.0.28307.1433[m
+[31m-MinimumVisualStudioVersion = 10.0.40219.1[m
+[31m-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Raptor", "Raptor\Raptor.vcxproj", "{FD1E9908-17A8-462B-8882-AB1989673E4A}"[m
+[31m-EndProject[m
+[31m-Global[m
+[31m-	GlobalSection(SolutionConfigurationPlatforms) = preSolution[m
+[31m-		Debug|x64 = Debug|x64[m
+[31m-		Debug|x86 = Debug|x86[m
+[31m-		Release|x64 = Release|x64[m
+[31m-		Release|x86 = Release|x86[m
+[31m-	EndGlobalSection[m
+[31m-	GlobalSection(ProjectConfigurationPlatforms) = postSolution[m
+[31m-		{FD1E9908-17A8-462B-8882-AB1989673E4A}.Debug|x64.ActiveCfg = Debug|x64[m
+[31m-		{FD1E9908-17A8-462B-8882-AB1989673E4A}.Debug|x64.Build.0 = Debug|x64[m
+[31m-		{FD1E9908-17A8-462B-8882-AB1989673E4A}.Debug|x86.ActiveCfg = Debug|Win32[m
+[31m-		{FD1E9908-17A8-462B-8882-AB1989673E4A}.Debug|x86.Build.0 = Debug|Win32[m
+[31m-		{FD1E9908-17A8-462B-8882-AB1989673E4A}.Release|x64.ActiveCfg = Release|x64[m
+[31m-		{FD1E9908-17A8-462B-8882-AB1989673E4A}.Release|x64.Build.0 = Release|x64[m
+[31m-		{FD1E9908-17A8-462B-8882-AB1989673E4A}.Release|x86.ActiveCfg = Release|Win32[m
+[31m-		{FD1E9908-17A8-462B-8882-AB1989673E4A}.Release|x86.Build.0 = Release|Win32[m
+[31m-	EndGlobalSection[m
+[31m-	GlobalSection(SolutionProperties) = preSolution[m
+[31m-		HideSolutionNode = FALSE[m
+[31m-	EndGlobalSection[m
+[31m-	GlobalSection(ExtensibilityGlobals) = postSolution[m
+[31m-		SolutionGuid = {BBC7D863-5C71-4C84-8EF3-09D33FB84671}[m
+[31m-	EndGlobalSection[m
+[31m-EndGlobal[m
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May12.cpp b/Algorithm/Raptor/Raptor/May/May12.cpp[m
+[1mdeleted file mode 100644[m
+[1mindex 660b06e..0000000[m
+[1m--- a/Algorithm/Raptor/Raptor/May/May12.cpp[m
+[1m+++ /dev/null[m
+[36m@@ -1,37 +0,0 @@[m
+[31m-#include <iostream>[m
+[31m-#include <string>[m
+[31m-[m
+[31m-using namespace std;[m
+[31m-[m
+[31m-void a1q9(int a, int b)[m
+[31m-{[m
+[31m-	int sum;[m
+[31m-	int end;[m
+[31m-	int start;[m
+[31m-[m
+[31m-	if (a > b)[m
+[31m-	{[m
+[31m-		start = b;[m
+[31m-		end = a;[m
+[31m-	}[m
+[31m-	else[m
+[31m-	{[m
+[31m-		start = a;[m
+[31m-		end = b;[m
+[31m-	}[m
+[31m-	sum = 0;[m
+[31m-	while (1)[m
+[31m-	{[m
+[31m-		sum = start + sum;[m
+[31m-		start = start + 1;[m
+[31m-		if (start > end) break;[m
+[31m-	}[m
+[31m-	cout << sum << endl;}[m
+[31m-[m
+[31m-int main()[m
+[31m-{[m
+[31m-[m
+[31m-	a1q9(-3, 10);[m
+[31m-[m
+[31m-	return 0;[m
+[31m-}[m
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May12.rap b/Algorithm/Raptor/Raptor/May/May12.rap[m
+[1mdeleted file mode 100644[m
+[1mindex 8ee3dea..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May12.rap and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May14.rap b/Algorithm/Raptor/Raptor/May/May14.rap[m
+[1mdeleted file mode 100644[m
+[1mindex 8273d93..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May14.rap and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May14.rap.backup0 b/Algorithm/Raptor/Raptor/May/May14.rap.backup0[m
+[1mdeleted file mode 100644[m
+[1mindex 7878f6a..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May14.rap.backup0 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May14.rap.backup1 b/Algorithm/Raptor/Raptor/May/May14.rap.backup1[m
+[1mdeleted file mode 100644[m
+[1mindex f775126..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May14.rap.backup1 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May14.rap.backup2 b/Algorithm/Raptor/Raptor/May/May14.rap.backup2[m
+[1mdeleted file mode 100644[m
+[1mindex 12ef289..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May14.rap.backup2 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May14.rap.backup3 b/Algorithm/Raptor/Raptor/May/May14.rap.backup3[m
+[1mdeleted file mode 100644[m
+[1mindex f88a731..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May14.rap.backup3 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May20.rap b/Algorithm/Raptor/Raptor/May/May20.rap[m
+[1mdeleted file mode 100644[m
+[1mindex fce246a..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May20.rap and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May20.rap.backup0 b/Algorithm/Raptor/Raptor/May/May20.rap.backup0[m
+[1mdeleted file mode 100644[m
+[1mindex 07586cd..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May20.rap.backup0 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May20.rap.backup1 b/Algorithm/Raptor/Raptor/May/May20.rap.backup1[m
+[1mdeleted file mode 100644[m
+[1mindex b20d578..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May20.rap.backup1 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May20.rap.backup2 b/Algorithm/Raptor/Raptor/May/May20.rap.backup2[m
+[1mdeleted file mode 100644[m
+[1mindex 7762f05..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May20.rap.backup2 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/May20.rap.backup3 b/Algorithm/Raptor/Raptor/May/May20.rap.backup3[m
+[1mdeleted file mode 100644[m
+[1mindex b85aa46..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/May20.rap.backup3 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/numeral_translator.cpp b/Algorithm/Raptor/Raptor/May/numeral_translator.cpp[m
+[1mdeleted file mode 100644[m
+[1mindex 778a036..0000000[m
+[1m--- a/Algorithm/Raptor/Raptor/May/numeral_translator.cpp[m
+[1m+++ /dev/null[m
+[36m@@ -1,118 +0,0 @@[m
+[31m-#include <iostream>[m
+[31m-#include <string>[m
+[31m-[m
+[31m-using namespace std;[m
+[31m-[m
+[31m-string dec_to_numeral(int, int);[m
+[31m-int numeral_to_dec(string, int);[m
+[31m-int char_to_num(char);[m
+[31m-char num_to_char(int);[m
+[31m-[m
+[31m-[m
+[31m-string dec_to_numeral(int dec, int numeral)[m
+[31m-{[m
+[31m-	int count;[m
+[31m-	int i;[m
+[31m-[m
+[31m-	if (numeral > 36)[m
+[31m-		return "error";[m
+[31m-[m
+[31m-	count = 0;[m
+[31m-	static string num_string;[m
+[31m-	num_string = "";[m
+[31m-[m
+[31m-	while (1)[m
+[31m-	{[m
+[31m-		count = count + 1;[m
+[31m-		if (!(pow(numeral, count) <= dec)) break;[m
+[31m-	}[m
+[31m-[m
+[31m-	i = count - 1;[m
+[31m-[m
+[31m-	while (1)[m
+[31m-	{[m
+[31m-		num_string/*[count - i-1]*/ += num_to_char(dec / pow(numeral, i));[m
+[31m-		dec = dec % (int)pow(numeral, i);[m
+[31m-		i = i - 1;[m
+[31m-		if (!(i >= 0)) break;[m
+[31m-	}[m
+[31m-	cout << num_string << endl;[m
+[31m-[m
+[31m-	return num_string;[m
+[31m-}[m
+[31m-[m
+[31m-[m
+[31m-char num_to_char(int num)[m
+[31m-{[m
+[31m-	char character;[m
+[31m-[m
+[31m-	if (num < 10)[m
+[31m-	{[m
+[31m-		character = ((char)((int) '0') + num);[m
+[31m-	}[m
+[31m-	else[m
+[31m-	{[m
+[31m-		character = ((char)((int) 'A') + num - 10);[m
+[31m-	}[m
+[31m-[m
+[31m-	return character;[m
+[31m-}[m
+[31m-[m
+[31m-[m
+[31m-int numeral_to_dec(string num_string, int numeral)[m
+[31m-{[m
+[31m-	int length;[m
+[31m-	int i;[m
+[31m-[m
+[31m-	if (numeral > 36)[m
+[31m-		return -1;[m
+[31m-[m
+[31m-	length = num_string.length();[m
+[31m-	i = 1;[m
+[31m-	int dec = 0;[m
+[31m-	while (1)[m
+[31m-	{[m
+[31m-		dec = dec + pow(numeral, (i - 1))*char_to_num(num_string[length - i]);[m
+[31m-		i = i + 1;[m
+[31m-		if (!(i <= length)) break;[m
+[31m-	}[m
+[31m-	cout << dec << endl;[m
+[31m-[m
+[31m-	return dec;[m
+[31m-}[m
+[31m-[m
+[31m-[m
+[31m-int char_to_num(char character)[m
+[31m-{[m
+[31m-	int num;[m
+[31m-[m
+[31m-	if (character >= '0' && character <= '9')[m
+[31m-	{[m
+[31m-		num = ((int)character) - ((int) '0');[m
+[31m-	}[m
+[31m-	else[m
+[31m-	{[m
+[31m-		if (character >= 'A' && character <= 'Z')[m
+[31m-		{[m
+[31m-			num = ((int)character) - ((int) 'A') + 10;[m
+[31m-		}[m
+[31m-		else[m
+[31m-		{[m
+[31m-			cout << "error" << endl;[m
+[31m-		}[m
+[31m-	}[m
+[31m-[m
+[31m-	return num;[m
+[31m-}[m
+[31m-[m
+[31m-[m
+[31m-int main()[m
+[31m-{[m
+[31m-	int dec;[m
+[31m-	string num_string;[m
+[31m-[m
+[31m-	dec = numeral_to_dec("3E8", 16);[m
+[31m-	num_string = dec_to_numeral(dec, 2);[m
+[31m-[m
+[31m-	return 0;[m
+[31m-}[m
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/numeral_translator.rap b/Algorithm/Raptor/Raptor/May/numeral_translator.rap[m
+[1mdeleted file mode 100644[m
+[1mindex 253af51..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/numeral_translator.rap and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup0 b/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup0[m
+[1mdeleted file mode 100644[m
+[1mindex 01ba21d..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup0 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup1 b/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup1[m
+[1mdeleted file mode 100644[m
+[1mindex 1213645..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup1 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup2 b/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup2[m
+[1mdeleted file mode 100644[m
+[1mindex fbd1be1..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup2 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup3 b/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup3[m
+[1mdeleted file mode 100644[m
+[1mindex f4734ee..0000000[m
+Binary files a/Algorithm/Raptor/Raptor/May/numeral_translator.rap.backup3 and /dev/null differ
+[1mdiff --git a/Algorithm/Raptor/Raptor/Raptor.vcxproj b/Algorithm/Raptor/Raptor/Raptor.vcxproj[m
+[1mdeleted file mode 100644[m
+[1mindex a24f0c1..0000000[m
+[1m--- a/Algorithm/Raptor/Raptor/Raptor.vcxproj[m
+[1m+++ /dev/null[m
+[36m@@ -1,132 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="utf-8"?>[m
+[31m-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">[m
+[31m-  <ItemGroup Label="ProjectConfigurations">[m
+[31m-    <ProjectConfiguration Include="Debug|Win32">[m
+[31m-      <Configuration>Debug</Configuration>[m
+[31m-      <Platform>Win32</Platform>[m
+[31m-    </ProjectConfiguration>[m
+[31m-    <ProjectConfiguration Include="Release|Win32">[m
+[31m-      <Configuration>Release</Configuration>[m
+[31m-      <Platform>Win32</Platform>[m
+[31m-    </ProjectConfiguration>[m
+[31m-    <ProjectConfiguration Include="Debug|x64">[m
+[31m-      <Configuration>Debug</Configuration>[m
+[31m-      <Platform>x64</Platform>[m
+[31m-    </ProjectConfiguration>[m
+[31m-    <ProjectConfiguration Include="Release|x64">[m
+[31m-      <Configuration>Release</Configuration>[m
+[31m-      <Platform>x64</Platform>[m
+[31m-    </ProjectConfiguration>[m
+[31m-  </ItemGroup>[m
+[31m-  <ItemGroup>[m
+[31m-    <ClCompile Include="May13\numeral_translator.cpp" />[m
+[31m-    <ClCompile Include="May\May12.cpp" />[m
+[31m-  </ItemGroup>[m
+[31m-  <PropertyGroup Label="Globals">[m
+[31m-    <VCProjectVersion>15.0</VCProjectVersion>[m
+[31m-    <ProjectGuid>{FD1E9908-17A8-462B-8882-AB1989673E4A}</ProjectGuid>[m
+[31m-    <RootNamespace>Raptor</RootNamespace>[m
+[31m-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>[m
+[31m-  </PropertyGroup>[m
+[31m-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />[m
+[31m-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">[m
+[31m-    <ConfigurationType>Application</ConfigurationType>[m
+[31m-    <UseDebugLibraries>true</UseDebugLibraries>[m
+[31m-    <PlatformToolset>v141</PlatformToolset>[m
+[31m-    <CharacterSet>MultiByte</CharacterSet>[m
+[31m-  </PropertyGroup>[m
+[31m-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">[m
+[31m-    <ConfigurationType>Application</ConfigurationType>[m
+[31m-    <UseDebugLibraries>false</UseDebugLibraries>[m
+[31m-    <PlatformToolset>v141</PlatformToolset>[m
+[31m-    <WholeProgramOptimization>true</WholeProgramOptimization>[m
+[31m-    <CharacterSet>MultiByte</CharacterSet>[m
+[31m-  </PropertyGroup>[m
+[31m-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">[m
+[31m-    <ConfigurationType>Application</ConfigurationType>[m
+[31m-    <UseDebugLibraries>true</UseDebugLibraries>[m
+[31m-    <PlatformToolset>v141</PlatformToolset>[m
+[31m-    <CharacterSet>MultiByte</CharacterSet>[m
+[31m-  </PropertyGroup>[m
+[31m-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">[m
+[31m-    <ConfigurationType>Application</ConfigurationType>[m
+[31m-    <UseDebugLibraries>false</UseDebugLibraries>[m
+[31m-    <PlatformToolset>v141</PlatformToolset>[m
+[31m-    <WholeProgramOptimization>true</WholeProgramOptimization>[m
+[31m-    <CharacterSet>MultiByte</CharacterSet>[m
+[31m-  </PropertyGroup>[m
+[31m-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />[m
+[31m-  <ImportGroup Label="ExtensionSettings">[m
+[31m-  </ImportGroup>[m
+[31m-  <ImportGroup Label="Shared">[m
+[31m-  </ImportGroup>[m
+[31m-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">[m
+[31m-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />[m
+[31m-  </ImportGroup>[m
+[31m-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">[m
+[31m-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />[m
+[31m-  </ImportGroup>[m
+[31m-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">[m
+[31m-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />[m
+[31m-  </ImportGroup>[m
+[31m-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">[m
+[31m-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />[m
+[31m-  </ImportGroup>[m
+[31m-  <PropertyGroup Label="UserMacros" />[m
+[31m-  <PropertyGroup />[m
+[31m-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">[m
+[31m-    <ClCompile>[m
+[31m-      <WarningLevel>Level3</WarningLevel>[m
+[31m-      <Optimization>Disabled</Optimization>[m
+[31m-      <SDLCheck>true</SDLCheck>[m
+[31m-      <ConformanceMode>true</ConformanceMode>[m
+[31m-    </ClCompile>[m
+[31m-    <Link>[m
+[31m-      <SubSystem>Console</SubSystem>[m
+[31m-    </Link>[m
+[31m-  </ItemDefinitionGroup>[m
+[31m-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">[m
+[31m-    <ClCompile>[m
+[31m-      <WarningLevel>Level3</WarningLevel>[m
+[31m-      <Optimization>Disabled</Optimization>[m
+[31m-      <SDLCheck>true</SDLCheck>[m
+[31m-      <ConformanceMode>true</ConformanceMode>[m
+[31m-    </ClCompile>[m
+[31m-    <Link>[m
+[31m-      <SubSystem>Console</SubSystem>[m
+[31m-    </Link>[m
+[31m-  </ItemDefinitionGroup>[m
+[31m-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">[m
+[31m-    <ClCompile>[m
+[31m-      <WarningLevel>Level3</WarningLevel>[m
+[31m-      <Optimization>MaxSpeed</Optimization>[m
+[31m-      <FunctionLevelLinking>true</FunctionLevelLinking>[m
+[31m-      <IntrinsicFunctions>true</IntrinsicFunctions>[m
+[31m-      <SDLCheck>true</SDLCheck>[m
+[31m-      <ConformanceMode>true</ConformanceMode>[m
+[31m-    </ClCompile>[m
+[31m-    <Link>[m
+[31m-      <SubSystem>Console</SubSystem>[m
+[31m-      <EnableCOMDATFolding>true</EnableCOMDATFolding>[m
+[31m-      <OptimizeReferences>true</OptimizeReferences>[m
+[31m-    </Link>[m
+[31m-  </ItemDefinitionGroup>[m
+[31m-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">[m
+[31m-    <ClCompile>[m
+[31m-      <WarningLevel>Level3</WarningLevel>[m
+[31m-      <Optimization>MaxSpeed</Optimization>[m
+[31m-      <FunctionLevelLinking>true</FunctionLevelLinking>[m
+[31m-      <IntrinsicFunctions>true</IntrinsicFunctions>[m
+[31m-      <SDLCheck>true</SDLCheck>[m
+[31m-      <ConformanceMode>true</ConformanceMode>[m
+[31m-    </ClCompile>[m
+[31m-    <Link>[m
+[31m-      <SubSystem>Console</SubSystem>[m
+[31m-      <EnableCOMDATFolding>true</EnableCOMDATFolding>[m
+[31m-      <OptimizeReferences>true</OptimizeReferences>[m
+[31m-    </Link>[m
+[31m-  </ItemDefinitionGroup>[m
+[31m-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />[m
+[31m-  <ImportGroup Label="ExtensionTargets">[m
+[31m-  </ImportGroup>[m
+[31m-</Project>[m
+\ No newline at end of file[m
+[1mdiff --git a/Algorithm/Raptor/Raptor/Raptor.vcxproj.filters b/Algorithm/Raptor/Raptor/Raptor.vcxproj.filters[m
+[1mdeleted file mode 100644[m
+[1mindex a28336e..0000000[m
+[1m--- a/Algorithm/Raptor/Raptor/Raptor.vcxproj.filters[m
+[1m+++ /dev/null[m
+[36m@@ -1,25 +0,0 @@[m
+[31m-﻿<?xml version="1.0" encoding="utf-8"?>[m
+[31m-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">[m
+[31m-  <ItemGroup>[m
+[31m-    <Filter Include="소스 파일">[m
+[31m-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>[m
+[31m-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>[m
+[31m-    </Filter>[m
+[31m-    <Filter Include="헤더 파일">[m
+[31m-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>[m
+[31m-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>[m
+[31m-    </Filter>[m
+[31m-    <Filter Include="리소스 파일">[m
+[31m-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>[m
+[31m-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>[m
+[31m-    </Filter>[m
+[31m-  </ItemGroup>[m
+[31m-  <ItemGroup>[m
+[31m-    <ClCompile Include="May13\numeral_translator.cpp">[m
+[31m-      <Filter>소스 파일</Filter>[m
+[31m-    </ClCompile>[m
+[31m-    <ClCompile Include="May\May12.cpp">[m
+[31m-      <Filter>소스 파일</Filter>[m
+[31m-    </ClCompile>[m
+[31m-  </ItemGroup>[m
+[31m-</Project>[m
+\ No newline at end of file[m
+[1mdiff --git a/CppPrimerPlus/CppPrimerPlus/pocket_calcurator.cpp b/CppPrimerPlus/CppPrimerPlus/pocket_calcurator.cpp[m
+[1mindex 33d1997..55b3484 100644[m
+[1m--- a/CppPrimerPlus/CppPrimerPlus/pocket_calcurator.cpp[m
+[1m+++ b/CppPrimerPlus/CppPrimerPlus/pocket_calcurator.cpp[m
+[36m@@ -50,12 +50,14 @@[m [mToken Calc::TokenStream::get()[m
+ 	if (full_)[m
+ 	{[m
+ 		full_ = false;[m
+[32m+[m		[32m//printf("%c", buffer_);//[m[41m[m
+ 		return buffer_;[m
+ 	}[m
+ 	else[m
+ 	{[m
+ 		char ch;[m
+ 		std::cin >> ch;[m
+[32m+[m		[32m//printf("%c", ch);//[m[41m[m
+ 		switch (ch)[m
+ 		{[m
+ 		case ';':[m
+[36m@@ -63,7 +65,7 @@[m [mToken Calc::TokenStream::get()[m
+ [m
+ 		case 'q':[m
+ [m
+[31m-		case '(': case ')': case '+': case '-': case '*': case '/':[m
+[32m+[m		[32mcase '(': case ')': case '+': case'-': case '*': case '/':[m[41m[m
+ 			return Token(ch, 0);[m
+ [m
+ 		case'.':[m
+[36m@@ -86,6 +88,7 @@[m [mvoid Calc::TokenStream::putback(Token t)[m
+ 	assert(!full_);	// INVARIANT : buffer must be empty[m
+ [m
+ 	buffer_ = t;[m
+[32m+[m	[32m//printf("\b");[m[41m[m
+ 	full_ = true;[m
+ }[m
+ [m
+[36m@@ -148,6 +151,15 @@[m [mdouble Calc::Term()[m
+ double Calc::Primary()[m
+ {[m
+ 	Token t = ts.get();[m
+[32m+[m	[32mif (t.kind_ == '-')[m[41m[m
+[32m+[m	[32m{[m[41m[m
+[32m+[m		[32mstd::cin.putback('-');	//we need complete literal, not broken one[m[41m[m
+[32m+[m		[32mdouble val;[m[41m[m
+[32m+[m		[32mstd::cin >> val;[m[41m[m
+[32m+[m		[32mt.kind_ = '8';	// kind '8' reptresents literal[m[41m[m
+[32m+[m		[32mt.value_ = val;[m[41m[m
+[32m+[m	[32m}[m[41m[m
+[32m+[m[41m[m
+ 	switch (t.kind_)[m
+ 	{[m
+ 	case '(': {[m

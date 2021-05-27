@@ -148,6 +148,16 @@ double Calc::Term()
 double Calc::Primary()
 {
 	Token t = ts.get();
+
+	if(t.kind_ == '-')
+	{
+		std::cin.putback('-');	//we need complete literal, not broken one
+		double val;
+		std::cin >> val;
+		t.kind_ = '8';	// kind '8' reptresents literal
+		t.value_ = val;
+	}
+
 	switch (t.kind_)
 	{
 	case '(': {
