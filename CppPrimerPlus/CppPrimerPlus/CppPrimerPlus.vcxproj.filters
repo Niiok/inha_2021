@@ -72,6 +72,9 @@
     <ClCompile Include="hangman.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="June1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stack.h">
