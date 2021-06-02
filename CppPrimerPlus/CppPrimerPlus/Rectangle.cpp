@@ -4,43 +4,16 @@
 Rectangle::Rectangle() {}
 
 Rectangle::Rectangle(double origin_x, double origin_y, double width, double height)
-	: origin_{ origin_x, origin_y, 0 }, width_{ width }, height_{ height }
+	:  width_{ width }, height_{ height }
+{
+	origin_ = { origin_x, origin_y, 0 };
+	reset_area_perimeter();
+}
+
+void Rectangle::reset_area_perimeter()
 {
 	area_ = width_ * height_;
 	perimeter_ = 2 * (width_ + height_);
-}
-
-
-
-double Rectangle::get_origin_x() const
-{
-	return origin_.x;
-}
-double Rectangle::get_origin_y() const
-{
-	return origin_.y;
-}
-double Rectangle::get_origin_z() const
-{
-	return origin_.z;
-}
-int Rectangle::set_origin_x(double val)
-{
-	origin_.x = val;
-
-	return 0;
-}
-int Rectangle::set_origin_y(double val)
-{
-	origin_.y = val;
-
-	return 0;
-}
-int Rectangle::set_origin_z(double val)
-{
-	origin_.z = val;
-
-	return 0;
 }
 
 
@@ -68,17 +41,6 @@ int Rectangle::set_height(double val)
 	perimeter_ = 2 * (width_ + height_);
 
 	return 0;
-}
-
-
-
-double Rectangle::Area() const
-{
-	return area_;
-}
-double Rectangle::Perimeter() const
-{
-	return perimeter_;
 }
 
 

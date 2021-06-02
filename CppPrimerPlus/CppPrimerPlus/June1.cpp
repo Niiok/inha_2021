@@ -148,15 +148,13 @@ int Algorithm_5_4()
 	memset(queen_diag1, -9, 8 * sizeof(int));
 	memset(queen_diag2, -9, 8 * sizeof(int));
 
-	PrintEightQueens(locations);
-
 	int queens = 8;
 
 
 	for (int i = 0; i < 8; ++i)
 	{
-		locations[0][0] = 0;
-		locations[1][0] = i;
+		locations[0][0] = i;
+		locations[1][0] = 0;
 		locations[2][0] = locations[0][0] - locations[1][0];
 		locations[3][0] = locations[0][0] + locations[1][0];
 
@@ -195,8 +193,8 @@ int EightQueens(int queens, int x_start, int y_start, int* locations[])
 
 					if(i == 7 - queens)
 					{
-						/*if (y != i + 1)
-							break;*/
+						if (y != i + 1)
+							break;
 
 					//PrintEightQueens(locations);
 						locations[0][i+1] = x;
@@ -244,7 +242,7 @@ int PrintEightQueens(int* locations[])
 		printf("\n");
 	}
 
-	printf("\n%d --------------------------\n\n\n", count);
+	printf("%d --------------------------\n\n", count);
 	++count;
 
 	if (locations[0][0] == -9)
