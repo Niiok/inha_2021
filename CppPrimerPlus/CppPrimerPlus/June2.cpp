@@ -1,5 +1,6 @@
 #include <iostream>
 #include <assert.h>
+#include"TnT.h"
 
 int problem1();
 int problem2();
@@ -20,9 +21,15 @@ int problem1()
 
 int problem2()
 {
-	int arr[] = { 99, 3, 55, 2, 72, 9, 4, 32, 5, 7, 1 };
+	//int arr[] = { 99, 3, 55, 2, 72, 9, 4, 32, 5, 7, 1 };
 
-	CocktailSort(11, arr);
+	TestArray<int> test(10000);
+	StopWatch timer;
+	timer.Start();
+
+	CocktailSort(test.size(), test.arr());
+
+	timer.Stop();
 
 	return 0;
 }
@@ -32,15 +39,15 @@ int CocktailSort(int size, int arr[])
 {
 	int done_right = size, done_left = -1;
 	int to_left_or_right = -1;		// -1 : left,   1 : right
-	int cycle_num = 0;
+	//int cycle_num = 0;
 	int compare_num = 0;
 	int change_num = 0;
 
 	while(done_left+1 < done_right)
 	{
-		++cycle_num;
+		//++cycle_num;
 
-		printf("\n패스%d\n", cycle_num);
+		//printf("\n패스%d\n", cycle_num);
 		switch (to_left_or_right)
 		{
 
@@ -50,7 +57,7 @@ int CocktailSort(int size, int arr[])
 			for (int i = done_right - 1; i > done_left + 1; --i)
 			{
 				++compare_num;
-				BubbleSortShow(size, arr, i-1);
+				//BubbleSortShow(size, arr, i-1);
 
 				if (arr[i] < arr[i - 1])
 				{
@@ -72,7 +79,7 @@ int CocktailSort(int size, int arr[])
 			for (int i = done_left + 1; i < done_right - 1; ++i)
 			{
 				++compare_num;
-				BubbleSortShow(size, arr, i);
+				//BubbleSortShow(size, arr, i);
 
 				if (arr[i] > arr[i + 1])
 				{
@@ -97,6 +104,7 @@ int CocktailSort(int size, int arr[])
 		to_left_or_right *= -1;
 	}
 
+	BubbleSortShow(size, arr, -2);
 	printf("\n비교를 %d회 했습니다.", compare_num);
 	printf("\n교환을 %d회 했습니다.\n", change_num);
 

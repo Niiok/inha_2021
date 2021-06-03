@@ -1,5 +1,5 @@
-#ifndef ___GEOMETRIC___
-#define ___GEOMETRIC___
+#ifndef ___GEOMETRIC_H___
+#define ___GEOMETRIC_H___
 
 #include<cmath>
 
