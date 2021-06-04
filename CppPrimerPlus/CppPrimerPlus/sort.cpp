@@ -5,14 +5,14 @@ int compare_sorting()
 {
 	//int arr[] = { 99, 3, 55, 2, 72, 9, 4, 32, 5, 7, 1 };
 
-	TestArray<int> test1(1000000);
+	TestArray<int> test1(1000);
 	TestArray<int> test2 = test1;
 	TestArray<int> test3 = test1;
 	TestArray<int> test4 = test1;
 	TestArray<int> test5 = test1;
 	TestArray<int> test6 = test1;
 
-	TestArray<int> test0 = test1;
+	TestArray<int> test00 = test1;
 	TestArray<int> test01 = test1;
 
 	StopWatch timer1;
@@ -22,19 +22,8 @@ int compare_sorting()
 	StopWatch timer5;
 	StopWatch timer6;
 	
-	StopWatch timer0;
+	StopWatch timer00;
 	StopWatch timer01;
-
-	printf("\n\n\t STL sort() Sorting\n");
-	timer0.Start();
-	std::sort(test0.arr(), test0.arr() + test0.size());
-	timer0.Stop();
-	
-	printf("\n\n\t C qsort() Sorting\n");
-	timer01.Start();
-	qsort(test01.arr(), test01.size(), sizeof(int), comparator);
-	timer01.Stop();
-
 
 	
 	printf("\n\n\t Simple Bubble Sorting\n");
@@ -68,6 +57,17 @@ int compare_sorting()
 	timer6.Stop();
 	
 
+
+
+	printf("\n\n\t STL sort() Sorting\n");
+	timer00.Start();
+	std::sort(test00.arr(), test00.arr() + test00.size());
+	timer00.Stop();
+	
+	printf("\n\n\t C qsort() Sorting\n");
+	timer01.Start();
+	qsort(test01.arr(), test01.size(), sizeof(int), comparator);
+	timer01.Stop();
 
 	return 0;
 }
