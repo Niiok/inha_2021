@@ -33,6 +33,7 @@ template<typename T>
 class TestArray {
 
 public:
+
 	TestArray()
 	{
 		array_ = (T*)malloc(10000 * sizeof(T));
@@ -40,6 +41,7 @@ public:
 		size_ = 10000;
 		shake();
 	}
+
 	TestArray(int num) 
 	{
 		array_ = (T*)malloc(num * sizeof(T));
@@ -47,6 +49,15 @@ public:
 		size_ = num;
 		shake();
 	}
+
+	TestArray(const TestArray& ob)
+	{
+		array_ = (T*)malloc(ob.size() * sizeof(T));
+		assert(array_);
+		size_ = ob.size();
+		memcpy(array_, ob.arr(), size_ * sizeof(int));
+	}
+
 	~TestArray()
 	{
 		free(array_);

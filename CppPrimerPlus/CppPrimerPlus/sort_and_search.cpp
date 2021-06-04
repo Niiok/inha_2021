@@ -1,3 +1,5 @@
+
+#include"sort.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -19,12 +21,15 @@ void* bsearchx(const void* key, const void* base, size_t nmemb, size_t size, int
 int compar_sample(const void* key, const void* compare);
 
 
+
 static std::vector<int> _vector_integer;
 static int _array_integer[ARRAY_SIZE];
 
 
+
 int main()
 {
+
 	for (int i = 1; i < 39; ++i)
 		_vector_integer.push_back(i);
 	for (int i = 0; i < ARRAY_SIZE; ++i)
@@ -40,6 +45,7 @@ int main()
 		std::cout << "\t 2. Search -\t linear search value \n";
 		std::cout << "\t 3. Search -\t linear search value (visual) \n";
 		std::cout << "\t 4. Search -\t binary search value (visual) \n";
+		std::cout << "\t 5. Sort -\t compare bubble, select, insert sorting (visual) \n";
 		std::cout << "\n\t Select menu : ";
 		std::cin >> menu;
 		std::cout << std::endl;
@@ -77,6 +83,11 @@ int main()
 			int num;
 			std::cin >> num;
 			Search_BinaryVisual(num);
+		} break;
+
+		case 5:
+		{
+			compare_sorting();
 		} break;
 
 		case 99:
@@ -278,3 +289,7 @@ int compar_sample(const void* key, const void* compare)
 	else if (*a < *b)
 		return -1;
 }
+
+
+
+

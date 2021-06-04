@@ -84,6 +84,15 @@
     <ClCompile Include="June3.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="sh01.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="June4.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="sort.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stack.h">
@@ -105,6 +114,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="TnT.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sort.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
