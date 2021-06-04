@@ -22,7 +22,7 @@ public:
 	inline void Stop() 
 	{
 		end_time_ = clock();
-		printf("\n StopWatch : %ld.%05ld second \n", (end_time_ - start_time_)/1000, (end_time_ - start_time_)%1000);
+		printf("\n StopWatch : %ld.%03ld second \n", (end_time_ - start_time_)/1000, (end_time_ - start_time_)%1000);
 		//std::cout << "\n StopWatch started : " << start_time_ << "    stopped : " << end_time_ << "\n"; 
 	}0
 	inline time_t ElapsedTime() { return clock() - start_time_; }
