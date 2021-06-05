@@ -5,7 +5,7 @@ int compare_sorting()
 {
 	//int arr[] = { 99, 3, 55, 2, 72, 9, 4, 32, 5, 7, 1 };
 
-	TestArray<int> test1(1000);
+	TestArray<int> test1(50000);
 	TestArray<int> test2 = test1;
 	TestArray<int> test3 = test1;
 	TestArray<int> test4 = test1;
