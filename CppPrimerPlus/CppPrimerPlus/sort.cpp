@@ -3,14 +3,14 @@
 
 int compare_sorting()
 {
-	//int arr[] = { 99, 3, 55, 2, 72, 9, 4, 32, 5, 7, 1 };
-
-	TestArray<int> test1(50000);
+	TestArray<int> test1(10000);
+	//test1.scale(100);
 	TestArray<int> test2 = test1;
 	TestArray<int> test3 = test1;
 	TestArray<int> test4 = test1;
 	TestArray<int> test5 = test1;
 	TestArray<int> test6 = test1;
+	TestArray<int> test7 = test1;
 
 	TestArray<int> test00 = test1;
 	TestArray<int> test01 = test1;
@@ -21,11 +21,12 @@ int compare_sorting()
 	StopWatch timer4;
 	StopWatch timer5;
 	StopWatch timer6;
-	
+	StopWatch timer7;
+
 	StopWatch timer00;
 	StopWatch timer01;
 
-	
+
 	printf("\n\n\t Simple Bubble Sorting\n");
 	timer1.Start();
 	SimpleBubbleSort(test1.size(), test1.arr());
@@ -45,17 +46,22 @@ int compare_sorting()
 	timer4.Start();
 	SimpleSelectionSort(test4.size(), test4.arr());
 	timer4.Stop();
-	
+
 	printf("\n\n\t Min-Max Selection Sorting\n");
 	timer5.Start();
-	MinMaxSelectionSort(test4.size(), test4.arr());
+	MinMaxSelectionSort(test5.size(), test5.arr());
 	timer5.Stop();
 
 	printf("\n\n\t Insertion Sorting\n");
 	timer6.Start();
-	InsertionSort(test5.size(), test5.arr());
+	InsertionSort(test6.size(), test6.arr());
 	timer6.Stop();
-	
+
+	printf("\n\n\t Shell Sorting\n");
+	timer7.Start();
+	ShellSort(test7.size(), test7.arr());
+	timer7.Stop();
+
 
 
 
@@ -63,7 +69,7 @@ int compare_sorting()
 	timer00.Start();
 	std::sort(test00.arr(), test00.arr() + test00.size());
 	timer00.Stop();
-	
+
 	printf("\n\n\t C qsort() Sorting\n");
 	timer01.Start();
 	qsort(test01.arr(), test01.size(), sizeof(int), comparator);
@@ -255,13 +261,13 @@ int SimpleSelectionSort(int size, int arr[])
 				min = j;
 		}
 
-		++change_num; 
+		++change_num;
 		{
 			int temp = arr[i];
 			arr[i] = arr[min];
 			arr[min] = temp;
 		}
-	} 
+	}
 
 	//printf("\n\n");
 	//SelectSortShow(size, arr, -2, -2, -2);
@@ -367,6 +373,52 @@ int InsertionSort(int size, int arr[])
 	return 0;
 }
 
+int ShellSort(int size, int arr[])
+{
+	int cycle_num = 0;
+	int compare_num = 0;
+	int change_num = 0;
+	int jump_offset = size / 2 + 1;
+
+	for (; jump_offset > 0; jump_offset /= 2)
+	{
+		//++cycle_num;
+
+		//printf("\n패스%d\n", cycle_num);
+
+		for (int i = jump_offset; i < size; ++i)
+		{
+			for (int j = i; j >= jump_offset; j -= jump_offset)
+			{
+				//ShellSortShow(size, arr, j - jump_offset, j);
+
+				++compare_num;
+				if (arr[j] < arr[j - jump_offset])
+				{
+					int temp = arr[j];
+					arr[j] = arr[j - jump_offset];
+					arr[j - jump_offset] = temp;
+
+					++change_num;
+				}
+				else
+					break;
+			}
+		}
+	}
+
+
+	//printf("\n\n");
+	//ShellSortShow(size, arr, -2, -2);
+	printf("\n비교를 %d회 했습니다.", compare_num);
+	printf("\n교환을 %d회 했습니다.\n", change_num);
+
+	return 0;
+}
+
+
+
+
 
 int BubbleSortShow(int size, int arr[], int index)
 {
@@ -428,6 +480,42 @@ int InsertSortShow(int size, int arr[], int index)
 			printf(" ");
 		}
 		printf(" %d ", arr[i]);
+	}
+	printf("\n");
+
+	return 0;
+}
+
+int ShellSortShow(int size, int arr[], int index1, int index2)
+{
+	printf("  ");
+	for (int i = 0; i < size; ++i)
+	{
+		if (i == index1 )
+		{
+			printf(" <");
+
+			if (arr[index2] < arr[index1])
+				printf("+");
+			else
+				printf(" ");
+		}
+		else if(i != index2+1)
+		{
+			printf("   ");
+		}
+
+		printf("%d", arr[i]);
+
+		if (i == index2)
+		{
+			if (arr[index2] < arr[index1])
+				printf("+");
+			else
+				printf(" ");
+
+			printf("> ");
+		}
 	}
 	printf("\n");
 

@@ -93,6 +93,9 @@
     <ClCompile Include="sort.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="June8.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stack.h">
@@ -117,6 +120,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="sort.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="workermi.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
