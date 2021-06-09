@@ -3,7 +3,7 @@
 
 int compare_sorting()
 {
-	TestArray<int> test1(10000);
+	TestArray<int> test1(20000);
 	//test1.scale(100);
 	TestArray<int> test2 = test1;
 	TestArray<int> test3 = test1;
@@ -11,6 +11,7 @@ int compare_sorting()
 	TestArray<int> test5 = test1;
 	TestArray<int> test6 = test1;
 	TestArray<int> test7 = test1;
+	TestArray<int> test8 = test1;
 
 	TestArray<int> test00 = test1;
 	TestArray<int> test01 = test1;
@@ -22,6 +23,7 @@ int compare_sorting()
 	StopWatch timer5;
 	StopWatch timer6;
 	StopWatch timer7;
+	StopWatch timer8;
 
 	StopWatch timer00;
 	StopWatch timer01;
@@ -61,6 +63,11 @@ int compare_sorting()
 	timer7.Start();
 	ShellSort(test7.size(), test7.arr());
 	timer7.Stop();
+	
+	printf("\n\n\t Quick Sorting\n");
+	timer8.Start();
+	QuickSort(test8.size(), test8.arr());
+	timer8.Stop();
 
 
 
@@ -416,6 +423,167 @@ int ShellSort(int size, int arr[])
 	return 0;
 }
 
+int QuickSort(int size, int arr[])
+{
+	static int cycle_num = 0;
+	static int compare_num = 0;
+	static int change_num = 0;
+
+	int result = 0;
+	if (cycle_num == 0)
+		result = 1;
+
+	++cycle_num;
+
+	int left, right;
+	int pivot_value = arr[0];
+
+
+	for (left = 1, right = size - 1; left != right; )	// does '<' slower than '!=' ?
+	{
+
+		++compare_num;
+		if (arr[left] > pivot_value)
+		{
+			++compare_num;
+			if (arr[right] < pivot_value)
+			{
+				int temp = arr[left];
+				arr[left] = arr[right];
+				arr[right] = temp;
+
+				++change_num;
+
+				//--right;
+				//++left;
+			}
+			else
+				--right;
+		}
+		else
+			++left;
+	}
+
+	if (arr[right] < arr[0])
+	{
+		++change_num;
+		int temp = arr[0];
+		arr[0] = arr[right];
+		arr[right] = temp;
+	}
+	else
+	{
+		++change_num;
+		int temp = arr[0];
+		arr[0] = arr[left - 1];
+		arr[left - 1] = temp;
+	}
+
+	if(left-1 > 1)
+		QuickSort(left-1, arr);
+	if(size - left > 1)
+		QuickSort(size - left, &arr[left]);
+
+
+	if (result == 1)
+	{
+		//printf("\n\n");
+		//QuickSortShow(size, arr, -2, -2, 0);
+
+		printf("\n비교를 %d회 했습니다.", compare_num);
+		printf("\n교환을 %d회 했습니다.\n", change_num);
+
+		cycle_num = 0;
+		compare_num = 0;
+		change_num = 0;
+	}
+
+	return 0;
+}
+
+int QuickSort_Visual(int size, int arr[], int offset)
+{
+	static int cycle_num = 0;
+	static int compare_num = 0;
+	static int change_num = 0;
+
+	int result = 0;
+	if (cycle_num == 0)
+		result = 1;
+
+	int left, right;
+	int pivot_value = arr[0];
+
+
+	++cycle_num;
+	printf("\n패스%d\n", cycle_num);
+
+	for (left = 1, right = size - 1; left != right; )
+	{
+		QuickSortShow(size, arr, left, right, offset);
+
+		++compare_num;
+		if (arr[left] > pivot_value)
+		{
+			++compare_num;
+			if (arr[right] < pivot_value)
+			{
+				int temp = arr[left];
+				arr[left] = arr[right];
+				arr[right] = temp;
+
+				++change_num;
+
+				//--right;
+				//++left;
+			}
+			else
+				--right;
+		}
+		else
+			++left;
+	}
+
+	if (arr[right] < arr[0])
+	{
+		++change_num;
+		int temp = arr[0];
+		arr[0] = arr[right];
+		arr[right] = temp;
+	}
+	else
+	{
+		++change_num;
+		int temp = arr[0];
+		arr[0] = arr[left - 1];
+		arr[left - 1] = temp;
+	}
+
+	printf("\n\n");
+	QuickSortShow(size, arr, -2, -2, offset);
+
+	if (left-1 > 1)
+		QuickSort_Visual(left-1, arr, offset);
+	if (size - left > 1)
+		QuickSort_Visual(size - left, &arr[left], offset + left);
+
+
+	if (result == 1)
+	{
+	printf("\n\n");
+	QuickSortShow(size, arr, -2, -2, offset);
+
+		printf("\n비교를 %d회 했습니다.", compare_num);
+		printf("\n교환을 %d회 했습니다.\n", change_num);
+
+		cycle_num = 0;
+		compare_num = 0;
+		change_num = 0;
+	}
+
+	return 0;
+}
+
 
 
 
@@ -510,6 +678,50 @@ int ShellSortShow(int size, int arr[], int index1, int index2)
 		if (i == index2)
 		{
 			if (arr[index2] < arr[index1])
+				printf("+");
+			else
+				printf(" ");
+
+			printf("> ");
+		}
+	}
+	printf("\n");
+
+	return 0;
+}
+
+int QuickSortShow(int size, int arr[], int left, int right, int offset)
+{
+	printf("  ");
+
+	for (int i = 0; i < offset; ++i)
+		printf("     ");
+
+	for (int i = 0; i < size; ++i)
+	{
+		if (i == left )
+		{
+			printf(" <");
+
+			if (arr[0] < arr[left])
+				printf("+");
+			else
+				printf(" ");
+		}
+		else if (i == 0 && left > -1)
+		{
+			printf("  *");
+		}
+		else if(i != right+1)
+		{
+			printf("   ");
+		}
+
+		printf("%d", arr[i]);
+
+		if (i == right)
+		{
+			if (arr[right] < arr[0])
 				printf("+");
 			else
 				printf(" ");

@@ -52,5 +52,5 @@ int p1_solution(int l, std::vector<int> v)
 
 int c14p3()
 {
-
+	return 0;
 }
