@@ -12,6 +12,7 @@ int compare_sorting()
 	TestArray<int> test6 = test1;
 	TestArray<int> test7 = test1;
 	TestArray<int> test8 = test1;
+	TestArray<int> test9 = test1;
 
 	TestArray<int> test00 = test1;
 	TestArray<int> test01 = test1;
@@ -24,6 +25,7 @@ int compare_sorting()
 	StopWatch timer6;
 	StopWatch timer7;
 	StopWatch timer8;
+	StopWatch timer9;
 
 	StopWatch timer00;
 	StopWatch timer01;
@@ -68,6 +70,11 @@ int compare_sorting()
 	timer8.Start();
 	QuickSort(test8.size(), test8.arr());
 	timer8.Stop();
+
+	printf("\n\n\t Merge Sorting\n");
+	timer9.Start();
+	MergeSort(test9.size(), test9.arr());
+	timer9.Stop();
 
 
 
@@ -582,6 +589,228 @@ int QuickSort_Visual(int size, int arr[], int offset)
 	}
 
 	return 0;
+}
+
+int MergeSort(int size, int arr[])
+{
+	static int cycle_num = 0;
+	static int compare_num = 0;
+	static int change_num = 0;
+
+	if(size > 2)
+	{
+		int recur = cycle_num;
+
+		int left = 0, right = 0;
+		int left_size = (size + 1) / 2;
+		int right_size = size / 2;
+		int* left_arr = (int*)malloc(left_size * sizeof(int));
+		int* right_arr = (int*)malloc(right_size * sizeof(int));
+		assert(left_arr);
+		assert(right_arr);
+
+		memcpy(left_arr, arr, left_size * sizeof(int));
+		memcpy(right_arr, &arr[left_size], right_size * sizeof(int));
+
+		++cycle_num;
+		//printf("\n패스%d\n", cycle_num);
+		//QuickSortShow(size, arr, -2, -2, offset);
+
+
+		MergeSort(left_size, left_arr);
+		MergeSort(right_size, right_arr);
+
+		for (int i = 0; i < size; ++i)
+		{
+			if (left < left_size && right < right_size)
+			{
+				++compare_num;
+
+				if (left_arr[left] < right_arr[right])
+				{
+					arr[i] = left_arr[left];
+					++left;
+				}
+				else
+				{
+					arr[i] = right_arr[right];
+					++right;
+				}
+
+				++change_num;
+			}
+			else
+			{
+				if (left < left_size)
+				{
+					arr[i] = left_arr[left];
+					++left;
+
+				}
+				else if(right < right_size)
+				{
+					arr[i] = right_arr[right];
+					++right;
+				}
+				else
+					assert(0);
+
+				++change_num;
+			}
+
+		}
+
+		/*{
+			printf("\n  ");
+			for (int i = 0; i < offset; ++i)
+				printf("     ");
+			printf("%d st/nd/rd/th recursion result \n", recur+1);
+			QuickSortShow(size, arr, -2, -2, offset);
+		}*/
+
+		if (recur == 0)
+		{
+			printf("\n비교를 %d회 했습니다.", compare_num);
+			printf("\n교환을 %d회 했습니다.\n", change_num);
+
+			cycle_num = 0;
+			compare_num = 0;
+			change_num = 0;
+		}
+
+		free(left_arr);
+		free(right_arr);
+
+		return 0;
+
+	}
+	else if (size == 1)
+		return 0;
+	else if (size == 2)
+	{
+		if (arr[0] > arr[1])
+		{
+			int temp = arr[0];
+			arr[0] = arr[1];
+			arr[1] = temp;
+		}
+
+		return 0;
+	}
+}
+
+int MergeSort_Visual(int size, int arr[], int offset)
+{
+	static int cycle_num = 0;
+	static int compare_num = 0;
+	static int change_num = 0;
+
+
+	if(size > 2)
+	{
+		int recur = cycle_num;
+
+
+		int left = 0, right = 0;
+		int left_size = (size + 1) / 2;
+		int right_size = size / 2;
+		int* left_arr = (int*)malloc(left_size * sizeof(int));
+		int* right_arr = (int*)malloc(right_size * sizeof(int));
+		assert(left_arr);
+		assert(right_arr);
+
+		memcpy(left_arr, arr, left_size * sizeof(int));
+		memcpy(right_arr, &arr[left_size], right_size * sizeof(int));
+
+		++cycle_num;
+		printf("\n패스%d\n", cycle_num);
+		QuickSortShow(size, arr, -2, -2, offset);
+
+
+		MergeSort_Visual(left_size, left_arr, offset);
+		MergeSort_Visual(right_size, right_arr, offset + left_size);
+
+		for (int i = 0; i < size; ++i)
+		{
+			if (left < left_size && right < right_size)
+			{
+				++compare_num;
+
+				if (left_arr[left] < right_arr[right])
+				{
+					arr[i] = left_arr[left];
+					++left;
+				}
+				else
+				{
+					arr[i] = right_arr[right];
+					++right;
+				}
+
+				++change_num;
+			}
+			else
+			{
+				if (left < left_size)
+				{
+					arr[i] = left_arr[left];
+					++left;
+
+				}
+				else if(right < right_size)
+				{
+					arr[i] = right_arr[right];
+					++right;
+				}
+				else
+					assert(0);
+
+				++change_num;
+			}
+
+			
+		}
+
+
+		{
+			printf("\n  ");
+			for (int i = 0; i < offset; ++i)
+				printf("     ");
+			printf("%d st/nd/rd/th recursion result \n", recur+1);
+			QuickSortShow(size, arr, -2, -2, offset);
+		}
+
+
+		if (recur == 0)
+		{
+			printf("\n비교를 %d회 했습니다.", compare_num);
+			printf("\n교환을 %d회 했습니다.\n", change_num);
+
+			cycle_num = 0;
+			compare_num = 0;
+			change_num = 0;
+		}
+
+
+		free(left_arr);
+		free(right_arr);
+
+		return 0;
+
+	}
+	else if (size == 1)
+		return 0;
+	else if (size == 2)
+	{
+		if (arr[0] > arr[1])
+		{
+			int temp = arr[0];
+			arr[0] = arr[1];
+			arr[1] = temp;
+		}
+
+		return 0;
+	}
 }
 
 
