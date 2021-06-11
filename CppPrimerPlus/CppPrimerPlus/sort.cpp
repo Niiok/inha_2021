@@ -3,8 +3,8 @@
 
 int compare_sorting()
 {
-	TestArray<int> test1(20000);
-	//test1.scale(100);
+	TestArray<int> test1(18);
+	test1.scale(100);
 	TestArray<int> test2 = test1;
 	TestArray<int> test3 = test1;
 	TestArray<int> test4 = test1;
@@ -13,6 +13,7 @@ int compare_sorting()
 	TestArray<int> test7 = test1;
 	TestArray<int> test8 = test1;
 	TestArray<int> test9 = test1;
+	TestArray<int> test10 = test1;
 
 	TestArray<int> test00 = test1;
 	TestArray<int> test01 = test1;
@@ -26,6 +27,7 @@ int compare_sorting()
 	StopWatch timer7;
 	StopWatch timer8;
 	StopWatch timer9;
+	StopWatch timer10;
 
 	StopWatch timer00;
 	StopWatch timer01;
@@ -75,6 +77,11 @@ int compare_sorting()
 	timer9.Start();
 	MergeSort(test9.size(), test9.arr());
 	timer9.Stop();
+	
+	printf("\n\n\t Heap Sorting\n");
+	timer10.Start();
+	HeapSort_Visual(test10.size(), test10.arr());
+	timer10.Stop();
 
 
 
@@ -813,6 +820,75 @@ int MergeSort_Visual(int size, int arr[], int offset)
 	}
 }
 
+int HeapSort_Visual(int size, int arr[])
+{
+	static int cycle_num = 0;
+	static int compare_num = 0;
+	static int change_num = 0;
+
+	// initial heap making
+	HeapSortShow(size, arr, -1);
+	MakeHeap_Check(size, arr, 0, &compare_num, &change_num);
+	HeapSortShow(size, arr, -1);
+
+
+	for (int i = size; i > 1; --i)
+	{
+		++cycle_num;
+		printf("\n패스%d\n", cycle_num);
+
+
+		for (int j = 0; j * 2 + 1 < i; )
+		{
+			int child_left = j * 2 + 1;
+			int child_right = j * 2 + 2;
+			int parent = (j - 1) / 2;
+			int child_bigger;
+
+			HeapSortShow(i, arr, j);
+
+			if (child_right == i)
+				child_bigger = child_left;
+			else
+			{
+				++compare_num;
+				child_bigger = (arr[child_left] > arr[child_right] ? child_left : child_right);
+			}
+
+
+			++compare_num;
+			if (arr[child_bigger] > arr[j])
+			{
+				int temp = arr[j];
+				arr[j] = arr[child_bigger];
+				arr[child_bigger] = temp;
+				++change_num;
+
+				j = child_bigger;
+			}
+			else
+				break;
+		}
+
+		int temp = arr[i - 1];
+		arr[i - 1] = arr[0];
+		arr[0] = temp;
+		++change_num;
+	}
+
+	HeapSortShow(size, arr, -1);
+
+	printf("\n비교를 %d회 했습니다.", compare_num);
+	printf("\n교환을 %d회 했습니다.\n", change_num);
+
+	cycle_num = 0;
+	compare_num = 0;
+	change_num = 0;
+
+
+	return 0;
+}
+
 
 
 
@@ -959,6 +1035,73 @@ int QuickSortShow(int size, int arr[], int left, int right, int offset)
 		}
 	}
 	printf("\n");
+
+	return 0;
+}
+
+int HeapSortShow(int size, int arr[], int index)
+{
+	printf("  ");
+
+	if (index >= 0)
+		for (int i = 0; i < size; ++i)
+		{
+			if (i == index)
+				printf("* %2d ", arr[i]);
+			else if(i == (index-1) / 2)
+				printf("p %2d ", arr[i]);
+			else if (i == index * 2 + 1)
+				printf("c %2d ", arr[i]);
+			else if (i == index * 2 + 2)
+				printf("c %2d ", arr[i]);
+			else
+				printf("     ");
+		}
+	else
+		for (int i = 0; i < size; ++i)
+		{
+			printf("  %2d ", arr[i]);
+		}
+
+	printf("|\n");
+
+	return 0;
+}
+
+int MakeHeap_Check(int size, int* arr, int index, int* compare_num, int* change_num)
+{
+	int child_left = index * 2 + 1;
+	int child_right = index * 2 + 2;
+	int parent = (index - 1) / 2;
+	int child_bigger;
+
+	if (child_left >= size)
+		return 0;
+	else
+	{
+		MakeHeap_Check(size, arr, child_left, compare_num, change_num);
+		MakeHeap_Check(size, arr, child_right, compare_num, change_num);
+	}
+
+	if (child_right == size)
+		child_bigger = child_left;
+	else
+	{
+		++(*compare_num);
+		child_bigger = (arr[child_left] > arr[child_right] ? child_left : child_right);
+	}
+
+	++(*compare_num);
+	if (arr[child_bigger] > arr[index])
+	{
+		int temp = arr[index];
+		arr[index] = arr[child_bigger];
+		arr[child_bigger] = temp;
+
+		++(*change_num);
+
+		MakeHeap_Check(size, arr, child_bigger, compare_num, change_num);
+	}
 
 	return 0;
 }
