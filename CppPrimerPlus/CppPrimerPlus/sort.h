@@ -18,6 +18,7 @@ int QuickSort_Visual(int size, int arr[], int offset);
 int MergeSort(int size, int arr[]);
 int MergeSort_Visual(int size, int arr[], int offset);
 int HeapSort_Visual(int size, int arr[]);
+int CountSort(int size, int arr[]);
 
 int BubbleSortShow(int size, int arr[], int index);
 int SelectSortShow(int size, int arr[], int index, int min, int max);

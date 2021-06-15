@@ -1,10 +1,11 @@
 #include"sort.h"
 #include <algorithm>
+#include <vector>
 
 int compare_sorting()
 {
-	TestArray<int> test1(18);
-	test1.scale(100);
+	TestArray<int> test1(20000);
+	//test1.scale(100);
 	TestArray<int> test2 = test1;
 	TestArray<int> test3 = test1;
 	TestArray<int> test4 = test1;
@@ -14,6 +15,7 @@ int compare_sorting()
 	TestArray<int> test8 = test1;
 	TestArray<int> test9 = test1;
 	TestArray<int> test10 = test1;
+	TestArray<int> test11 = test1;
 
 	TestArray<int> test00 = test1;
 	TestArray<int> test01 = test1;
@@ -28,6 +30,7 @@ int compare_sorting()
 	StopWatch timer8;
 	StopWatch timer9;
 	StopWatch timer10;
+	StopWatch timer11;
 
 	StopWatch timer00;
 	StopWatch timer01;
@@ -78,10 +81,15 @@ int compare_sorting()
 	MergeSort(test9.size(), test9.arr());
 	timer9.Stop();
 	
-	printf("\n\n\t Heap Sorting\n");
-	timer10.Start();
-	HeapSort_Visual(test10.size(), test10.arr());
-	timer10.Stop();
+	//printf("\n\n\t Heap Sorting\n");
+	//timer10.Start();
+	//HeapSort_Visual(test10.size(), test10.arr());
+	//timer10.Stop();
+
+	printf("\n\n\t Count Sorting\n");
+	timer11.Start();
+	CountSort(test11.size(), test11.arr());
+	timer11.Stop();
 
 
 
@@ -889,6 +897,28 @@ int HeapSort_Visual(int size, int arr[])
 	return 0;
 }
 
+int CountSort(int size, int arr[])
+{
+	std::vector<int> a = { 0 };
+
+	for (int i = 0; i < size; ++i)
+	{
+		int num = arr[i];
+
+		if (num >= a.size())
+			a.resize(num + 1, 0);
+
+		++a[num];
+	}
+
+
+	int index = 0;
+	for (int i = 0; i < a.size(); ++i)
+		for (int j = a[i]; j > 0; --j)
+			arr[index++] = i;
+
+	return 0;
+}
 
 
 
