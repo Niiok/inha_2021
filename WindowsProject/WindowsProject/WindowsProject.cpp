@@ -1,8 +1,11 @@
 ﻿// WindowsProject.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
+#define _USE_MATH_DEFINES
 #include "framework.h"
 #include "WindowsProject.h"
+#include <cmath>
+#include <ctime>
 
 #define MAX_LOADSTRING 100
 
@@ -16,6 +19,10 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+void DrawGrid(HDC hdc, RECT rect, INT line_num);
+void DrawCircle(HDC hdc, COORD center, INT radius);
+void DrawSunflower(HDC hdc, COORD center, INT radius, INT leaves);
+
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -123,8 +130,18 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	static bool b_keydown = false;
+	static TCHAR str[1024];
+	static INT count = 0, x_word = 0, y_pos = 0;
+	static SIZE size;
+
     switch (message)
     {
+	case WM_CREATE:
+		CreateCaret(hWnd, NULL, 5, 15);
+		ShowCaret(hWnd);
+
+		break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -145,14 +162,101 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
+			RECT win_rect;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+			if (b_keydown)
+			{
+				HDC hdc = GetDC(hWnd);
+
+				GetTextExtentPoint(hdc, str + (_tcslen(str)-x_word), x_word, &size);
+				//TextOut(hdc, 0, y_pos, str, _tcslen(str));
+				RECT rt = { 0,0,400,400 };
+				DrawText(hdc, str, _tcslen(str), &rt, DT_TOP | DT_LEFT);
+				SetCaretPos(size.cx, y_pos);
+
+				ReleaseDC(hWnd, hdc);
+			}
+			GetWindowRect(hWnd, &win_rect);
+			DrawGrid(hdc, {0,0,win_rect.right-win_rect.left, win_rect.bottom - win_rect.top}, 100);				
+			//srand(time(NULL));
+		
+			HBRUSH brush = CreateSolidBrush(rand());
+			HBRUSH old_brush = (HBRUSH)SelectObject(hdc, brush);
+
+			int max = (rand() % 200) + 10;
+			for (int i = 0; i < max; ++i)
+			{
+				DeleteObject(brush);
+				brush = CreateSolidBrush((DWORD)(rand() << 24) >> 8 | (DWORD)(rand() << 24) >> 16 | (DWORD)(rand() << 24) >> 24);
+				(HBRUSH)SelectObject(hdc, brush);
+				SHORT x = rand() % (SHORT)(win_rect.right - win_rect.left);
+				SHORT y = rand() % (SHORT)(win_rect.bottom - win_rect.top);
+				INT rad = (rand() % 50)+20;
+				DrawCircle(hdc, {x ,y }, rad);
+			}
+
+			SelectObject(hdc, old_brush);
+
+			for (int i = 0; i < 10; ++i)
+			{
+				SHORT x = rand() % (SHORT)(win_rect.right - win_rect.left);
+				SHORT y = rand() % (SHORT)(win_rect.bottom - win_rect.top);
+				INT rad = (rand() % 50) + 10;
+				INT leaves = (rand() % 50) + 6;
+				DrawSunflower(hdc, { x, y }, rad, leaves);
+			}
             EndPaint(hWnd, &ps);
+
         }
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
+	case WM_KEYDOWN:
+		//b_keydown = true;
+		//PostMessage(hWnd, WM_PAINT, 0, 0);
+		//InvalidateRect(hWnd, NULL, true);
+		break;
+	case WM_KEYUP:
+		//b_keydown = false;
+		//PostMessage(hWnd, WM_PAINT, 0, 0);
+		//InvalidateRect(hWnd, NULL, true);
+		break;
+	case WM_CHAR:
+		b_keydown = true;
+		switch (wParam)
+		{
+		case VK_BACK:
+			if (count == 0)
+			{
+				if (y_pos > 0)
+					y_pos -= 16;
+				break;
+			}
+			str[--count] = NULL;
+			x_word -= 1;
+			break;
+		case VK_RETURN:
+			//count = 0;
+			//str[0] = NULL;
+			if (count == 1023)
+				break;
+			str[count++] = wParam;
+			str[count] = NULL;
+			x_word = 0;
+			y_pos += 16;
+			break;
+		default:
+			if (count == 1023)
+				break;
+			str[count++] = wParam;
+			str[count] = NULL;
+			x_word += 1;
+			break;
+		}
+		InvalidateRect(hWnd, NULL, true);
+		break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
@@ -178,3 +282,57 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
+
+
+void DrawGrid(HDC hdc, RECT rect, INT line_num)
+{
+	FLOAT x_gap = (FLOAT)(rect.right - rect.left) / (line_num - 1);
+	FLOAT y_gap = (FLOAT)(rect.bottom - rect.top) / (line_num - 1);
+	for (int i = 0; i < line_num; ++i)
+	{
+		MoveToEx(hdc, rect.left + (x_gap)*i ,rect.top , NULL);
+		LineTo(hdc, rect.left + (x_gap) * i, rect.bottom);
+		MoveToEx(hdc, rect.left , rect.top + (y_gap) * i, NULL);
+		LineTo(hdc, rect.right, rect.top + (y_gap) * i);
+	}
+}
+
+void DrawCircle(HDC hdc, COORD center, INT radius)
+{
+	Ellipse(hdc, center.X-radius, center.Y-radius, center.X + radius, center.Y+radius);
+}
+
+void DrawSunflower(HDC hdc, COORD center, INT radius, INT leaves)
+{
+
+	if (leaves < 3 || 360 % leaves != 0)
+		return;
+
+	float leaf_theta = 2 * M_PI / leaves;
+	float leaf_rad = abs(radius * sin(leaf_theta / 2) / (1 - sin(leaf_theta / 2)));
+
+	COORD leaf_center{0 , 0-(radius+leaf_rad)};
+
+	HBRUSH brush = CreateSolidBrush((DWORD)(0x001144));
+	HBRUSH old_brush = (HBRUSH)SelectObject(hdc, brush);
+	Ellipse(hdc, center.X-radius, center.Y-radius, center.X + radius, center.Y+radius);
+
+	DeleteObject(brush);
+	brush = CreateSolidBrush((DWORD)(0x00FFFF));
+	SelectObject(hdc, brush);
+	for (int i = 0; i < leaves; ++i)
+	{
+		SHORT x = cos(leaf_theta*i)*leaf_center.X + sin(leaf_theta*i)*leaf_center.Y;
+		SHORT y = -sin(leaf_theta*i)*leaf_center.X + cos(leaf_theta*i)*leaf_center.Y;
+
+		Ellipse(hdc, center.X + x - leaf_rad,
+			center.Y + y - leaf_rad,
+			center.X + x + leaf_rad,
+			center.Y + y + leaf_rad);
+	}
+
+	DeleteObject(brush);
+	SelectObject(hdc, old_brush);
+	SelectObject(hdc, brush);
+}
+
