@@ -84,7 +84,7 @@ public:
 			//if (i % 10 == 0)
 				//srand(time(NULL));
 			//Sleep(1);
-			array_[i] = rand();
+			array_[i] = (T)rand();
 		}
 	}
 
@@ -96,6 +96,15 @@ public:
 		}
 	}
 
+	void MakeStr()
+	{
+		for (int i = 0; i < size_; ++i)
+		{
+			array_[i] = (array_[i] % 26) + 97;
+		}
+
+		array_[size_ - 1] = 0;
+	}
 };
 
 #endif

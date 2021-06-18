@@ -22,6 +22,10 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 void DrawGrid(HDC hdc, RECT rect, INT line_num);
 void DrawCircle(HDC hdc, COORD center, INT radius);
 void DrawSunflower(HDC hdc, COORD center, INT radius, INT leaves);
+void DrawRectangle(HDC hdc, COORD center, INT width, INT height);
+void DrawInputText(HDC hdc, RECT area, LPCTSTR str);
+void DrawStar(HDC hdc, COORD center, INT radius, INT wings);
+void DrawStar_weird(HDC hdc, COORD center, INT radius);
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -82,7 +86,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINDOWSPROJECT));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+2);
+    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
     wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WINDOWSPROJECT);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
@@ -132,7 +136,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static bool b_keydown = false;
 	static TCHAR str[1024];
-	static INT count = 0, x_word = 0, y_pos = 0;
+	static INT count = 0;
 	static SIZE size;
 
     switch (message)
@@ -165,21 +169,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			RECT win_rect;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-			if (b_keydown)
-			{
-				HDC hdc = GetDC(hWnd);
-
-				GetTextExtentPoint(hdc, str + (_tcslen(str)-x_word), x_word, &size);
-				//TextOut(hdc, 0, y_pos, str, _tcslen(str));
-				RECT rt = { 0,0,400,400 };
-				DrawText(hdc, str, _tcslen(str), &rt, DT_TOP | DT_LEFT);
-				SetCaretPos(size.cx, y_pos);
-
-				ReleaseDC(hWnd, hdc);
-			}
 			GetWindowRect(hWnd, &win_rect);
-			DrawGrid(hdc, {0,0,win_rect.right-win_rect.left, win_rect.bottom - win_rect.top}, 100);				
-			//srand(time(NULL));
+			//DrawGrid(hdc, {0,0,win_rect.right-win_rect.left, win_rect.bottom - win_rect.top}, 100);				
+			DrawStar(hdc, { 100, 200 }, 45, 6);
+			DrawStar(hdc, { 200, 200 }, 45, 5);
+			DrawStar(hdc, { 300, 200 }, 45, 4);
+			DrawStar(hdc, { 400, 200 }, 45, 8);
+			DrawStar(hdc, { 500, 200 }, 45, 3);
+			DrawStar_weird(hdc, { 200, 80 }, 45);
+			DrawInputText(hdc, { 10, 10, 400, 400 }, str);
+			DrawRectangle(hdc, {400, 100}, 10, 10);
+
+			srand(time(NULL));
 		
 			HBRUSH brush = CreateSolidBrush(rand());
 			HBRUSH old_brush = (HBRUSH)SelectObject(hdc, brush);
@@ -187,16 +188,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			int max = (rand() % 200) + 10;
 			for (int i = 0; i < max; ++i)
 			{
+				brush = CreateSolidBrush(RGB(rand()%256, rand()%256, rand()%256));
+				brush = (HBRUSH)SelectObject(hdc, brush);
 				DeleteObject(brush);
-				brush = CreateSolidBrush((DWORD)(rand() << 24) >> 8 | (DWORD)(rand() << 24) >> 16 | (DWORD)(rand() << 24) >> 24);
-				(HBRUSH)SelectObject(hdc, brush);
 				SHORT x = rand() % (SHORT)(win_rect.right - win_rect.left);
 				SHORT y = rand() % (SHORT)(win_rect.bottom - win_rect.top);
 				INT rad = (rand() % 50)+20;
 				DrawCircle(hdc, {x ,y }, rad);
 			}
 
-			SelectObject(hdc, old_brush);
+			brush = (HBRUSH)SelectObject(hdc, old_brush);
+			DeleteObject(brush);
 
 			for (int i = 0; i < 10; ++i)
 			{
@@ -206,8 +208,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				INT leaves = (rand() % 50) + 6;
 				DrawSunflower(hdc, { x, y }, rad, leaves);
 			}
+
             EndPaint(hWnd, &ps);
 
+			/*{
+				HDC hdc = GetDC(hWnd);
+				ReleaseDC(hWnd, hdc);
+			}*/
         }
         break;
     case WM_DESTROY:
@@ -224,18 +231,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		//InvalidateRect(hWnd, NULL, true);
 		break;
 	case WM_CHAR:
-		b_keydown = true;
+		//b_keydown = true;
 		switch (wParam)
 		{
 		case VK_BACK:
 			if (count == 0)
-			{
-				if (y_pos > 0)
-					y_pos -= 16;
 				break;
-			}
 			str[--count] = NULL;
-			x_word -= 1;
 			break;
 		case VK_RETURN:
 			//count = 0;
@@ -244,15 +246,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				break;
 			str[count++] = wParam;
 			str[count] = NULL;
-			x_word = 0;
-			y_pos += 16;
 			break;
 		default:
 			if (count == 1023)
 				break;
 			str[count++] = wParam;
 			str[count] = NULL;
-			x_word += 1;
 			break;
 		}
 		InvalidateRect(hWnd, NULL, true);
@@ -334,5 +333,112 @@ void DrawSunflower(HDC hdc, COORD center, INT radius, INT leaves)
 	DeleteObject(brush);
 	SelectObject(hdc, old_brush);
 	SelectObject(hdc, brush);
+}
+
+void DrawRectangle(HDC hdc, COORD center, INT width, INT height)
+{
+	Rectangle(hdc, center.X - width / 2, center.Y - height / 2, center.X + width / 2, center.Y + height / 2);
+}
+
+void DrawInputText(HDC hdc, RECT area, LPCTSTR str)
+{
+	INT x_pos = 0;
+	INT y_pos = 1;
+	INT max_x = 0;
+	INT count = _tcslen(str);
+
+	for (int i = 0; i < count; ++i)
+	{
+		++x_pos;
+		if (x_pos > max_x)
+			max_x = x_pos;
+
+		if (str[i] == static_cast<TCHAR>('\n'))
+		{
+			x_pos = 0;
+			++y_pos;
+		}
+	}
+
+	SIZE size;
+
+	//GetTextExtentPoint(hdc, str + (count - x_pos), x_pos, &size);
+	GetTextExtentPoint(hdc, str, x_pos, &size);
+	Rectangle(hdc, area.left-1, area.top-1, area.left + size.cx +1, area.top + y_pos*16+1);
+	//TextOut(hdc, 0, y_pos, str, _tcslen(str));
+	DrawText(hdc, str, _tcslen(str), &area, DT_TOP | DT_LEFT);
+	SetCaretPos(area.left + size.cx, area.top + (y_pos-1)*16);
+
+}
+
+void DrawStar(HDC hdc, COORD center, INT radius, INT wings)
+{
+	if (wings < 4 || 360 % wings != 0)
+		return;
+
+	const double GOLDEN_RATIO = 1.61803398875;
+	const double DTR = M_PI / 180;	// degree to radian
+	const INT degree = 360 / wings;
+
+	POINT* points = (POINT*)malloc(sizeof(POINT) * wings*2);
+
+	// outer points
+	POINT outer = { 0, -radius };
+	for (int i = 0; i < wings; ++i)
+	{
+		INT x = outer.x*cos(DTR * degree * i) - outer.y*sin(DTR * degree * i);
+		INT y = outer.x*sin(DTR * degree * i) + outer.y*cos(DTR * degree * i);
+		points[i*2] = {center.X + x ,center.Y + y };
+	}
+
+	// inner points
+	double star_half = (1 + GOLDEN_RATIO) / 2;
+	double pentagon_half = star_half - 1;
+	INT first_x = (points[2].x - center.X) * pentagon_half / star_half;
+	INT first_y = (points[2].y - center.Y);
+	POINT inner = { first_x, first_y };
+
+	for (int i = 0; i < wings; ++i)
+	{
+		INT x = inner.x*cos(DTR * degree * i) - inner.y*sin(DTR * degree * i);
+		INT y = inner.x*sin(DTR * degree * i) + inner.y*cos(DTR * degree * i);
+		points[i * 2 +1] = { center.X + x ,center.Y + y };
+	}
+	
+	Polygon(hdc, points, wings*2);
+	free (points);
+}
+
+void DrawStar_weird(HDC hdc, COORD center, INT radius)
+{
+	const double GOLDEN_RATIO = 1.61803398875;
+	const double DTR = M_PI / 180;	// degree to radian
+
+	POINT points[10];
+
+	// outer points
+	POINT outer = { 0.-radius };
+	for (int i = 0; i < 5; ++i)
+	{
+		INT x = outer.x*cos(DTR * 72 * i) - outer.y*sin(DTR * 72 * i);
+		INT y = outer.x*sin(DTR * 72 * i) + outer.y*cos(DTR * 72 * i);
+		points[i*2] = {center.X + x ,center.Y + y };
+	}
+
+	// inner points
+	double star_half = (1 + GOLDEN_RATIO) / 2;
+	double pentagon_half = star_half - 1;
+	INT first_x = (points[2].x - center.X) * star_half / pentagon_half;
+	INT first_y = (points[2].y - center.Y);
+	POINT inner = { first_x, first_y };
+
+	for (int i = 0; i < 5; ++i)
+	{
+		INT x = inner.x*cos(DTR * 72 * i) - inner.y*sin(DTR * 72 * i);
+		INT y = inner.x*sin(DTR * 72 * i) + inner.y*cos(DTR * 72 * i);
+		points[i * 2 +1] = { center.X + x ,center.Y + y };
+	}
+	
+	Polygon(hdc, points, 10);
 }
 
