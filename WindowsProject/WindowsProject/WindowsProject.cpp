@@ -6,8 +6,11 @@
 #include "WindowsProject.h"
 #include <cmath>
 #include <ctime>
+#include <vector>
+#include "CCircle.h"
 
 #define MAX_LOADSTRING 100
+#define TIMER_1 1
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -138,12 +141,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static TCHAR str[1024];
 	static INT count = 0;
 	static SIZE size;
+	static INT cir_radius_1 = 100;
+	static COORD cir_center_1 = {cir_radius_1 +1 , cir_radius_1+1};
+	static COORD cir_differential_1 = { 0, 0 };
+
+	static INT cir_radius_2 = 100;
+	static COORD cir_center_2 = {cir_radius_2 +1 , cir_radius_2+1};
+	static INT cir_radius_3 = 100;
+	static COORD cir_center_3 = {cir_radius_3 +1 , cir_radius_3+1};
+
+	static std::vector<Geometry::CObject*> circles;
+	//circles.push_back(new Geometry::CCircle(200, 200));
+
+	RECT client_rect;
+	GetClientRect(hWnd, &client_rect);
 
     switch (message)
     {
 	case WM_CREATE:
 		CreateCaret(hWnd, NULL, 5, 15);
 		ShowCaret(hWnd);
+		SetTimer(hWnd, TIMER_1, 10, NULL);
 
 		break;
     case WM_COMMAND:
@@ -166,11 +184,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
-			RECT win_rect;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-			GetWindowRect(hWnd, &win_rect);
-			//DrawGrid(hdc, {0,0,win_rect.right-win_rect.left, win_rect.bottom - win_rect.top}, 100);				
+			//DrawGrid(hdc, {0,0,client_rect.right-client_rect.left, client_rect.bottom - client_rect.top}, 100);				
 			DrawStar(hdc, { 100, 200 }, 45, 6);
 			DrawStar(hdc, { 200, 200 }, 45, 5);
 			DrawStar(hdc, { 300, 200 }, 45, 4);
@@ -180,7 +196,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DrawInputText(hdc, { 10, 10, 400, 400 }, str);
 			DrawRectangle(hdc, {400, 100}, 10, 10);
 
-			srand(time(NULL));
+			/*srand(time(NULL));
 		
 			HBRUSH brush = CreateSolidBrush(rand());
 			HBRUSH old_brush = (HBRUSH)SelectObject(hdc, brush);
@@ -191,8 +207,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				brush = CreateSolidBrush(RGB(rand()%256, rand()%256, rand()%256));
 				brush = (HBRUSH)SelectObject(hdc, brush);
 				DeleteObject(brush);
-				SHORT x = rand() % (SHORT)(win_rect.right - win_rect.left);
-				SHORT y = rand() % (SHORT)(win_rect.bottom - win_rect.top);
+				SHORT x = rand() % (SHORT)(client_rect.right - client_rect.left);
+				SHORT y = rand() % (SHORT)(client_rect.bottom - client_rect.top);
 				INT rad = (rand() % 50)+20;
 				DrawCircle(hdc, {x ,y }, rad);
 			}
@@ -202,12 +218,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			for (int i = 0; i < 10; ++i)
 			{
-				SHORT x = rand() % (SHORT)(win_rect.right - win_rect.left);
-				SHORT y = rand() % (SHORT)(win_rect.bottom - win_rect.top);
+				SHORT x = rand() % (SHORT)(client_rect.right - client_rect.left);
+				SHORT y = rand() % (SHORT)(client_rect.bottom - client_rect.top);
 				INT rad = (rand() % 50) + 10;
 				INT leaves = (rand() % 50) + 6;
 				DrawSunflower(hdc, { x, y }, rad, leaves);
-			}
+			}*/
+
+			DrawCircle(hdc, cir_center_1, cir_radius_1);
+			/*DrawCircle(hdc, cir_center_2, cir_radius_2);
+			TextOut(hdc, cir_center_2.X-10, cir_center_2.Y-8, L"Left", 4);*/
+			for (auto i : circles)
+				i->Draw();
+			DrawCircle(hdc, cir_center_3, cir_radius_3);
+			TextOut(hdc, cir_center_3.X-12, cir_center_3.Y-8, L"Right", 5);
+
 
             EndPaint(hWnd, &ps);
 
@@ -218,17 +243,68 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
+		KillTimer(hWnd, TIMER_1);
+		for (auto i : circles)
+			delete i;
         PostQuitMessage(0);
         break;
+	case WM_TIMER:
+	
+		if ((cir_center_1.Y - cir_radius_1 + cir_differential_1.Y > 0) && (cir_center_1.Y + cir_radius_1 + cir_differential_1.Y < client_rect.bottom - client_rect.top))
+			cir_center_1.Y += cir_differential_1.Y;
+		else
+			cir_differential_1.Y *= -0.99;
+		
+	
+		if ((cir_center_1.X - cir_radius_1 + cir_differential_1.X > 0) && (cir_center_1.X + cir_radius_1 + cir_differential_1.X < client_rect.right - client_rect.left))
+			cir_center_1.X += cir_differential_1.X;
+		else
+			cir_differential_1.X *= -0.99;
+	
+		for (auto i : circles)
+			i->Update(circles);
+
+		InvalidateRect(hWnd, NULL, true);
+		break;
+
 	case WM_KEYDOWN:
-		//b_keydown = true;
-		//PostMessage(hWnd, WM_PAINT, 0, 0);
-		//InvalidateRect(hWnd, NULL, true);
+		b_keydown = true;
+		switch (wParam)
+		{
+	/*	case VK_UP:
+			if (key_center.Y - key_radius - 10 > 0)
+				key_center.Y -= 10;
+			break;
+		case VK_DOWN:
+			if (key_center.Y + key_radius < client_rect.bottom - client_rect.top)
+				key_center.Y += 10;
+			break;
+		case VK_LEFT:
+			if (key_center.X - key_radius - 10 > 0)
+				key_center.X -= 10;
+			break;
+		case VK_RIGHT:
+			if (key_center.X + key_radius + 10 < client_rect.right - client_rect.left)
+				key_center.X += 10;
+			break;*/
+		case VK_UP:
+				cir_differential_1.Y -= 10;
+			break;
+		case VK_DOWN:
+				cir_differential_1.Y += 10;
+			break;
+		case VK_LEFT:
+				cir_differential_1.X -= 10;
+			break;
+		case VK_RIGHT:
+				cir_differential_1.X += 10;
+			break;
+		}
+		InvalidateRect(hWnd, NULL, true);
 		break;
 	case WM_KEYUP:
-		//b_keydown = false;
-		//PostMessage(hWnd, WM_PAINT, 0, 0);
-		//InvalidateRect(hWnd, NULL, true);
+		b_keydown = false;
+		InvalidateRect(hWnd, NULL, true);
 		break;
 	case WM_CHAR:
 		//b_keydown = true;
@@ -247,6 +323,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			str[count++] = wParam;
 			str[count] = NULL;
 			break;
+		
+
 		default:
 			if (count == 1023)
 				break;
@@ -256,6 +334,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		InvalidateRect(hWnd, NULL, true);
 		break;
+	case WM_LBUTTONDOWN:
+	{
+		/*cir_center_2.X = LOWORD(lParam);
+		cir_center_2.Y = HIWORD(lParam);*/
+		Geometry::CCircle* cir = new Geometry::CCircle((int)LOWORD(lParam), (int)HIWORD(lParam));
+		circles.push_back(cir);
+		InvalidateRect(hWnd, NULL, true);
+	}
+		break;
+	case WM_RBUTTONDOWN:
+		cir_center_3.X = LOWORD(lParam);
+		cir_center_3.Y = HIWORD(lParam);
+		InvalidateRect(hWnd, NULL, true);
+		break;
+
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
