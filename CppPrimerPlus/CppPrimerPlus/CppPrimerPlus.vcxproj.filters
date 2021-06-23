@@ -39,16 +39,7 @@
     <ClCompile Include="Gacha.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="stack.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="queue.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="May25.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="complex_number.h">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="complex_number.cpp">
@@ -90,9 +81,6 @@
     <ClCompile Include="June4.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="sort.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="June8.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -117,34 +105,55 @@
     <ClCompile Include="June18.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="June23.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="List.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="complex_number.h">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Stack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Sort.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Queue.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stack.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="queue.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="pocket_calcurator.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Circle.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Rectangle.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometric.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="TnT.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="sort.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="workermi.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pocket_calcurator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometric.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Queue.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Sort.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -15,12 +15,12 @@ namespace Geometry {
 	protected:
 		HWND hWnd_;
 		HDC hdc_;
-		double center_x_;
-		double center_y_;
-		double vec_x_;
-		double vec_y_;
-		double cur_vec_x_;
-		double cur_vec_y_;
+		float center_x_;
+		float center_y_;
+		float vec_x_;
+		float vec_y_;
+		float cur_vec_x_;
+		float cur_vec_y_;
 		RECT client_rect_;
 
 	public:

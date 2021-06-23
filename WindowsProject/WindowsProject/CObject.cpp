@@ -10,9 +10,9 @@ Geometry::CObject::CObject(int x, int y)
 	center_x_ = x;
 	center_y_ = y;
 
-	double dir = rand();
-	vec_x_ = cos(dir);
-	vec_y_ = sin(dir);
+	float dir = rand();
+	vec_x_ = cosf(dir);
+	vec_y_ = sinf(dir);
 }
 Geometry::CObject::~CObject()
 {

@@ -141,20 +141,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static TCHAR str[1024];
 	static INT count = 0;
 	static SIZE size;
+
+
 	static INT cir_radius_1 = 100;
 	static COORD cir_center_1 = {cir_radius_1 +1 , cir_radius_1+1};
 	static COORD cir_differential_1 = { 0, 0 };
-
 	static INT cir_radius_2 = 100;
 	static COORD cir_center_2 = {cir_radius_2 +1 , cir_radius_2+1};
 	static INT cir_radius_3 = 100;
 	static COORD cir_center_3 = {cir_radius_3 +1 , cir_radius_3+1};
 
 	static std::vector<Geometry::CObject*> circles;
-	//circles.push_back(new Geometry::CCircle(200, 200));
 
-	RECT client_rect;
+	static RECT client_rect;
 	GetClientRect(hWnd, &client_rect);
+	static RECT screen_rect = { 0, 0, client_rect.right - client_rect.left, client_rect.bottom - client_rect.top };
 
     switch (message)
     {
@@ -164,6 +165,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		SetTimer(hWnd, TIMER_1, 10, NULL);
 
 		break;
+
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -181,6 +183,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
@@ -196,34 +199,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DrawInputText(hdc, { 10, 10, 400, 400 }, str);
 			DrawRectangle(hdc, {400, 100}, 10, 10);
 
-			/*srand(time(NULL));
-		
-			HBRUSH brush = CreateSolidBrush(rand());
-			HBRUSH old_brush = (HBRUSH)SelectObject(hdc, brush);
-
-			int max = (rand() % 200) + 10;
-			for (int i = 0; i < max; ++i)
-			{
-				brush = CreateSolidBrush(RGB(rand()%256, rand()%256, rand()%256));
-				brush = (HBRUSH)SelectObject(hdc, brush);
-				DeleteObject(brush);
-				SHORT x = rand() % (SHORT)(client_rect.right - client_rect.left);
-				SHORT y = rand() % (SHORT)(client_rect.bottom - client_rect.top);
-				INT rad = (rand() % 50)+20;
-				DrawCircle(hdc, {x ,y }, rad);
-			}
-
-			brush = (HBRUSH)SelectObject(hdc, old_brush);
-			DeleteObject(brush);
-
-			for (int i = 0; i < 10; ++i)
-			{
-				SHORT x = rand() % (SHORT)(client_rect.right - client_rect.left);
-				SHORT y = rand() % (SHORT)(client_rect.bottom - client_rect.top);
-				INT rad = (rand() % 50) + 10;
-				INT leaves = (rand() % 50) + 6;
-				DrawSunflower(hdc, { x, y }, rad, leaves);
-			}*/
 
 			DrawCircle(hdc, cir_center_1, cir_radius_1);
 			/*DrawCircle(hdc, cir_center_2, cir_radius_2);
@@ -242,51 +217,44 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}*/
         }
         break;
+
     case WM_DESTROY:
 		KillTimer(hWnd, TIMER_1);
 		for (auto i : circles)
 			delete i;
         PostQuitMessage(0);
         break;
-	case WM_TIMER:
-	
-		if ((cir_center_1.Y - cir_radius_1 + cir_differential_1.Y > 0) && (cir_center_1.Y + cir_radius_1 + cir_differential_1.Y < client_rect.bottom - client_rect.top))
-			cir_center_1.Y += cir_differential_1.Y;
-		else
-			cir_differential_1.Y *= -0.99;
-		
-	
-		if ((cir_center_1.X - cir_radius_1 + cir_differential_1.X > 0) && (cir_center_1.X + cir_radius_1 + cir_differential_1.X < client_rect.right - client_rect.left))
-			cir_center_1.X += cir_differential_1.X;
-		else
-			cir_differential_1.X *= -0.99;
-	
-		for (auto i : circles)
-			i->Update(circles);
 
-		InvalidateRect(hWnd, NULL, true);
+	case WM_TIMER:
+		switch (lParam)
+		{
+		case TIMER_1:
+			if ((cir_center_1.Y - cir_radius_1 + cir_differential_1.Y > 0) && (cir_center_1.Y + cir_radius_1 + cir_differential_1.Y < client_rect.bottom - client_rect.top))
+				cir_center_1.Y += cir_differential_1.Y;
+			else
+				cir_differential_1.Y *= -0.99;
+
+
+			if ((cir_center_1.X - cir_radius_1 + cir_differential_1.X > 0) && (cir_center_1.X + cir_radius_1 + cir_differential_1.X < client_rect.right - client_rect.left))
+				cir_center_1.X += cir_differential_1.X;
+			else
+				cir_differential_1.X *= -0.99;
+
+			for (auto i : circles)
+				i->Update(circles);
+
+			InvalidateRect(hWnd, NULL, true);
+			break;
+
+		default:
+			break;
+		}
 		break;
 
 	case WM_KEYDOWN:
 		b_keydown = true;
 		switch (wParam)
 		{
-	/*	case VK_UP:
-			if (key_center.Y - key_radius - 10 > 0)
-				key_center.Y -= 10;
-			break;
-		case VK_DOWN:
-			if (key_center.Y + key_radius < client_rect.bottom - client_rect.top)
-				key_center.Y += 10;
-			break;
-		case VK_LEFT:
-			if (key_center.X - key_radius - 10 > 0)
-				key_center.X -= 10;
-			break;
-		case VK_RIGHT:
-			if (key_center.X + key_radius + 10 < client_rect.right - client_rect.left)
-				key_center.X += 10;
-			break;*/
 		case VK_UP:
 				cir_differential_1.Y -= 10;
 			break;
@@ -302,10 +270,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		InvalidateRect(hWnd, NULL, true);
 		break;
+
 	case WM_KEYUP:
 		b_keydown = false;
 		InvalidateRect(hWnd, NULL, true);
 		break;
+
 	case WM_CHAR:
 		//b_keydown = true;
 		switch (wParam)
@@ -324,7 +294,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			str[count] = NULL;
 			break;
 		
-
 		default:
 			if (count == 1023)
 				break;
@@ -334,6 +303,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		InvalidateRect(hWnd, NULL, true);
 		break;
+
 	case WM_LBUTTONDOWN:
 	{
 		/*cir_center_2.X = LOWORD(lParam);
@@ -343,6 +313,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		InvalidateRect(hWnd, NULL, true);
 	}
 		break;
+
 	case WM_RBUTTONDOWN:
 		cir_center_3.X = LOWORD(lParam);
 		cir_center_3.Y = HIWORD(lParam);

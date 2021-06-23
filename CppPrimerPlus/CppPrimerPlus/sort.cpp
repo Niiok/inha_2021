@@ -1,4 +1,4 @@
-#include"sort.h"
+#include"Sort.h"
 #include <algorithm>
 #include <vector>
 
@@ -712,6 +712,7 @@ int MergeSort(int size, int arr[])
 
 		return 0;
 	}
+	return 0;
 }
 
 int MergeSort_Visual(int size, int arr[], int offset)
@@ -826,6 +827,7 @@ int MergeSort_Visual(int size, int arr[], int offset)
 
 		return 0;
 	}
+	return 0;
 }
 
 int HeapSort_Visual(int size, int arr[])
