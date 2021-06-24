@@ -21,70 +21,70 @@ void Geometry::CCircle::Collision(std::vector<Geometry::CGeometry*>& list)
 		if (i == this)
 			continue;
 
-		double over_time = WillOverlap(*i);
+		double over_time = OverlapWith(i);
 		if (over_time > 0.0)
 		{
-			float temp_x = this->vec_x_;
-			float temp_y = this->vec_y_;
-			
-			//center_x_ += vec_x_ * over_time;
-			//center_y_ += vec_y_ * over_time;
-
-			this->vec_x_ = i->get_vec_x_();
-			this->vec_y_ = i->get_vec_y_();
-
-			//i->center_x_ += i->vec_x_ * over_time;
-			//i->center_y_ += i->vec_y_ * over_time;
-
-			i->set_vec_x_(temp_x);
-			i->set_vec_y_(temp_y);
+			CollideWith(i);
 		}
 	}
 
 	//boundary
-	if (center_y_ - radius_ + NextMoveY() < 0)
+	if (center_.y - radius_ + NextMoveY() < 0)
 	{
-		vec_y_ *= -1;
-		center_y_ += 10;
+		vec_.y *= -1;
+		center_.y += 10;
 	}
-	if (center_y_ + radius_ + NextMoveY() > client_rect_.bottom - client_rect_.top)
+	if (center_.y + radius_ + NextMoveY() > client_rect_.bottom - client_rect_.top)
 	{
-		vec_y_ *= -1;
-		center_y_ -= 10;
+		vec_.y *= -1;
+		center_.y -= 10;
 	}
 
 
-	if (center_x_ - radius_ + NextMoveX() < 0)
+	if (center_.x - radius_ + NextMoveX() < 0)
 	{
-		vec_x_ *= -1;
-		center_x_ += 10;
+		vec_.x *= -1;
+		center_.x += 10;
 	}
-	if (center_x_ + radius_ + NextMoveX() > client_rect_.right - client_rect_.left)
+	if (center_.x + radius_ + NextMoveX() > client_rect_.right - client_rect_.left)
 	{
-		vec_x_ *= -1;
-		center_x_ -= 10;
+		vec_.x *= -1;
+		center_.x -= 10;
 	}
 
 }
+
 void Geometry::CCircle::Draw()
 {
 	hdc_ = GetDC(hWnd_);
 
 	Ellipse(hdc_,
-		center_x_ - radius_,
-		center_y_ - radius_,
-		center_x_ + radius_,
-		center_y_ + radius_);
+		center_.x - radius_,
+		center_.y - radius_,
+		center_.x + radius_,
+		center_.y + radius_);
 
 	ReleaseDC(hWnd_, hdc_);
 }
-double Geometry::CCircle::WillOverlap(Geometry::CGeometry& another) const
+
+
+double Geometry::CCircle::OverlapWith(Geometry::CGeometry* another) const
 {
-	float distance_max = MaxDistance() + another.MaxDistance();
+	CCircle* cp = dynamic_cast<CCircle*>(another);
+	if (cp != NULL)
+		return OverlapWith(cp);
+
+	// rect here
+
+	return -1;
+}
+double Geometry::CCircle::OverlapWith(const Geometry::CCircle* another) const
+{
+	float distance_max = MaxDistance() + another->MaxDistance();
 	distance_max *= distance_max;
-	float distance_x = center_x_ + NextMoveX() - (another.get_center_x_() + another.NextMoveX());
+	float distance_x = center_.x + NextMoveX() - (another->get_center_().x + another->NextMoveX());
 	distance_x *= distance_x;
-	float distance_y = center_y_ + NextMoveY() - (another.get_center_y_() + another.NextMoveY());
+	float distance_y = center_.y + NextMoveY() - (another->get_center_().y + another->NextMoveY());
 	distance_y *= distance_y;
 
 	if(distance_max > distance_x + distance_y)
@@ -92,6 +92,37 @@ double Geometry::CCircle::WillOverlap(Geometry::CGeometry& another) const
 
 	return 0;
 }
+
+double Geometry::CCircle::CollideWith(Geometry::CGeometry* another)
+{
+	CCircle* cp = dynamic_cast<CCircle*>(another);
+	if (cp != NULL)
+		return CollideWith(cp);
+
+	// rect here
+
+	return -1;
+}
+double Geometry::CCircle::CollideWith(Geometry::CCircle* another) 
+{
+	float temp_x = this->vec_.x;
+	float temp_y = this->vec_.y;
+
+	//center_.x += vec_.x * over_time;
+	//center_.y += vec_.y * over_time;
+
+	this->vec_.x = another->get_vec_().x;
+	this->vec_.y = another->get_vec_().y;
+
+	//another->center_.x += i->vec_.x * over_time;
+	//another->center_.y += i->vec_.y * over_time;
+
+	another->set_vec_x_(temp_x);
+	another->set_vec_y_(temp_y);
+
+	return 0;
+}
+
 float Geometry::CCircle::MaxDistance() const
 {
 	return radius_;

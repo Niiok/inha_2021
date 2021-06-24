@@ -17,7 +17,7 @@ void Geometry::CStar::Draw()
 {
 	hdc_ = GetDC(hWnd_);
 
-	DrawStar(hdc_, { (SHORT)center_x_, (SHORT)center_y_ }, radius_, 5);
+	DrawStar(hdc_, { (SHORT)center_.x, (SHORT)center_.y }, radius_, 5);
 
 	ReleaseDC(hWnd_, hdc_);
 }

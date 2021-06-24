@@ -154,6 +154,7 @@
     <ClInclude Include="..\..\vmath.h" />
     <ClInclude Include="CCircle.h" />
     <ClInclude Include="CGeometry.h" />
+    <ClInclude Include="CRect.h" />
     <ClInclude Include="CStar.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="CCircle.cpp" />
     <ClCompile Include="CGeometry.cpp" />
+    <ClCompile Include="CRect.cpp" />
     <ClCompile Include="CStar.cpp" />
     <ClCompile Include="WindowsProject.cpp" />
   </ItemGroup>
