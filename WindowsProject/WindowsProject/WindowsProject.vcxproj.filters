@@ -30,10 +30,13 @@
     <ClInclude Include="..\..\vmath.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CObject.h">
+    <ClInclude Include="CCircle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="CCircle.h">
+    <ClInclude Include="CStar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CGeometry.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,10 +44,13 @@
     <ClCompile Include="WindowsProject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CObject.cpp">
+    <ClCompile Include="CCircle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CCircle.cpp">
+    <ClCompile Include="CStar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CGeometry.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

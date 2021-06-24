@@ -38,6 +38,7 @@ public:
 	// etc
 	int size();
 	int foreach(int(*func)(T& a, T& b), T& b);
+	int binary_each(int(*func)(T& a, T& b), T& b);
 
 
 
@@ -49,12 +50,12 @@ private:
 
 		Node* prev = head_;
 
-		if (index < size_ / 2)
-			for (int i = 0; i != index; ++i)
-				prev = prev->back;
-		else
+		if (index > size_ / 2)
 			for (int i = size_; i != index; --i)
 				prev = prev->front;
+		else
+			for (int i = 0; i != index; ++i)
+				prev = prev->back;
 		return prev;
 	}
 };

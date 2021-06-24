@@ -18,13 +18,16 @@ List<T>::List(int size)
 template<typename T>
 List<T>::~List()
 {
-	Node* temp = head_;
+	if (size_ == 0)
+		return;
+
+	Node* todel = head_;
 
 	do {
-		Node* next = temp->back;
-		delete temp;
-		temp = next;
-	} while (temp != head_);
+		Node* next = todel->back;
+		delete todel;
+		todel = next;
+	} while (todel != head_);
 }
 
 
@@ -155,4 +158,45 @@ int List<T>::foreach(int(*func)(T& a, T& b), T& b)
 		i = -1;
 
 	return i;
+}
+
+template<typename T>
+int List<T>::binary_each(int(*func)(T& a, T& b), T& b)
+{
+	int left = 0;
+	int right = size_ - 1;
+	int node_index;
+	Node* temp = FindNode((right + left) / 2);
+
+	if (size_ == 0)
+		return -1;
+
+	do
+	{
+		node_index = (left + right) / 2;
+		printf("%d  ", node_index);
+
+		int func_result = func(temp->data, b);
+
+		if (func_result > 0)
+		{
+			right = node_index - 1;
+			for (int i = node_index; i != (left + right)/2; --i)
+				temp = temp->front;
+		}
+		else if (func_result < 0)
+		{
+			left = node_index + 1;
+			for (int i = node_index; i != (left + right)/2; ++i)
+				temp = temp->back;
+		}
+		else if (func_result == 0)
+		{
+			return node_index;
+		}
+
+	} while (left <= right);
+
+
+	return -left-1;
 }

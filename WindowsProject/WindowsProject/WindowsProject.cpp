@@ -7,7 +7,7 @@
 #include <cmath>
 #include <ctime>
 #include <vector>
-#include "CCircle.h"
+#include "CStar.h"
 
 #define MAX_LOADSTRING 100
 #define TIMER_1 1
@@ -151,7 +151,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static INT cir_radius_3 = 100;
 	static COORD cir_center_3 = {cir_radius_3 +1 , cir_radius_3+1};
 
-	static std::vector<Geometry::CObject*> circles;
+	static std::vector<Geometry::CGeometry*> objects;
 
 	static RECT client_rect;
 	GetClientRect(hWnd, &client_rect);
@@ -162,7 +162,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 		CreateCaret(hWnd, NULL, 5, 15);
 		ShowCaret(hWnd);
-		SetTimer(hWnd, TIMER_1, 10, NULL);
+		SetTimer(hWnd, TIMER_1, 1000/30, NULL);
 
 		break;
 
@@ -203,7 +203,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DrawCircle(hdc, cir_center_1, cir_radius_1);
 			/*DrawCircle(hdc, cir_center_2, cir_radius_2);
 			TextOut(hdc, cir_center_2.X-10, cir_center_2.Y-8, L"Left", 4);*/
-			for (auto i : circles)
+			for (auto i : objects)
 				i->Draw();
 			DrawCircle(hdc, cir_center_3, cir_radius_3);
 			TextOut(hdc, cir_center_3.X-12, cir_center_3.Y-8, L"Right", 5);
@@ -220,28 +220,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_DESTROY:
 		KillTimer(hWnd, TIMER_1);
-		for (auto i : circles)
+		for (auto i : objects)
 			delete i;
         PostQuitMessage(0);
         break;
 
 	case WM_TIMER:
-		switch (lParam)
+		switch (LOWORD(wParam))
 		{
 		case TIMER_1:
-			if ((cir_center_1.Y - cir_radius_1 + cir_differential_1.Y > 0) && (cir_center_1.Y + cir_radius_1 + cir_differential_1.Y < client_rect.bottom - client_rect.top))
+			if ((cir_center_1.Y - cir_radius_1 + cir_differential_1.Y > 0) 
+				&& (cir_center_1.Y + cir_radius_1 + cir_differential_1.Y 
+					< client_rect.bottom - client_rect.top))
 				cir_center_1.Y += cir_differential_1.Y;
 			else
 				cir_differential_1.Y *= -0.99;
 
 
-			if ((cir_center_1.X - cir_radius_1 + cir_differential_1.X > 0) && (cir_center_1.X + cir_radius_1 + cir_differential_1.X < client_rect.right - client_rect.left))
+			if ((cir_center_1.X - cir_radius_1 + cir_differential_1.X > 0) 
+				&& (cir_center_1.X + cir_radius_1 + cir_differential_1.X 
+					< client_rect.right - client_rect.left))
 				cir_center_1.X += cir_differential_1.X;
 			else
 				cir_differential_1.X *= -0.99;
 
-			for (auto i : circles)
-				i->Update(circles);
+			for (auto i : objects)
+				i->Update(objects);
 
 			InvalidateRect(hWnd, NULL, true);
 			break;
@@ -308,8 +312,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		/*cir_center_2.X = LOWORD(lParam);
 		cir_center_2.Y = HIWORD(lParam);*/
-		Geometry::CCircle* cir = new Geometry::CCircle((int)LOWORD(lParam), (int)HIWORD(lParam));
-		circles.push_back(cir);
+		switch (rand() % 2)
+		{
+		case 0:
+		{
+			Geometry::CCircle* cir = new Geometry::CCircle((int)LOWORD(lParam), (int)HIWORD(lParam));
+			objects.push_back(cir);
+		}
+			break;
+
+		case 1:
+		{
+			Geometry::CStar* sta = new Geometry::CStar((int)LOWORD(lParam), (int)HIWORD(lParam));
+			objects.push_back(sta);
+		}
+			break;
+		}
 		InvalidateRect(hWnd, NULL, true);
 	}
 		break;
