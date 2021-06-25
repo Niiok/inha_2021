@@ -1,6 +1,6 @@
 #pragma once
 #include "CGeometry.h"
-#include "CRect.h"
+//#include "CRect.h"
 
 namespace Geometry {
 

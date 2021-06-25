@@ -1,5 +1,5 @@
-#ifndef ___Queue
-#define ___Queue
+#ifndef __Queue_h__
+#define __Queue_h__
 
 #include <iostream>
 #include <assert.h>
@@ -71,5 +71,7 @@ void Print(const Queue<int>* s);
 
 void Terminate(Queue<int>* s);
 
+
+#include "Queue.cpp"
 
 #endif

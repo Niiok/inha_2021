@@ -9,8 +9,8 @@ List<T>::List()
 template<typename T>
 List<T>::List(int size)
 {
-	if (size < 0)
-		assert(0);
+	assert(size >= 0);
+		
 
 	for (int i = 0; i < size; ++i)
 		push_back(T());
@@ -87,8 +87,7 @@ void List<T>::insert(int index, T data)
 template<typename T>
 void List<T>::erase(int index)
 {
-	if (size_ == 0 || size_ <= index)
-		assert(0);
+	assert(size_ > 0 && size_ > index);
 
 	Node* prev = FindNode(index);		//    D   
 	Node* prev_front = prev->front;		// O  d   
@@ -121,8 +120,7 @@ T& List<T>::back()
 template<typename T>
 T& List<T>::operator[] (int index)
 {
-	if (index >= size_ || index < 0)
-		assert(0);
+	assert(index < size_ && index >= 0);
 
 	Node* ret = FindNode(index);
 
@@ -135,8 +133,7 @@ T& List<T>::operator[] (int index)
 template<typename T>
 int List<T>::size()
 {
-	if (size_ < 0)
-		assert(0);
+	assert(size_ >= 0);
 	return size_;
 }
 

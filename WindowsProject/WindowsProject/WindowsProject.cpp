@@ -7,6 +7,7 @@
 #include <cmath>
 #include <ctime>
 #include <vector>
+#include <commdlg.h>
 #include "CStar.h"
 
 #define MAX_LOADSTRING 100
@@ -90,7 +91,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINDOWSPROJECT));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WINDOWSPROJECT);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDR_HELP);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -157,6 +158,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	GetClientRect(hWnd, &client_rect);
 	static RECT screen_rect = { 0, 0, client_rect.right - client_rect.left, client_rect.bottom - client_rect.top };
 
+	CHOOSECOLOR COLOR;
+	static COLORREF tmp[16], color;
+	HBRUSH hBrush, OldBrush;
+
     switch (message)
     {
 	case WM_CREATE:
@@ -178,17 +183,38 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;
+			case ID_COLORDLG:
+				{
+				/*for (int i = 0; i < 16; ++i)
+					tmp[i] = RGB(rand() % 256, rand() % 256, rand() % 256);
+				memset(&COLOR, 0, sizeof(CHOOSECOLOR));
+				COLOR.lStructSize = sizeof(CHOOSECOLOR);
+				COLOR.hwndOwner = hWnd;
+				COLOR.lpCustColors = tmp;
+				COLOR.Flags = CC_FULLOPEN;*/
+				if (ChooseColor(&COLOR) != 0)
+				{
+					color = COLOR.rgbResult;
+					InvalidateRgn(hWnd, NULL, true);
+				}
+				}
+				break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
         }
         break;
 
-    case WM_PAINT:
-        {
+    case WM_PAINT:        {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+
+			hBrush = CreateSolidBrush(color);
+			OldBrush = (HBRUSH)SelectObject(hdc, hBrush);
+			//Ellipse(hdc, 10, 10, 200, 200);
+
+
 			//DrawGrid(hdc, {0,0,client_rect.right-client_rect.left, client_rect.bottom - client_rect.top}, 100);				
 			DrawStar(hdc, { 100, 200 }, 45, 6);
 			DrawStar(hdc, { 200, 200 }, 45, 5);
@@ -208,6 +234,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DrawCircle(hdc, cir_center_3, cir_radius_3);
 			TextOut(hdc, cir_center_3.X-12, cir_center_3.Y-8, L"Right", 5);
 
+			SelectObject(hdc, OldBrush);
+			DeleteObject(hBrush);
 
             EndPaint(hWnd, &ps);
 

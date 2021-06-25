@@ -35,7 +35,7 @@ int Queue<T>::Enque(T x)
 }
 
 template<typename T>
-int Queue<T>::Deque(T *x)
+int Queue<T>::Deque(T* x)
 {
 	if (IsEmpty())
 		return -1;

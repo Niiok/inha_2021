@@ -45,8 +45,7 @@ public:
 private:
 	Node* FindNode(int index)
 	{
-		if (index > size_ || index < 0)
-			assert(0);
+		assert(index <= size_ && index >= 0);
 
 		Node* prev = head_;
 
