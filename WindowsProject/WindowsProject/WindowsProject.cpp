@@ -185,13 +185,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
 			case ID_COLORDLG:
 				{
-				/*for (int i = 0; i < 16; ++i)
+				for (int i = 0; i < 16; ++i)
 					tmp[i] = RGB(rand() % 256, rand() % 256, rand() % 256);
 				memset(&COLOR, 0, sizeof(CHOOSECOLOR));
 				COLOR.lStructSize = sizeof(CHOOSECOLOR);
 				COLOR.hwndOwner = hWnd;
 				COLOR.lpCustColors = tmp;
-				COLOR.Flags = CC_FULLOPEN;*/
+				COLOR.Flags = CC_FULLOPEN;
 				if (ChooseColor(&COLOR) != 0)
 				{
 					color = COLOR.rgbResult;
