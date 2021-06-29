@@ -15,6 +15,7 @@ namespace Game {
 	protected:
 		int b_quit_ = 0;
 		HWND hWnd_ = 0;
+		RECT client_;
 		GameState* next_ = NULL;
 
 	public:

@@ -15,19 +15,18 @@ GameLogin::~GameLogin()
 
 int GameLogin::Draw(HDC hdc)
 {
-	RECT client;
 	SIZE caret_pos;
-	GetClientRect(hWnd_, &client);
-	client.bottom = client.bottom - client.top;
-	client.right = client.right - client.left;
-	client.top = 0;
-	client.left = 0;
+	GetClientRect(hWnd_, &client_);
+	client_.bottom = client_.bottom - client_.top;
+	client_.right = client_.right - client_.left;
+	client_.top = 0;
+	client_.left = 0;
 
-	Rectangle(hdc, client.right * 0.3, client.bottom * 0.7 , client.right * 0.7, client.bottom * 0.7 + 19);
-	TextOut(hdc, client.right * 0.3 + 20, client.bottom * 0.7-20, L"ID를 입력하세요.", 10);
-	TextOut(hdc, client.right * 0.3 + 1, client.bottom * 0.7+1, str_, strlen_);
+	Rectangle(hdc, client_.right * 0.3, client_.bottom * 0.7 , client_.right * 0.7, client_.bottom * 0.7 + 19);
+	TextOut(hdc, client_.right * 0.3 + 20, client_.bottom * 0.7-20, L"ID를 입력하세요.", 10);
+	TextOut(hdc, client_.right * 0.3 + 1, client_.bottom * 0.7+1, str_, strlen_);
 	GetTextExtentPoint(hdc, str_, strlen_, &caret_pos);
-	SetCaretPos(client.right * 0.3 + caret_pos.cx + 2, client.bottom * 0.7 + 2);
+	SetCaretPos(client_.right * 0.3 + caret_pos.cx + 2, client_.bottom * 0.7 + 2);
 
 	return 0;
 }

@@ -2,6 +2,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define _USE_MATH_DEFINES
 #include "GameLogin.h"
+#include "GameOver.h"
 #include "GameState.h"
 #include <vector>
 #include <math.h>
@@ -94,16 +95,16 @@ namespace Game {
 		~GamePlay();
 
 	protected:
-		int num_of_wall_ = 8;
-		int score_ = 0;
-		float spawn_rate_ = 100.0f;
-		RECT client_;
 		TCHAR str_[LOGIN_STRMAX];
+		int score_ = 0;
+		friend int GameState::Next();
+
+		int num_of_wall_ = 8;
+		float spawn_rate_ = 100.0f;
 		Turret turret_;
 		std::vector<DefenseWall> walls_;
 		std::vector<Bullet> bullets_;
 		std::vector<Enemy> enemies_;
-		friend int GameState::Next();
 
 	public:
 		int Draw(HDC hdc) override;

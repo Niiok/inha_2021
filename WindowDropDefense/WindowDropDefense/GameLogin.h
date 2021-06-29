@@ -2,6 +2,7 @@
 #include "GameState.h"
 #include <tchar.h>
 #include "GamePlay.h"
+#include "GameOver.h"
 
 namespace Game {
 

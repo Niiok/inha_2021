@@ -5,14 +5,6 @@ using namespace Game;
 
 GamePlay::GamePlay(HWND hWnd) : GameState(hWnd)
 {
-	RECT client;
-
-	GetClientRect(hWnd, &client);
-	client.bottom = client.bottom - client.top;
-	client.right = client.right - client.left;
-	client.top = 0;
-	client.left = 0;
-
 	for (int i = 0; i < num_of_wall_; ++i)
 		walls_.push_back(DefenseWall(i, num_of_wall_));
 }
@@ -37,10 +29,10 @@ int GamePlay::Draw(HDC hdc)
 	client_.top = 0;
 	client_.left = 0;
 
-	for (auto i : walls_)
+	for (auto i : bullets_)
 		i.Draw(hdc, client_);
 	turret_.Draw(hdc, client_);
-	for (auto i : bullets_)
+	for (auto i : walls_)
 		i.Draw(hdc, client_);
 	for (auto i : enemies_)
 		i.Draw(hdc, client_);
@@ -50,12 +42,12 @@ int GamePlay::Draw(HDC hdc)
 	sprintf(str, "Spawn Rate : %f", spawn_rate_);
 	mbstowcs(wstr, str, strlen(str) + 1);
 	LPWSTR wptr = wstr;
-	TextOut(hdc, client_.right*0.45f, client_.bottom*0.7f + 16, wptr, _tcslen(wstr));
+	TextOut(hdc, client_.right*0.43f, client_.bottom*0.15f + 16, wptr, _tcslen(wstr));
 
 	sprintf(str, "Score : %d", score_);
 	mbstowcs(wstr, str, strlen(str) + 1);
 	wptr = wstr;
-	TextOut(hdc, client_.right*0.47f, client_.bottom*0.7f - gap, wptr, _tcslen(wstr));
+	TextOut(hdc, client_.right*0.46f, client_.bottom*0.15f - gap, wptr, _tcslen(wstr));
 
 	TextOut(hdc, client_.right*0.01f, client_.bottom*0.01f, str_, _tcslen(str_));
 
@@ -140,7 +132,11 @@ int GamePlay::Input(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 int GamePlay::Next()
 {
+	GameOver* temp = new GameOver(hWnd_);
+	temp->SetChar(str_);
 
+	next_ = temp;
+	b_quit_ = 1;
 	return 0;
 }
 
@@ -266,7 +262,7 @@ int Enemy::Update(std::vector<DefenseWall>& walls, RECT client)
 	if (Collision(walls, client) == -1)
 		return -1;
 
-	if (center_.y > 1.5)
+	if (center_.y > 1.0)
 		return -100;
 
 	return 0;
