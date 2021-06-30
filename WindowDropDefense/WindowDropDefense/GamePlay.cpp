@@ -7,16 +7,18 @@ GamePlay::GamePlay(HWND hWnd) : GameState(hWnd)
 {
 	for (int i = 0; i < num_of_wall_; ++i)
 		walls_.push_back(DefenseWall(i, num_of_wall_));
+
+	prev_score = score_;
 }
 GamePlay::~GamePlay()
 {
+
 }
 
 
 int GamePlay::Draw(HDC hdc)
 {
-	static int prev_score = score_;
-	static int gap = 0;
+
 	gap += score_ - prev_score;
 	gap += score_ - prev_score;
 	if (gap > 0)
@@ -78,7 +80,9 @@ int GamePlay::Update()
 		if (ret == -1)
 			i = enemies_.erase(i);
 		else if (ret == -100)
-			Next();
+		{
+			return Next();
+		}
 		else 
 			++i;
 	}
@@ -134,6 +138,7 @@ int GamePlay::Next()
 {
 	GameOver* temp = new GameOver(hWnd_);
 	temp->SetChar(str_);
+	temp->SetScore(score_);
 
 	next_ = temp;
 	b_quit_ = 1;
@@ -146,6 +151,9 @@ int GamePlay::SetChar(TCHAR* str)
 	
 	return 0;
 }
+
+
+
 
 
 void Turret::Draw(HDC hdc, RECT client)
