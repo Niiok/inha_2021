@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <math.h>
+#include <stdlib.h>
 
 int Window_Width = 100;
 int Window_Height = 100;
@@ -28,9 +29,9 @@ int main(int argc, char* args[])
 
 	while (!quit)
 	{
-		while (SDL_PollEvent(&e) != 0)
+		//while (SDL_PollEvent(&e) != 0)
 		{
-			//SDL_PollEvent(&e);
+			SDL_PollEvent(&e);
 
 			switch (e.type)
 			{
@@ -48,9 +49,10 @@ int main(int argc, char* args[])
 			SDL_GetGlobalMouseState(&mouse_x, &mouse_y);
 
 			
-			int x = mouse_x - Window_Width/2 + cos(i/5)*Window_Width/4;
+			int ran = rand() % 10;
+			int x = mouse_x - Window_Width/2 + cos(i/5)*Window_Width/ran;
 			
-			int y = mouse_y - Window_Height/2 + sin(i/5)*Window_Height/4;
+			int y = mouse_y - Window_Height/2 + sin(i/5)*Window_Height/ran;
 			SDL_SetWindowPosition(window, x, y);
 
 

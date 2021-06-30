@@ -50,7 +50,12 @@ int GameOver::Input(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_KEYDOWN:
-		Next();
+		switch (wParam)
+		{
+		case VK_RETURN:
+			Next();
+			break;
+		}
 		break;
 	case WM_KEYUP:
 		break;

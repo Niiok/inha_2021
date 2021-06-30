@@ -97,12 +97,12 @@ namespace Game {
 	protected:
 		TCHAR str_[LOGIN_STRMAX];
 		int score_ = 0;
-		int prev_score = score_;
-		int gap = 0;
 		friend int GameState::Next();
 
+		int prev_score_ = score_;
+		int gap_ = 0;
 		int num_of_wall_ = 8;
-		float spawn_rate_ = 1.0f;
+		float spawn_rate_ = 10.0f;
 		Turret turret_;
 		std::vector<DefenseWall> walls_;
 		std::vector<Bullet> bullets_;

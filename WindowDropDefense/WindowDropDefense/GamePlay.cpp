@@ -8,7 +8,7 @@ GamePlay::GamePlay(HWND hWnd) : GameState(hWnd)
 	for (int i = 0; i < num_of_wall_; ++i)
 		walls_.push_back(DefenseWall(i, num_of_wall_));
 
-	prev_score = score_;
+	prev_score_ = score_;
 }
 GamePlay::~GamePlay()
 {
@@ -19,11 +19,13 @@ GamePlay::~GamePlay()
 int GamePlay::Draw(HDC hdc)
 {
 
-	gap += score_ - prev_score;
-	gap += score_ - prev_score;
-	if (gap > 0)
-		gap--;
-	prev_score = score_;
+	gap_ += score_ - prev_score_;
+	gap_ += score_ - prev_score_;
+	if (gap_ > 0)
+		gap_--;
+	if (gap_ > 0)
+		gap_--;
+	prev_score_ = score_;
 
 	GetClientRect(hWnd_, &client_);
 	client_.bottom = client_.bottom - client_.top;
@@ -49,7 +51,7 @@ int GamePlay::Draw(HDC hdc)
 	sprintf(str, "Score : %d", score_);
 	mbstowcs(wstr, str, strlen(str) + 1);
 	wptr = wstr;
-	TextOut(hdc, client_.right*0.46f, client_.bottom*0.15f - gap, wptr, _tcslen(wstr));
+	TextOut(hdc, client_.right*0.46f, client_.bottom*0.15f - gap_, wptr, _tcslen(wstr));
 
 	TextOut(hdc, client_.right*0.01f, client_.bottom*0.01f, str_, _tcslen(str_));
 

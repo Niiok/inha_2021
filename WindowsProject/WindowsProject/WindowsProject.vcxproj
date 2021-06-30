@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\vmath.h" />
+    <ClInclude Include="Bitmapping.h" />
     <ClInclude Include="CCircle.h" />
     <ClInclude Include="CGeometry.h" />
     <ClInclude Include="CRect.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="WindowsProject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bitmapping.cpp" />
     <ClCompile Include="CCircle.cpp" />
     <ClCompile Include="CGeometry.cpp" />
     <ClCompile Include="CRect.cpp" />
