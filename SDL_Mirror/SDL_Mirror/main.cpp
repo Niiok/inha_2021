@@ -4,13 +4,14 @@
 #include <math.h>
 #include <stdlib.h>
 
-int Window_Width = 100;
-int Window_Height = 100;
+int Window_Width = 1000;
+int Window_Height = 500;
 
 int main(int argc, char* args[])
 {
 	SDL_Window* window;
 	SDL_Surface* surface;
+	SDL_Renderer* render;
 	SDL_Event e;
 	bool quit = false;
 
@@ -21,11 +22,39 @@ int main(int argc, char* args[])
 		1000,
 		500,
 		Window_Width, Window_Height, 
-		SDL_WINDOW_SHOWN | SDL_WINDOW_BORDERLESS);
+		SDL_WINDOW_SHOWN /*| SDL_WINDOW_BORDERLESS*/);
 	assert(window);
 
 	surface = SDL_GetWindowSurface(window);
 	assert(surface);
+
+	//render = SDL_CreateRenderer(window, 1, 0);
+	//assert(render);
+
+
+	////Circle test
+	//int circle_x = Window_Width / 2;
+	//int circle_y = Window_Height / 2;
+	//int circle_radius = 100;
+	//SDL_SetRenderDrawColor(render, 100, 100, 255, 255);
+
+	//int point_x;
+	//int point_y;
+
+	//while (circle_radius > 0)
+	//{
+	//	for (int t = 0; t < 360; t++)
+	//	{
+	//		point_x = circle_x + circle_radius * cos(t);
+	//		point_y = circle_y + circle_radius * sin(t);
+	//		SDL_RenderDrawPoint(render, point_x, point_y);
+	//	}
+
+	//	circle_radius--;
+	//}
+	//SDL_RenderPresent(render);
+
+	//SDL_Delay(10000);
 
 	while (!quit)
 	{
