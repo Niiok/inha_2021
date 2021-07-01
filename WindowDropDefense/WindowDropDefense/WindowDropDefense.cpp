@@ -14,6 +14,7 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 GameState* state;
+// double buffer try //RECT client_rect;
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -160,7 +161,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-			state->Draw(hdc);
+			// double buffer try //{
+			// double buffer try //	HDC hAltDC = CreateCompatibleDC(hdc);
+			// double buffer try //	assert(hAltDC);
+			// double buffer try //
+				state->Draw(hdc);
+
+			// double buffer try //	GetClientRect(hWnd, &client_rect);
+			// double buffer try //	client_rect.right -= client_rect.left;
+			// double buffer try //	client_rect.bottom -= client_rect.top;
+			// double buffer try //
+			// double buffer try //	Rectangle(hAltDC, 100, 100, 300, 300);
+			// double buffer try //
+			// double buffer try //	BitBlt(hdc, 0, 0, client_rect.right, client_rect.bottom, hAltDC, 0, 0, SRCCOPY);
+			// double buffer try //
+			// double buffer try //	DeleteDC(hAltDC);
+			// double buffer try //}
             EndPaint(hWnd, &ps);
         }
         break;
@@ -188,7 +204,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_LBUTTONDOWN:
 	case WM_RBUTTONDOWN:
 		state->Input(hWnd, message, wParam, lParam);
-		InvalidateRect(hWnd, NULL, true);
+		//InvalidateRect(hWnd, NULL, true);
 		break;
 
     case WM_DESTROY:
