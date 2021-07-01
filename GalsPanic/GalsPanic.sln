@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1525
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GalsPanic", "GalsPanic\GalsPanic.vcxproj", "{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}.Debug|x64.ActiveCfg = Debug|x64
+		{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}.Debug|x64.Build.0 = Debug|x64
+		{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}.Debug|x86.ActiveCfg = Debug|Win32
+		{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}.Debug|x86.Build.0 = Debug|Win32
+		{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}.Release|x64.ActiveCfg = Release|x64
+		{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}.Release|x64.Build.0 = Release|x64
+		{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}.Release|x86.ActiveCfg = Release|Win32
+		{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5EE9CEF7-5924-4BFB-963D-57F8A0C04CD9}
+	EndGlobalSection
+EndGlobal

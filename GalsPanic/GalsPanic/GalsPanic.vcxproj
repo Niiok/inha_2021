@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{6C4FEA17-8A30-4F61-BD6F-A5535BC49847}</ProjectGuid>
+    <ProjectGuid>{4C759A6A-B94D-41D0-B365-59A32FA3D5AF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>WindowsProject2</RootNamespace>
+    <RootNamespace>GalsPanic</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -95,7 +95,6 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>msimg32.lib;Gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -153,19 +152,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GalsPanic.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="WindowsProject2.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WindowsProject2.cpp" />
+    <ClCompile Include="GalsPanic.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="WindowsProject2.rc" />
+    <ResourceCompile Include="GalsPanic.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="GalsPanic.ico" />
     <Image Include="small.ico" />
-    <Image Include="WindowsProject2.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

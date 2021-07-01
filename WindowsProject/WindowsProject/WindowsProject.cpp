@@ -9,7 +9,7 @@
 #include <vector>
 #include <commdlg.h>
 #include "CStar.h"
-#pragma comment (lib, "msimg32.lib")
+
 
 #define MAX_LOADSTRING 100
 #define TIMER_1 1
@@ -19,17 +19,6 @@ HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
-HBITMAP hBackImage;
-BITMAP bitBack;
-HBITMAP hTransparentImage;
-BITMAP bitTransparent;
-HBITMAP hAniImage;
-BITMAP bitAni;
-const int SPRITE_SIZE_X = 57;
-const int SPRITE_SIZE_Y = 52;
-int RUN_FRAME_MAX = 0;
-int RUN_FRAME_MIN = 0;
-int curframe = RUN_FRAME_MIN;
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -43,10 +32,7 @@ void DrawRectangle(HDC hdc, COORD center, INT width, INT height);
 void DrawInputText(HDC hdc, RECT area, LPCTSTR str);
 void DrawStar(HDC hdc, COORD center, INT radius, INT wings);
 void DrawStar_weird(HDC hdc, COORD center, INT radius);
-void CreateBitmap();
-void DrawBitmap(HWND hWnd, HDC hdc);
-void DeleteBitmap();
-void UpdateFrame(HWND hWnd);
+
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -185,7 +171,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		CreateCaret(hWnd, NULL, 5, 15);
 		ShowCaret(hWnd);
 		SetTimer(hWnd, TIMER_1, 1000/30, NULL);
-		CreateBitmap();
 		break;
 
     case WM_COMMAND:
@@ -222,6 +207,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 
+
     case WM_PAINT:        {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
@@ -254,7 +240,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			SelectObject(hdc, OldBrush);
 			DeleteObject(hBrush);
 
-			DrawBitmap(hWnd, hdc);
 
             EndPaint(hWnd, &ps);
 
@@ -269,7 +254,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		KillTimer(hWnd, TIMER_1);
 		for (auto i : objects)
 			delete i;
-		DeleteBitmap();
         PostQuitMessage(0);
         break;
 
@@ -295,7 +279,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			for (auto i : objects)
 				i->Update(objects);
 
-			UpdateFrame(hWnd);
 
 			InvalidateRect(hWnd, NULL, true);
 			break;
@@ -574,86 +557,3 @@ void DrawStar_weird(HDC hdc, COORD center, INT radius)
 	Polygon(hdc, points, 10);
 }
 
-void CreateBitmap()
-{
-	hBackImage = (HBITMAP)LoadImage(NULL, TEXT("../image/수지.bmp"),
-		IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-	GetObject(hBackImage, sizeof(BITMAP), &bitBack);
-
-	hTransparentImage = (HBITMAP)LoadImage(NULL, TEXT("../image/sigong.bmp"),
-		IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-	GetObject(hTransparentImage, sizeof(BITMAP), &bitTransparent);
-
-	hAniImage = (HBITMAP)LoadImage(NULL, TEXT("../image/zero_run.bmp"),
-		IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
-	GetObject(hAniImage, sizeof(BITMAP), &bitAni);
-
-	RUN_FRAME_MAX = bitAni.bmWidth / SPRITE_SIZE_X - 1;
-	RUN_FRAME_MIN = 2;
-	curframe = RUN_FRAME_MIN;
-}
-
-void DrawBitmap(HWND hWnd, HDC hdc)
-{
-	HDC hMemDC;
-	HBITMAP hOldBitmap;
-	int bx, by;
-
-
-	{
-		hMemDC = CreateCompatibleDC(hdc);
-		hOldBitmap = (HBITMAP)SelectObject(hMemDC, hBackImage);
-		bx = bitBack.bmWidth;
-		by = bitBack.bmHeight;
-
-		BitBlt(hdc, 0, 0, bx, by, hMemDC, 0, 0, SRCCOPY);
-
-		SelectObject(hMemDC, hOldBitmap);
-
-		DeleteDC(hMemDC);
-	}
-	
-	{
-		hMemDC = CreateCompatibleDC(hdc);
-		hOldBitmap = (HBITMAP)SelectObject(hMemDC, hTransparentImage);
-		bx = bitTransparent.bmWidth;
-		by = bitTransparent.bmHeight;
-
-		BitBlt(hdc, 100, 200, bx, by, hMemDC, 0, 0, SRCCOPY);
-		TransparentBlt(hdc, 200, 200, bx, by, hMemDC, 0, 0, bx, by, RGB(255, 0, 255));
-
-		SelectObject(hMemDC, hOldBitmap);
-		DeleteDC(hMemDC);
-	}
-
-	{
-		hMemDC = CreateCompatibleDC(hdc);
-		hOldBitmap = (HBITMAP)SelectObject(hMemDC, hAniImage);
-		bx = bitAni.bmWidth / 16;
-		by = bitAni.bmHeight / 2;
-
-		int xStart = curframe * bx;
-		int yStart = 0;
-
-		TransparentBlt(hdc, 200, 400, bx, by, hMemDC, xStart, yStart, bx, by, RGB(255, 0, 255));
-
-		SelectObject(hMemDC, hOldBitmap);
-		DeleteDC(hMemDC);
-	}
-
-}
-
-void DeleteBitmap()
-{
-	DeleteObject(hBackImage);
-	DeleteObject(hTransparentImage);
-	DeleteObject(hAniImage);
-}
-
-void UpdateFrame(HWND hWnd)
-{
-	curframe++;
-	if (curframe > RUN_FRAME_MAX)
-		curframe = RUN_FRAME_MIN;
-
-}
