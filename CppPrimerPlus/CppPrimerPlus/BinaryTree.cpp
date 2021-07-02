@@ -104,13 +104,13 @@ void BinaryTree<T>::Remove(int index)
 
 			if (todel->left == NULL && todel->right == NULL)	// no child
 			{
-				todel->parent->left = NULL;
+				todel->parent->right = NULL;
 			}
 			else // one child
 			{
-				Node* child = (todel->left != NULL) ? todel->left : todel->right;
+				Node* child = todel->left;
 				
-				todel->parent->left = child;
+				todel->parent->right = child;
 				child->parent = todel->parent;
 			}
 				delete todel;

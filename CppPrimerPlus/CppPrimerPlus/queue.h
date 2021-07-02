@@ -1,3 +1,6 @@
+
+#pragma once
+
 #ifndef __Queue_h__
 #define __Queue_h__
 

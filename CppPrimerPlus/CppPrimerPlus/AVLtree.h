@@ -3,8 +3,8 @@
 #include "Queue.h"
 #include <assert.h>
 
-template <typename T>
-class BinaryTree
+template<typename T>
+class AVLtree
 {
 	struct Node {
 		Node* parent = NULL;
@@ -12,6 +12,8 @@ class BinaryTree
 		Node* right = NULL;
 		T* data;
 		int index = 0;
+		int left_count = 0;
+		int right_count = 0;
 
 		Node()
 		{
@@ -40,22 +42,17 @@ class BinaryTree
 		}
 	};
 
-
 public:
-	BinaryTree();
-	BinaryTree(int);
-	virtual ~BinaryTree();
+	AVLtree();
+	virtual ~AVLtree();
 
-protected:
-	Node* root_ = NULL;
+private:
 	int size_ = 0;
-
+	Node* root_ = NULL;
 
 public:
-
-	// modifier
-	virtual void Add(int index, T data);
-	virtual void Remove(int index);
+	void Add(int index, T data);
+	void Remove(int index);
 
 
 	// element access
@@ -66,6 +63,8 @@ public:
 	int size();
 	virtual int foreach(int(*func)(T& a, T& b), T& b);
 	//int binary_each(int(*func)(T& a, T& b), T& b);
+
+	int ShowTree(int width);
 
 protected:
 	Node* FindNode(int index)
@@ -85,11 +84,11 @@ protected:
 
 		return prev;
 	}
-	virtual int inorder(Queue<Node*>& que, Node* target);
-	virtual int postorder(Queue<Node*>& que, Node* target);
+	int inorder(Queue<Node*>& que, Node* target);
+	int postorder(Queue<Node*>& que, Node* target);
+	int BFS(Queue<Node*>& que, Node* target);
+	void CheckBalance(Node* parent);
+	void RotateBalance(Node* parent);
 };
 
-
-#include "BinaryTree.cpp"
-
-
+#include "AVLtree.cpp"
