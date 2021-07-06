@@ -64,17 +64,6 @@ int main(int argc, char* args[])
 			static double i = 0;
 			i += 0.1;
 
-			int mouse_x;
-			int mouse_y;
-			SDL_GetGlobalMouseState(&mouse_x, &mouse_y);
-
-
-			int x = mouse_x - Window_Width / 2 + cos(i / 5)*Window_Width / 4;
-
-			int y = mouse_y - Window_Height / 2 + sin(i / 5)*Window_Height / 4;
-			SDL_SetWindowPosition(window, x, y);
-
-
 			//if (SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 0xFF * cos(i / 10), 0xFF * sin(i / 10), 0x80)))
 			//	assert(0);
 			//if (SDL_UpdateWindowSurface(window))
@@ -84,8 +73,6 @@ int main(int argc, char* args[])
 			SDL_RenderFillRect(render, NULL);
 			SDL_SetRenderDrawColor(render, 0xFF*sinf(i/5), 0xFF*cosf(i/5), 0x80, 0xFF);
 			SDL_RenderDrawRect(render, NULL);
-
-			SDL_RenderD
 
 			SDL_SetRenderDrawColor(render, 0x80, 0xFF*sin(i), 0xFF*cos(i), 0xFF);
 			SDL_RenderDrawLines(render, points_mod, 5);
@@ -112,7 +99,7 @@ void Init()
 		SDL_WINDOW_SHOWN | SDL_WINDOW_BORDERLESS);
 	assert(window);
 
-	render = SDL_CreateRenderer(window, 1, 0);
+	render = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	assert(render);
 
 	surface = SDL_GetWindowSurface(window);

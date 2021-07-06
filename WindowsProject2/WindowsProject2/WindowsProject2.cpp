@@ -66,6 +66,8 @@ void GDI_Draw(HDC hdc);
 void GDI_End();
 void GDI_OnPaint(HDC hdc);
 
+BOOL CALLBACK MyDlg_Proc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam);
+
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -586,3 +588,45 @@ void GDI_OnPaint(HDC hdc)
 		delete pimg;
 }
 
+BOOL CALLBACK MyDlg_Proc(HWND hDlg, UINT iMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (iMsg)
+	{
+	case WM_INITDIALOG:
+	{
+		HWND hWndBtn = GetDlgItem(hDlg, IDC_PAUSE_BTN);
+		EnableWindow(hWndBtn, false);
+	}
+	return 1;
+
+	case WM_COMMAND:
+		switch (LOWORD(wParam))
+		{
+		case IDC_START_BTN:
+			SetDlgItemText(hDlg, IDC_MYDLG_STATIC, _T("시작"));
+			{
+				HWND hWndBtn = GetDlgItem(hDlg, IDC_START_BTN);
+				EnableWindow(hWndBtn, false);
+
+				hWndBtn = GetDlgItem(hDlg, IDC_PAUSE_BTN);
+				EnableWindow(hWndBtn, true);
+			}
+			break;
+		case IDC_PAUSE_BTN:
+			SetDlgItemText(hDlg, IDC_MYDLG_STATIC, _T("정지"));
+			{
+				HWND hWndBtn = GetDlgItem(hDlg, IDC_PAUSE_BTN);
+				EnableWindow(hWndBtn, false);
+
+				hWndBtn = GetDlgItem(hDlg, IDC_START_BTN);
+				EnableWindow(hWndBtn, true);
+			}
+			break;
+		case IDC_STOP_BTN:
+			EndDialog(hDlg, 0);
+			//SetDlgItemText(hDlg, IDC_MYDLG_STATIC, _T("종료"));
+			break;
+		}
+	}
+
+}

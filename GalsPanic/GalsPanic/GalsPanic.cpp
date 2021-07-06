@@ -163,10 +163,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				if (!hAltDC)
 					MessageBox(hWnd, L"Could not Initialize Compatible DC.", L"Error", MB_OK);
 
-				Rectangle(hAltDC, 100, 100, 300, 300);
-				Rectangle(hdc, 500, 500, 600, 600);
+				Rectangle(hAltDC, 0, 0, 300, 300);
+				Ellipse(hAltDC, 0, 0, 300, 300);
+
+
 
 				BitBlt(hdc, 0, 0, client_rect.right, client_rect.bottom, hAltDC, 0, 0, SRCCOPY);
+
+				Rectangle(hdc, 500, 500, 600, 600);
+				Ellipse(hdc, 500, 500, 600, 600);
 
 				DeleteDC(hAltDC);
 			}
