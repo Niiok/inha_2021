@@ -82,7 +82,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,7 +127,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GalsPanic.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SDL_Game.cpp" />
+    <ClCompile Include="SDL_State.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GalsPanic.h" />
+    <ClInclude Include="SDL_Game.h" />
+    <ClInclude Include="SDL_State.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
