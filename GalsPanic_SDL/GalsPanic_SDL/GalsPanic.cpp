@@ -28,23 +28,32 @@ void GalsPanic::Input()
 
 void GalsPanic::Process()
 {
-	if (SDL_Game::keystate[SDL_SCANCODE_SPACE])
-	{
-		player_mode = 1 - player_mode;
-		SDL_Delay(10);
-	}
 
 	switch (player_mode)
 	{
-	case 0: // in
-		PlayerMoveIn();
+	case 0:
+		PlayerMoveOut();
 		break;
 
 	case 1:
-		PlayerMoveOut();
+		PlayerMoveIn();
 			break;
 	}
 
+	if (SDL_Game::keystate[SDL_SCANCODE_SPACE])
+	{
+		static int count = 0;
+		if (count == 0)
+		{
+			printf("\t change!\n");
+
+			MovementChange();
+			
+			count = 6;
+		}
+		else if (count > 0)
+			--count;
+	}
 }
 
 void GalsPanic::Output()
@@ -66,12 +75,25 @@ void GalsPanic::Output()
 			vertices_static[i + 1].first * SDL_Game::window_rect.w,
 			vertices_static[i + 1].second * SDL_Game::window_rect.h);
 	}
-	if (vertices_static.size() > 2)
-		SDL_RenderDrawLine(SDL_Game::renderer, vertices_static[0].first * SDL_Game::window_rect.w,
-			vertices_static[0].second * SDL_Game::window_rect.h,
-			vertices_static[vertices_static.size() - 1].first * SDL_Game::window_rect.w,
-			vertices_static[vertices_static.size() - 1].second * SDL_Game::window_rect.h);
+	SDL_RenderDrawLine(SDL_Game::renderer, vertices_static[0].first * SDL_Game::window_rect.w,
+		vertices_static[0].second * SDL_Game::window_rect.h,
+		vertices_static[vertices_static.size() - 1].first * SDL_Game::window_rect.w,
+		vertices_static[vertices_static.size() - 1].second * SDL_Game::window_rect.h);
 
+	if (vertices_temp.size() > 1)
+	{
+		for (int i = 0; i < vertices_temp.size() - 1; ++i)
+		{
+			SDL_RenderDrawLine(SDL_Game::renderer, vertices_temp[i].first * SDL_Game::window_rect.w,
+				vertices_temp[i].second * SDL_Game::window_rect.h,
+				vertices_temp[i + 1].first * SDL_Game::window_rect.w,
+				vertices_temp[i + 1].second * SDL_Game::window_rect.h);
+		}
+		SDL_RenderDrawLine(SDL_Game::renderer, player_x * SDL_Game::window_rect.w,
+			player_y * SDL_Game::window_rect.h,
+			vertices_temp[vertices_temp.size() - 1].first * SDL_Game::window_rect.w,
+			vertices_temp[vertices_temp.size() - 1].second * SDL_Game::window_rect.h);
+	}
 }
 
 
@@ -86,11 +108,10 @@ void GalsPanic::PlayerMoveIn()
 	static float dst_vertex_x;
 	static float dst_vertex_y;
 
-	static float src_minus_dst_x;
-	static float src_minus_dst_y;
+	static float dx;
+	static float dy;
 
 	static float gradient;
-
 
 	// walkway setting
 	if (old_line != in_line)
@@ -98,29 +119,23 @@ void GalsPanic::PlayerMoveIn()
 
 		next_line = (in_line + 1 == vertices_static.size() ? 0 : in_line + 1);
 		prev_line = (in_line - 1 == -1 ? vertices_static.size() - 1 : in_line - 1);
-		
-		printf("\t%d", in_line);
-		printf("\t%d", prev_line);
-		printf("\t%d\n", next_line);
 
 		src_vertex_x = vertices_static[in_line].first;
 		src_vertex_y = vertices_static[in_line].second;
 		dst_vertex_x = vertices_static[next_line].first;
 		dst_vertex_y = vertices_static[next_line].second;
 
-		src_minus_dst_x = src_vertex_x - dst_vertex_x;
-		src_minus_dst_y = src_vertex_y - dst_vertex_y;
+		dx = dst_vertex_x - src_vertex_x;
+		dy = dst_vertex_y - src_vertex_y;
 
-		gradient = src_minus_dst_y / src_minus_dst_x;
-
-		printf("\tdx : %f\tdy : %f\tgradient : %f\n",src_minus_dst_x, src_minus_dst_y, gradient);
+		gradient = dy / dx;
+		printf("\tgradient  = %f\n", gradient);
 
 		old_line = in_line;
 	}
 
-
 	// move
-	if (abs(gradient) == 1)
+	if (abs(gradient) < 1.001 && abs(gradient) > 0.999)
 	{
 		int key_pressed = 0;
 
@@ -187,11 +202,9 @@ void GalsPanic::PlayerMoveIn()
 			}
 	}
 
-
-
 	// which line am i standing
 		// x compare
-	if (src_minus_dst_x > 0)
+	if (dx < 0)	// src x is bigger
 	{
 		if (player_x > src_vertex_x)
 		{
@@ -208,7 +221,7 @@ void GalsPanic::PlayerMoveIn()
 			return;
 		}
 	}
-	else if (src_minus_dst_x < 0)
+	else if (dx > 0)	// dst x is bigger
 	{
 		if (player_x < src_vertex_x)
 		{
@@ -225,9 +238,8 @@ void GalsPanic::PlayerMoveIn()
 			return;
 		}
 	}
-
 		// y compare
-	if (src_minus_dst_y > 0)
+	if (dy < 0)	// src y is bigger
 	{
 		if (player_y > src_vertex_y)
 		{
@@ -244,7 +256,7 @@ void GalsPanic::PlayerMoveIn()
 			return;
 		}
 	}
-	else if (src_minus_dst_y < 0)
+	else if (dy > 0)	// dst y is bigger
 	{
 		if (player_y < src_vertex_y)
 		{
@@ -265,7 +277,10 @@ void GalsPanic::PlayerMoveIn()
 
 void GalsPanic::PlayerMoveOut()
 {
+	static float total_degree = 0.0;
+
 	int new_direction = 0;
+
 
 	if (SDL_Game::keystate[SDL_SCANCODE_UP])
 		new_direction -= 2;
@@ -280,9 +295,9 @@ void GalsPanic::PlayerMoveOut()
 		new_direction += 16;
 
 
-	if (new_direction != old_direction && new_direction != 0)
+	if (abs(new_direction) != abs(old_direction) && new_direction != 0)
 	{
-		vertices_static.push_back({ player_x, player_y });
+		vertices_temp.push_back({ player_x, player_y });
 		old_direction = new_direction;
 	}
 
@@ -302,4 +317,82 @@ void GalsPanic::PlayerMoveOut()
 	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT])
 		if (player_x < 1.0)
 			player_x += player_speed;
+
+
+	int vt_size = vertices_temp.size();
+	for (int i = vt_size - 1; i > 0; --i)
+	{
+		std::pair<float, float> inter = OverlapLine(
+			{ player_x, player_y }, vertices_temp[vt_size - 1],
+			vertices_temp[i], vertices_temp[i - 1]);
+		if (inter.first != -1)
+		{
+			player_x = vertices_temp[0].first;
+			player_y = vertices_temp[0].second;
+			MovementChange();
+			return;
+		}
+	}
+}
+
+std::pair<float,float> GalsPanic::OverlapLine(
+	std::pair<float, float> p1, std::pair<float, float> p2,
+	std::pair<float, float> p3, std::pair<float, float> p4)
+{
+	// p1 = line 1's source
+	// p2 = line 1's destination
+	// p3 = line 2's source
+	// p4 = line 2's destination
+
+	float denominator =		// (x1-x2)(y3-y4)-(y1-y2)(x3-x4)
+		(p1.first - p2.first) * (p3.second - p4.second)
+		- (p1.second - p2.second) * (p3.first - p4.first);
+
+	if (denominator == 0)
+		return { -1,-1 };
+
+	float t = 
+		((p1.first - p3.first)*(p3.second - p4.second)
+		- (p1.second - p3.second)*(p3.first - p4.first))
+		/ denominator;
+	if (t >= 1.0 || t <= 0.0)
+		return { -1, -1 };
+
+	float u =
+		((p2.first - p1.first)*(p1.second - p3.second)
+			- (p2.second - p1.second)*(p1.first - p3.first))
+		/ denominator;
+	if (u >= 1.0 || u <= 0.0)
+		return { -1, -1 };
+	
+
+	float inter_x = p1.first + t * (p2.first - p1.first);
+	float inter_y = p1.second + t * (p2.second - p1.second);
+
+	return { inter_x, inter_y };
+}
+
+
+
+void GalsPanic::MovementChange()
+{
+	switch (player_mode)
+	{
+	case 0:		// out to in
+	{
+
+
+		vertices_temp.clear();
+	}
+		break;
+	case 1:		// in to out
+	{
+
+
+		vertices_temp.push_back({ player_x, player_y });
+	}
+		break;
+	}
+
+	player_mode = 1 - player_mode;
 }
