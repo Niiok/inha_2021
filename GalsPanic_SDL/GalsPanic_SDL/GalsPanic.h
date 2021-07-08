@@ -17,11 +17,17 @@ public:
 private:
 	SDL_Rect rect = { 100, 100, 100, 100 };
 	SDL_Texture* background = NULL;
-	std::vector<std::pair<float,float>> vertices;
+
+	std::vector<std::pair<float, float>> vertices_static;
+	std::vector<std::pair<float, float>> vertices_temp;
+
 	float player_x = 0.5;
 	float player_y = 0.5;
 	float player_speed = 0.01;
-	int cur_index = 0;
+
+	int player_mode = 0;
+	int old_line = -1;
+	int in_line = 0;
 	int old_direction = 0;
 
 public:
@@ -30,5 +36,7 @@ public:
 	void Output() override;
 
 private:
-	void PlayerMove();
+	void PlayerMoveOut();
+	void PlayerMoveIn();
+	int OverlapLine();
 };
