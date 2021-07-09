@@ -2,8 +2,14 @@
 
 #include "SDL_Game.h"
 #include "SDL_State.h"
-#include "SDL_image.h"
+#include "GalsObject.h"
+#include "GalsPlayer.h"
+#include "GalsMap.h"
+
 #include <vector>
+
+class GalsPlayer;
+class GalsMap;
 
 
 
@@ -15,21 +21,8 @@ public:
 	~GalsPanic();
 
 private:
-	SDL_Rect rect = { 100, 100, 100, 100 };
-	SDL_Texture* background = NULL;
-
-	std::vector<std::pair<float, float>> vertices_static;
-	std::vector<std::pair<float, float>> vertices_temp;
-
-	float player_x = 0.5;
-	float player_y = 0.5;
-	float player_speed = 0.01;
-
-	int player_mode = 1;
-	int old_line = -1;
-	int in_line = 0;
-	int old_direction = 0;
-	int out_move_degree = 0;
+	GalsPlayer player_;
+	GalsMap map_;
 
 public:
 	void Input() override;
@@ -37,11 +30,6 @@ public:
 	void Output() override;
 
 private:
-	void PlayerMoveOut();
-	void PlayerMoveIn();
-	std::pair<float, float> OverlapLine(
-		std::pair<float, float> p1, std::pair<float,float> p2,
-		std::pair<float,float> p3, std::pair<float,float> p4 );
-	void MovementChange();
-	int DirToDegree(int key);
+	
+
 };

@@ -4,6 +4,9 @@
 #include "SDL.h"
 #include "SDL_State.h"
 
+#define PREDEF_FPS 1000/60
+#define PREDEF_WIDTH 500
+#define PREDEF_HEIGHT 400
 
 class SDL_Game
 {

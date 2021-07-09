@@ -1,7 +1,7 @@
 #include "SDL_Game.h"
 
-int SDL_Game::FPS = 1000 / 30;
-SDL_Rect SDL_Game::window_rect = { SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 400, 400 };
+int SDL_Game::FPS = PREDEF_FPS;
+SDL_Rect SDL_Game::window_rect = { SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, PREDEF_WIDTH, PREDEF_HEIGHT };
 
 
 SDL_Window* SDL_Game::window = NULL;

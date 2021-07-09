@@ -27,6 +27,15 @@
     <ClCompile Include="GalsPanic.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GalsObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GalsPlayer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GalsMap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SDL_Game.h">
@@ -36,6 +45,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="GalsPanic.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GalsObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GalsPlayer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GalsMap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

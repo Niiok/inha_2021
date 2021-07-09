@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "SDL_Game.h"
+#include "GalsObject.h"
 #include "GalsPanic.h"
 
 int main(int argc, char* argv[])

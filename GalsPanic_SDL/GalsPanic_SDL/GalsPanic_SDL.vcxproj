@@ -127,13 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GalsMap.cpp" />
+    <ClCompile Include="GalsObject.cpp" />
     <ClCompile Include="GalsPanic.cpp" />
+    <ClCompile Include="GalsPlayer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SDL_Game.cpp" />
     <ClCompile Include="SDL_State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GalsMap.h" />
+    <ClInclude Include="GalsObject.h" />
     <ClInclude Include="GalsPanic.h" />
+    <ClInclude Include="GalsPlayer.h" />
     <ClInclude Include="SDL_Game.h" />
     <ClInclude Include="SDL_State.h" />
   </ItemGroup>
