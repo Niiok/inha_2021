@@ -49,7 +49,7 @@ void GalsPanic::Process()
 
 			MovementChange();
 			
-			count = 6;
+			count = 2;
 		}
 		else if (count > 0)
 			--count;
@@ -80,7 +80,7 @@ void GalsPanic::Output()
 		vertices_static[vertices_static.size() - 1].first * SDL_Game::window_rect.w,
 		vertices_static[vertices_static.size() - 1].second * SDL_Game::window_rect.h);
 
-	if (vertices_temp.size() > 1)
+	if (vertices_temp.size() > 0)
 	{
 		for (int i = 0; i < vertices_temp.size() - 1; ++i)
 		{
@@ -130,7 +130,6 @@ void GalsPanic::PlayerMoveIn()
 
 		gradient = dy / dx;
 		printf("\tgradient  = %f\n", gradient);
-
 		old_line = in_line;
 	}
 
@@ -277,45 +276,43 @@ void GalsPanic::PlayerMoveIn()
 
 void GalsPanic::PlayerMoveOut()
 {
-	static float total_degree = 0.0;
-
 	int new_direction = 0;
 
 
-	if (SDL_Game::keystate[SDL_SCANCODE_UP])
+	if (SDL_Game::keystate[SDL_SCANCODE_UP] && player_y > 0.0)
 		new_direction -= 2;
 
-	if (SDL_Game::keystate[SDL_SCANCODE_DOWN])
+	if (SDL_Game::keystate[SDL_SCANCODE_DOWN] && player_y < 1.0)
 		new_direction += 2;
 
-	if (SDL_Game::keystate[SDL_SCANCODE_LEFT])
+	if (SDL_Game::keystate[SDL_SCANCODE_LEFT] && player_x > 0.0)
 		new_direction -= 16;
 
-	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT] )
+	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT] && player_x < 1.0)
 		new_direction += 16;
 
 
 	if (abs(new_direction) != abs(old_direction) && new_direction != 0)
 	{
 		vertices_temp.push_back({ player_x, player_y });
+
+		out_move_degree += (DirToDegree(new_direction) - DirToDegree(old_direction));
+
 		old_direction = new_direction;
 	}
+		printf("\ttotoal degree = %d\n", out_move_degree);
 
 
-	if (SDL_Game::keystate[SDL_SCANCODE_UP])
-		if (player_y > 0.0)
+	if (SDL_Game::keystate[SDL_SCANCODE_UP] && player_y > 0.0)
 			player_y -= player_speed;
 
-	if (SDL_Game::keystate[SDL_SCANCODE_DOWN])
-		if (player_y < 1.0)
+	if (SDL_Game::keystate[SDL_SCANCODE_DOWN] && player_y < 1.0)
 			player_y += player_speed;
 
-	if (SDL_Game::keystate[SDL_SCANCODE_LEFT])
-		if (player_x > 0.0)
+	if (SDL_Game::keystate[SDL_SCANCODE_LEFT] && player_x > 0.0)
 			player_x -= player_speed;
 
-	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT])
-		if (player_x < 1.0)
+	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT] && player_x < 1.0)
 			player_x += player_speed;
 
 
@@ -327,8 +324,6 @@ void GalsPanic::PlayerMoveOut()
 			vertices_temp[i], vertices_temp[i - 1]);
 		if (inter.first != -1)
 		{
-			player_x = vertices_temp[0].first;
-			player_y = vertices_temp[0].second;
 			MovementChange();
 			return;
 		}
@@ -378,21 +373,59 @@ void GalsPanic::MovementChange()
 {
 	switch (player_mode)
 	{
-	case 0:		// out to in
+	case 0:		// out to in  ==  inmove initial
 	{
-
-
-		vertices_temp.clear();
+		player_x = vertices_temp[0].first;
+		player_y = vertices_temp[0].second;
 	}
 		break;
-	case 1:		// in to out
+	case 1:		// in to out  ==  outmove initial
 	{
-
-
+		out_move_degree = 0;
+		vertices_temp.clear();
 		vertices_temp.push_back({ player_x, player_y });
 	}
 		break;
 	}
 
 	player_mode = 1 - player_mode;
+}
+
+int GalsPanic::DirToDegree(int keydir)
+{
+	/*if (SDL_Game::keystate[SDL_SCANCODE_UP] && player_y > 0.0)
+		new_direction -= 2;
+
+	if (SDL_Game::keystate[SDL_SCANCODE_DOWN] && player_y < 1.0)
+		new_direction += 2;
+
+	if (SDL_Game::keystate[SDL_SCANCODE_LEFT] && player_x > 0.0)
+		new_direction -= 16;
+
+	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT] && player_x < 1.0)
+		new_direction += 16;*/
+
+	switch (keydir)
+	{
+	case 16:	// right
+		return 0;
+	case 14:	// right-up
+		return 45;
+	case -2:	// up
+		return 90;
+	case -18:	// left-up
+		return 135;
+	case -16:	// left
+		return 180;
+	case -14:	// left-down
+		return 225;
+	case 2:	// down
+		return 270;
+	case 18:	// right-down
+		return 315;
+	}
+
+	return -1;
+
+	// new_move - old_move = changed_degree
 }
