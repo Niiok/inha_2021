@@ -273,11 +273,13 @@ void GalsPlayer::MoveOut()
 
 
 	int vt_size = map_->vertices_temp_.size();
-	for (int i = vt_size - 1; i > 0; --i)
+	for (int i = 0; i < vt_size; ++i)
 	{
+		int next_i = (i != vt_size - 1 ? i + 1 : 0);
+
 		floatXY inter = OverlapLine(
-			{ location_.x, location_.y }, map_->vertices_temp_[vt_size - 1],
-			map_->vertices_temp_[i], map_->vertices_temp_[i - 1]);
+			map_->vertices_temp_[vt_size - 1], { location_.x, location_.y },
+			map_->vertices_temp_[i], map_->vertices_temp_[next_i]);
 		if (inter.x != -1)
 		{
 			MoveModeChange();
@@ -335,14 +337,14 @@ floatXY GalsPlayer::OverlapLine(
 		((p1.x - p3.x)*(p3.y - p4.y)
 			- (p1.y - p3.y)*(p3.x - p4.x))
 		/ denominator;
-	if (t >= 1.0 || t <= 0.0)
+	if (t > 1.0 || t <= 0.0)
 		return { -1, -1 };
 
 	float u =
 		((p2.x - p1.x)*(p1.y - p3.y)
 			- (p2.y - p1.y)*(p1.x - p3.x))
 		/ denominator;
-	if (u >= 1.0 || u <= 0.0)
+	if (u >= 1.0 || u < 0.0)
 		return { -1, -1 };
 
 
@@ -358,11 +360,13 @@ floatXY GalsPlayer::OverlapLine(
 void GalsPlayer::Coll_Player_Polygon()
 {
 	int vs_size = map_->vertices_static_.size();
-	for (int i = vs_size - 1; i > 0; --i)
+	for (int i = 0; i < vs_size; ++i)
 	{
+		int next_i = (i != vs_size - 1 ? i + 1 : 0);
+
 		floatXY inter = OverlapLine(
-			{ location_.x, location_.y }, map_->vertices_temp_[map_->vertices_temp_.size() - 1],
-			map_->vertices_static_[i], map_->vertices_static_[i - 1]);
+			map_->vertices_temp_[map_->vertices_temp_.size() - 1], { location_.x, location_.y },
+			map_->vertices_static_[i], map_->vertices_static_[next_i]);
 
 		if (inter.x != -1)
 		{

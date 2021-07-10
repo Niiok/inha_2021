@@ -29,8 +29,8 @@ void GalsPanic::Process()
 
 void GalsPanic::Output()
 {
-	SDL_SetRenderDrawColor(SDL_Game::renderer, 0, 0, 0, 125);
-	SDL_RenderFillRect(SDL_Game::renderer, NULL);
+	//SDL_SetRenderDrawColor(SDL_Game::renderer, 0, 0, 0, 32);
+	//SDL_RenderClear(SDL_Game::renderer);
 	
 
 	map_.Draw();

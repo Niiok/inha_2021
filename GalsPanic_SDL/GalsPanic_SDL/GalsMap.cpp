@@ -3,7 +3,7 @@
 
 GalsMap::GalsMap()
 {
-	IMG_Init(IMG_INIT_PNG);
+	SDL_assert(	IMG_Init(IMG_INIT_PNG) );
 	vertices_static_.push_back({ 0.5f, 0.5f });
 	vertices_static_.push_back({ 0.6f, 0.5f });
 	vertices_static_.push_back({ 0.6f, 0.6f });
@@ -12,15 +12,28 @@ GalsMap::GalsMap()
 	//vertices.push_back({0.0, 1.0});
 	//vertices.push_back({1.0, 1.0});
 	//vertices.push_back({1.0, 0.0});
+
+	{
+		SDL_Surface* image_surface = IMG_Load("../data/background.png");
+		printf("%p", image_surface);
+		SDL_assert(image_surface != NULL);
+		background_ = SDL_CreateTextureFromSurface(SDL_Game::renderer, image_surface);
+		printf("%s", SDL_GetError());
+		SDL_assert(background_ != NULL);
+		SDL_FreeSurface(image_surface);
+	}
 }
 
 GalsMap::~GalsMap()
 {
+	SDL_DestroyTexture(background_);
 	IMG_Quit();
 }
 
 void GalsMap::Draw()
 {
+
+	SDL_RenderCopy(SDL_Game::renderer, background_, NULL, NULL);
 
 	SDL_SetRenderDrawColor(SDL_Game::renderer, 255, 255, 255, 255);
 

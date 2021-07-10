@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SDL_Game.h"
+//#include "SDL_Game.h"
 #include "SDL_State.h"
 #include "GalsObject.h"
 #include "GalsPlayer.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include "SDL_image.h"
+#include <SDL_image.h>
 
 #include "GalsObject.h"
 #include "GalsPlayer.h"
@@ -17,7 +17,7 @@ public:
 protected:
 	GalsPlayer* player_;
 
-	SDL_Texture* background_ = NULL;
+	SDL_Texture* background_;
 
 	std::vector<floatXY> vertices_static_;
 	std::vector<floatXY> vertices_temp_;
