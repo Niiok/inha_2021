@@ -36,6 +36,9 @@ void GalsMap::Draw()
 		vertices_static_[vertices_static_.size() - 1].x * SDL_Game::window_rect.w,
 		vertices_static_[vertices_static_.size() - 1].y * SDL_Game::window_rect.h);
 
+
+	SDL_SetRenderDrawColor(SDL_Game::renderer, 255, 0, 0, 255);
+
 	if (vertices_temp_.size() > 0)
 	{
 		for (int i = 0; i < vertices_temp_.size() - 1; ++i)

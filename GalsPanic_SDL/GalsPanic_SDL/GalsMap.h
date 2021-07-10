@@ -3,6 +3,7 @@
 
 #include "GalsObject.h"
 #include "GalsPlayer.h"
+#include <vector>
 
 class GalsMap :
 	public GalsObject

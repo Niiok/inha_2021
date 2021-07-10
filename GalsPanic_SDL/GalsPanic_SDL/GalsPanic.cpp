@@ -22,7 +22,8 @@ void GalsPanic::Input()
 
 void GalsPanic::Process()
 {
-
+	map_.Update();
+	player_.Update();
 
 }
 
@@ -32,7 +33,8 @@ void GalsPanic::Output()
 	SDL_RenderFillRect(SDL_Game::renderer, NULL);
 	
 
-
+	map_.Draw();
+	player_.Draw();
 
 
 }

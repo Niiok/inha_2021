@@ -6,7 +6,6 @@
 #include "GalsPlayer.h"
 #include "GalsMap.h"
 
-#include <vector>
 
 class GalsPlayer;
 class GalsMap;

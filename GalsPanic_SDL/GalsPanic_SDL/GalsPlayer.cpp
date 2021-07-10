@@ -297,13 +297,13 @@ void GalsPlayer::MoveModeChange()
 	{
 		location_.x = map_->vertices_temp_[0].x;
 		location_.y = map_->vertices_temp_[0].y;
+		map_->vertices_temp_.clear();
 	}
 	break;
 	case 1:		// in to out  ==  outmove initial
 	{
 		old_direction = { 0, 0 };
 		out_move_degree = 0;
-		map_->vertices_temp_.clear();
 		map_->vertices_temp_.push_back({ location_.x, location_.y });
 	}
 	break;
@@ -361,7 +361,7 @@ void GalsPlayer::Coll_Player_Polygon()
 	for (int i = vs_size - 1; i > 0; --i)
 	{
 		floatXY inter = OverlapLine(
-			{ location_.x, location_.y }, map_->vertices_static_[vs_size - 1],
+			{ location_.x, location_.y }, map_->vertices_temp_[map_->vertices_temp_.size() - 1],
 			map_->vertices_static_[i], map_->vertices_static_[i - 1]);
 
 		if (inter.x != -1)

@@ -1,5 +1,5 @@
 #pragma once
-#include "GalsPanic.h"
+#include "SDL_Game.h"
 
 struct intXY
 {
