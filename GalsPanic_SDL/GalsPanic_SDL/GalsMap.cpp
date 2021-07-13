@@ -14,12 +14,13 @@ GalsMap::GalsMap()
 	//vertices.push_back({1.0, 0.0});
 
 	{
+
 		SDL_Surface* image_surface = IMG_Load("../data/background.png");
-		printf("%p", image_surface);
 		SDL_assert(image_surface != NULL);
+
 		background_ = SDL_CreateTextureFromSurface(SDL_Game::renderer, image_surface);
-		printf("%s", SDL_GetError());
 		SDL_assert(background_ != NULL);
+
 		SDL_FreeSurface(image_surface);
 	}
 }
@@ -32,7 +33,6 @@ GalsMap::~GalsMap()
 
 void GalsMap::Draw()
 {
-
 	SDL_RenderCopy(SDL_Game::renderer, background_, NULL, NULL);
 
 	SDL_SetRenderDrawColor(SDL_Game::renderer, 255, 255, 255, 255);

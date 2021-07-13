@@ -12,7 +12,7 @@ const Uint8* SDL_Game::keystate = NULL;
 SDL_State* SDL_Game::game_state = NULL;
 
 
-SDL_Game::SDL_Game(SDL_State* initial_state)
+SDL_Game::SDL_Game()
 {
 	if (SDL_Init(SDL_INIT_VIDEO /*| SDL_INIT_EVENTS*/))
 		SDL_assert(0);
@@ -25,8 +25,20 @@ SDL_Game::SDL_Game(SDL_State* initial_state)
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_assert(renderer);
 
-	game_state = initial_state;
+}
 
+SDL_Game::~SDL_Game()
+{
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+
+	delete game_state;
+}
+
+
+void SDL_Game::Run()
+{
 	int old_tick = SDL_GetTicks();
 	int new_tick;
 
@@ -67,13 +79,4 @@ SDL_Game::SDL_Game(SDL_State* initial_state)
 		}
 	}
 
-}
-
-SDL_Game::~SDL_Game()
-{
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
-
-	delete game_state;
 }

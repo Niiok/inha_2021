@@ -11,7 +11,7 @@ static constexpr int INITIAL_HEIGHT = 400;
 class SDL_Game
 {
 public:
-	SDL_Game(SDL_State* initial_state);
+	SDL_Game();
 	~SDL_Game();
 
 public:
@@ -25,9 +25,9 @@ public:
 
 	static SDL_State* game_state;
 
-
 public:
-
+	inline void SetState(SDL_State* state) { game_state = state; }
+	void Run();
 
 
 };

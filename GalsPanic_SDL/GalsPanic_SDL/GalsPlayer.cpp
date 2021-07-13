@@ -16,6 +16,7 @@ GalsPlayer::~GalsPlayer()
 void GalsPlayer::Draw()
 {
 	SDL_SetRenderDrawColor(SDL_Game::renderer, 255, 255, 255, 255);
+
 	SDL_Rect player_rect = { (location_.x - 0.005)*SDL_Game::window_rect.w,
 	(location_.y - 0.005)*SDL_Game::window_rect.h,
 	0.01*SDL_Game::window_rect.w,
@@ -272,22 +273,8 @@ void GalsPlayer::MoveOut()
 		location_.x += speed_;
 
 
-	int vt_size = map_->vertices_temp_.size();
-	for (int i = 0; i < vt_size; ++i)
-	{
-		int next_i = (i != vt_size - 1 ? i + 1 : 0);
 
-		floatXY inter = OverlapLine(
-			map_->vertices_temp_[vt_size - 1], { location_.x, location_.y },
-			map_->vertices_temp_[i], map_->vertices_temp_[next_i]);
-		if (inter.x != -1)
-		{
-			MoveModeChange();
-			return;
-		}
-	}
-
-	Coll_Player_Polygon();
+	Coll_Line();
 }
 
 
@@ -357,8 +344,9 @@ floatXY GalsPlayer::OverlapLine(
 
 
 
-void GalsPlayer::Coll_Player_Polygon()
+void GalsPlayer::Coll_Line()
 {
+	// static lines
 	int vs_size = map_->vertices_static_.size();
 	for (int i = 0; i < vs_size; ++i)
 	{
@@ -385,4 +373,22 @@ void GalsPlayer::Coll_Player_Polygon()
 			return;
 		}
 	}
+
+
+	// temp lines
+	int vt_size = map_->vertices_temp_.size();
+	for (int i = 0; i < vt_size; ++i)
+	{
+		int next_i = (i != vt_size - 1 ? i + 1 : 0);
+
+		floatXY inter = OverlapLine(
+			map_->vertices_temp_[vt_size - 1], { location_.x, location_.y },
+			map_->vertices_temp_[i], map_->vertices_temp_[next_i]);
+		if (inter.x != -1)
+		{
+			MoveModeChange();
+			return;
+		}
+	}
+
 }

@@ -37,6 +37,6 @@ protected:
 
 	floatXY OverlapLine(floatXY p1, floatXY p2,
 		floatXY p3, floatXY p4);
-	void Coll_Player_Polygon();
+	void Coll_Line();
 };
 

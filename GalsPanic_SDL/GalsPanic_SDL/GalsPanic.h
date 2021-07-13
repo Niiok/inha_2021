@@ -20,8 +20,8 @@ public:
 	~GalsPanic();
 
 private:
-	GalsPlayer player_;
 	GalsMap map_;
+	GalsPlayer player_;
 
 public:
 	void Input() override;

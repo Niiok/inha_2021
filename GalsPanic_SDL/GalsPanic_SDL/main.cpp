@@ -4,10 +4,12 @@
 
 int main(int argc, char* argv[])
 {
+	SDL_Game game;
 
 	SDL_State* state = new GalsPanic;
 
-	SDL_Game this_object_do_everything(state);
+	game.SetState(state);
+	game.Run();
 
 	return 0;
 }
