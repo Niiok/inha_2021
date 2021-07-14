@@ -2,11 +2,12 @@
 
 #include <stdio.h>
 #include <SDL.h>
+#include <SDL_image.h>
 #include "SDL_State.h"
 
 static constexpr int INITIAL_FPS = 1000 / 60;
-static constexpr int INITIAL_WIDTH = 500;
-static constexpr int INITIAL_HEIGHT = 400;
+static constexpr int INITIAL_WIDTH = 600;
+static constexpr int INITIAL_HEIGHT = 512;
 
 class SDL_Game
 {

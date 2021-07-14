@@ -14,8 +14,9 @@ SDL_State* SDL_Game::game_state = NULL;
 
 SDL_Game::SDL_Game()
 {
-	if (SDL_Init(SDL_INIT_VIDEO /*| SDL_INIT_EVENTS*/))
-		SDL_assert(0);
+	SDL_assert(!SDL_Init(SDL_INIT_VIDEO /*| SDL_INIT_EVENTS*/));
+
+	SDL_assert(IMG_Init(IMG_INIT_PNG));
 
 	window = SDL_CreateWindow("test",
 		window_rect.x, window_rect.y, window_rect.w, window_rect.h,
@@ -31,6 +32,7 @@ SDL_Game::~SDL_Game()
 {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	IMG_Quit();
 	SDL_Quit();
 
 	delete game_state;

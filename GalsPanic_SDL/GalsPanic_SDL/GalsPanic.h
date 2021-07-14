@@ -11,7 +11,6 @@ class GalsPlayer;
 class GalsMap;
 
 
-
 class GalsPanic :
 	public SDL_State
 {

@@ -35,8 +35,7 @@ protected:
 	virtual void MoveOut();
 	virtual void MoveModeChange();
 
-	floatXY OverlapLine(floatXY p1, floatXY p2,
-		floatXY p3, floatXY p4);
+
 	void Coll_Line();
 };
 

@@ -13,6 +13,10 @@ struct floatXY
 	float y;
 };
 
+floatXY OverlapLine(
+	floatXY p1, floatXY p2,
+	floatXY p3, floatXY p4);
+
 class GalsObject
 {
 public:
@@ -29,4 +33,3 @@ public:
 	virtual void Draw() = 0;
 	virtual void Update() = 0;
 };
-
