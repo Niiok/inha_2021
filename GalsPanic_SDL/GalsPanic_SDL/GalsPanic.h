@@ -4,6 +4,7 @@
 #include "SDL_State.h"
 #include "GalsObject.h"
 #include "GalsPlayer.h"
+#include "GalsEnemy.h"
 #include "GalsMap.h"
 
 
@@ -21,6 +22,7 @@ public:
 private:
 	GalsMap map_;
 	GalsPlayer player_;
+	GalsEnemy enemy_;
 
 public:
 	void Input() override;

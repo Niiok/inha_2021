@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GalsEnemy.cpp" />
     <ClCompile Include="GalsMap.cpp" />
     <ClCompile Include="GalsObject.cpp" />
     <ClCompile Include="GalsPanic.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="SDL_State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GalsEnemy.h" />
     <ClInclude Include="GalsMap.h" />
     <ClInclude Include="GalsObject.h" />
     <ClInclude Include="GalsPanic.h" />

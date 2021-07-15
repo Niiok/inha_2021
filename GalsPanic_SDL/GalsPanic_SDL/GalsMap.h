@@ -31,6 +31,6 @@ public:
 
 private:
 	void RefreshBackground();
-
+	void MergeVertices(int started_line, int ended_line );
 };
 

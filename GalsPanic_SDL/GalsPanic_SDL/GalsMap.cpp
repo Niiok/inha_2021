@@ -3,10 +3,10 @@
 
 GalsMap::GalsMap()
 {
-	vertices_static_.push_back({ 0.3f, 0.3f });
-	vertices_static_.push_back({ 0.7f, 0.3f });
-	vertices_static_.push_back({ 0.7f, 0.7f });
-	vertices_static_.push_back({ 0.3f, 0.7f });
+	vertices_static_.push_back({ 0.001f, 0.001f });
+	vertices_static_.push_back({ 0.999f, 0.001f });
+	vertices_static_.push_back({ 0.999f, 0.999f });
+	vertices_static_.push_back({ 0.001f, 0.999f });
 	//vertices.push_back({0.0, 0.0});
 	//vertices.push_back({0.0, 1.0});
 	//vertices.push_back({1.0, 1.0});
@@ -104,11 +104,11 @@ void GalsMap::RefreshBackground()
 
 	SDL_SetRenderTarget(game_renderer, polygon_);
 
-	SDL_SetRenderDrawColor(game_renderer, 0, 0, 0, 255);
+	SDL_SetRenderDrawColor(game_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(game_renderer);
 
 	SDL_SetRenderDrawBlendMode(game_renderer, SDL_BLENDMODE_NONE);
-	SDL_SetRenderDrawColor(game_renderer, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(game_renderer, 1, 1, 1, 220);
 	int vs_size = vertices_static_.size();
 
 
@@ -158,4 +158,26 @@ void GalsMap::RefreshBackground()
 
 
 	SDL_SetRenderTarget(game_renderer, NULL);
+}
+
+
+void GalsMap::MergeVertices(int src, int dst)
+{
+	// vertices_temp_.begin() = first connection
+	// vertices_temp_.end()-1 = last connection
+	// src = src line area's index
+	// dst = dst line area's index
+
+		floatXY till = vertices_static_[dst];
+		int index = player_->in_line;
+		while (till.x != vertices_static_[index].x
+			|| till.y != vertices_static_[index].y)
+		{
+			vertices_static_.erase(vertices_static_.begin() + index);
+
+			index = (index == vertices_static_.size() - 1 ? 0 : index);
+		}
+
+
+
 }

@@ -321,31 +321,8 @@ void GalsPlayer::Coll_Line()
 
 		if (inter.x != -1)
 		{
-			// vertices_temp_[0] = first connection
-			// inter = last connection
-			// in_line = src line area's index
-			// i = dst line area's index
-
-			if (out_move_degree >= 0)
-			{
-				floatXY till = map_->vertices_static_[i];
-				int index = in_line;
-				while (till.x != map_->vertices_static_[index].x
-					|| till.y != map_->vertices_static_[index].y)
-				{
-					map_->vertices_static_.erase(map_->vertices_static_.begin() + index);
-
-					index = (index == map_->vertices_static_.size() - 1 ? 0 : index);
-				}
-
-				
-			}
-			else if (out_move_degree < 0)
-			{
-
-			}
-			else
-				SDL_assert(0);
+			map_->vertices_temp_.push_back(inter);
+			map_->MergeVertices(in_line, i);
 
 			MoveModeChange();
 			return;

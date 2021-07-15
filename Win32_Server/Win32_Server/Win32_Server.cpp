@@ -153,7 +153,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 		return Init_Server(hWnd);
-		break;
 
 	case WM_ASYNC:
 		switch (lParam)
