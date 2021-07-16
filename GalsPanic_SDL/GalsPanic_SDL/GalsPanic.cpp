@@ -1,9 +1,10 @@
 #include "GalsPanic.h"
 
 
-GalsPanic::GalsPanic() : player_{GalsPlayer(map_)}
+GalsPanic::GalsPanic() : player_{ GalsPlayer(map_) }, enemy_{ GalsEnemy(map_) }
 {
 	map_.SetPlayer(player_);
+	map_.SetEnemy(enemy_);
 }
 
 GalsPanic::~GalsPanic()

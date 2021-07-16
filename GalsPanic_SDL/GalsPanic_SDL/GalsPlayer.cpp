@@ -1,7 +1,7 @@
 #include "GalsPlayer.h"
 
 
-GalsPlayer::GalsPlayer(GalsMap& map) : map_{&map}
+GalsPlayer::GalsPlayer(GalsMap& map) : map_{ &map }
 {
 	location_.x = map_->vertices_static_[0].x;
 	location_.y = map_->vertices_static_[0].y;
@@ -72,7 +72,6 @@ void GalsPlayer::MoveIn()
 	// walkway setting
 	if (old_line != in_line)
 	{
-
 		next_line = (in_line + 1 == map_->vertices_static_.size() ? 0 : in_line + 1);
 		prev_line = (in_line - 1 == -1 ? map_->vertices_static_.size() - 1 : in_line - 1);
 
@@ -86,6 +85,31 @@ void GalsPlayer::MoveIn()
 
 		gradient = dy / dx;
 		printf("\tgradient  = %f\n", gradient);
+
+		if (isnan(gradient))
+		{
+			if (in_line == 0 && old_line != 1)
+			{
+				in_line = 1;
+				return;
+			}
+			else if (old_line == 0 && in_line != 1)
+			{
+				in_line = map_->vertices_static_.size() - 2;
+				return;
+			}
+
+
+			in_line += (in_line - old_line) / abs(in_line - old_line);
+			
+			if (in_line == map_->vertices_static_.size())
+				in_line = 0;
+			else if (in_line == -1)
+				in_line = map_->vertices_static_.size() - 1;
+			
+			return;
+		}
+
 		old_line = in_line;
 	}
 
@@ -250,7 +274,8 @@ void GalsPlayer::MoveOut()
 	if (abs(new_direction.x * 4 + new_direction.y) != abs(old_direction.x * 4 + old_direction.y)
 		&& (new_direction.x * 4 + new_direction.y) != 0)
 	{
-		map_->vertices_temp_.push_back({ location_.x, location_.y });
+	
+			map_->vertices_temp_.push_back({ location_.x, location_.y });
 
 		int diff = new_direction.x*old_direction.y - new_direction.y*old_direction.x;
 		out_move_degree += diff;
@@ -260,16 +285,16 @@ void GalsPlayer::MoveOut()
 	printf("\ttotoal degree = %d\n", out_move_degree);
 
 
-	if (SDL_Game::keystate[SDL_SCANCODE_UP] && location_.y > 0.0)
+	if (SDL_Game::keystate[SDL_SCANCODE_UP] && location_.y-speed_ > 0.0)
 		location_.y -= speed_;
 
-	if (SDL_Game::keystate[SDL_SCANCODE_DOWN] && location_.y < 1.0)
+	if (SDL_Game::keystate[SDL_SCANCODE_DOWN] && location_.y+speed_ < 1.0)
 		location_.y += speed_;
 
-	if (SDL_Game::keystate[SDL_SCANCODE_LEFT] && location_.x > 0.0)
+	if (SDL_Game::keystate[SDL_SCANCODE_LEFT] && location_.x-speed_ > 0.0)
 		location_.x -= speed_;
 
-	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT] && location_.x < 1.0)
+	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT] && location_.x+speed_ < 1.0)
 		location_.x += speed_;
 
 
@@ -293,7 +318,7 @@ void GalsPlayer::MoveModeChange()
 	{
 		old_direction = { 0, 0 };
 		out_move_degree = 0;
-		map_->vertices_temp_.push_back({ location_.x, location_.y });
+		//map_->vertices_temp_.push_back({ location_.x, location_.y });
 	}
 	break;
 	}
@@ -309,41 +334,44 @@ void GalsPlayer::MoveModeChange()
 
 void GalsPlayer::Coll_Line()
 {
-	// static lines
-	int vs_size = map_->vertices_static_.size();
-	for (int i = 0; i < vs_size; ++i)
+	if (map_->vertices_temp_.size() > 0)
 	{
-		int next_i = (i != vs_size - 1 ? i + 1 : 0);
-
-		floatXY inter = OverlapLine(
-			map_->vertices_temp_[map_->vertices_temp_.size() - 1], { location_.x, location_.y },
-			map_->vertices_static_[i], map_->vertices_static_[next_i]);
-
-		if (inter.x != -1)
+		// static lines
+		int vs_size = map_->vertices_static_.size();
+		for (int i = 0; i < vs_size; ++i)
 		{
-			map_->vertices_temp_.push_back(inter);
-			map_->MergeVertices(in_line, i);
+			int next_i = (i != vs_size - 1 ? i + 1 : 0);
 
-			MoveModeChange();
-			return;
+			floatXY inter = OverlapLine(
+				map_->vertices_temp_[map_->vertices_temp_.size() - 1], { location_.x, location_.y },
+				map_->vertices_static_[i], map_->vertices_static_[next_i]);
+
+			if (inter.x != -1)
+			{
+				map_->vertices_temp_.push_back(inter);
+				map_->MergeVertices(in_line, i);
+
+				map_->RefreshBackground();
+				MoveModeChange();
+				return;
+			}
+		}
+
+
+		// temp lines
+		int vt_size = map_->vertices_temp_.size();
+		for (int i = 0; i < vt_size; ++i)
+		{
+			int next_i = (i != vt_size - 1 ? i + 1 : 0);
+
+			floatXY inter = OverlapLine(
+				map_->vertices_temp_[vt_size - 1], { location_.x, location_.y },
+				map_->vertices_temp_[i], map_->vertices_temp_[next_i]);
+			if (inter.x != -1)
+			{
+				MoveModeChange();
+				return;
+			}
 		}
 	}
-
-
-	// temp lines
-	int vt_size = map_->vertices_temp_.size();
-	for (int i = 0; i < vt_size; ++i)
-	{
-		int next_i = (i != vt_size - 1 ? i + 1 : 0);
-
-		floatXY inter = OverlapLine(
-			map_->vertices_temp_[vt_size - 1], { location_.x, location_.y },
-			map_->vertices_temp_[i], map_->vertices_temp_[next_i]);
-		if (inter.x != -1)
-		{
-			MoveModeChange();
-			return;
-		}
-	}
-
 }

@@ -15,7 +15,7 @@ public:
 protected:
 	GalsMap* map_;
 
-	float speed_ = 0.005;
+	float speed_ = 0.005f;
 
 	int move_mode_ = 1;
 	int old_line = -1;

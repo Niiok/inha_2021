@@ -1,10 +1,11 @@
 #include "GalsEnemy.h"
 
-GalsEnemy::GalsEnemy()
+
+GalsEnemy::GalsEnemy(GalsMap& map) : map_{ &map }
 {
-	location_.x = 0.5;
-	location_.y = 0.5;
-	size_ = 0.1;
+	location_.x = 0.5f;
+	location_.y = 0.5f;
+	size_ = 0.1f;
 
 	rect_.x = (location_.x-size_/2) * SDL_Game::window_rect.w;
 	rect_.y = (location_.y-size_/2) * SDL_Game::window_rect.h;

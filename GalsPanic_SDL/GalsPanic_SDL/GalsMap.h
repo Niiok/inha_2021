@@ -2,6 +2,7 @@
 
 #include "GalsObject.h"
 #include "GalsPlayer.h"
+#include "GalsEnemy.h"
 #include <vector>
 #include <queue>
 
@@ -9,6 +10,7 @@ class GalsMap :
 	public GalsObject
 {
 	friend class GalsPlayer;
+	friend class GalsEnemy;
 
 public:
 	GalsMap();
@@ -16,6 +18,7 @@ public:
 
 protected:
 	GalsPlayer* player_;
+	GalsEnemy* enemy_;
 
 	SDL_Texture* background_origin_;
 	SDL_Texture* background_;
@@ -24,10 +27,13 @@ protected:
 	std::vector<floatXY> vertices_static_;
 	std::vector<floatXY> vertices_temp_;
 
+	int reverse = 1;
+
 public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	inline void SetPlayer(GalsPlayer& player) { player_ = &player; }
+	inline void SetEnemy(GalsEnemy& enemy) { enemy_ = &enemy; }
 
 private:
 	void RefreshBackground();

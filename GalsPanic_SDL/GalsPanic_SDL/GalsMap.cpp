@@ -3,10 +3,10 @@
 
 GalsMap::GalsMap()
 {
-	vertices_static_.push_back({ 0.001f, 0.001f });
-	vertices_static_.push_back({ 0.999f, 0.001f });
-	vertices_static_.push_back({ 0.999f, 0.999f });
-	vertices_static_.push_back({ 0.001f, 0.999f });
+	vertices_static_.push_back({ 0.005f, 0.005f });
+	vertices_static_.push_back({ 0.995f, 0.005f });
+	vertices_static_.push_back({ 0.995f, 0.995f });
+	vertices_static_.push_back({ 0.005f, 0.995f });
 	//vertices.push_back({0.0, 0.0});
 	//vertices.push_back({0.0, 1.0});
 	//vertices.push_back({1.0, 1.0});
@@ -163,21 +163,94 @@ void GalsMap::RefreshBackground()
 
 void GalsMap::MergeVertices(int src, int dst)
 {
-	// vertices_temp_.begin() = first connection
-	// vertices_temp_.end()-1 = last connection
-	// src = src line area's index
-	// dst = dst line area's index
+	// vertices_temp_.begin() : first connection
+	// vertices_temp_.end()-1 : last connection
+	// src : started static line area's index
+	// dst : ended static line area's index
 
-		floatXY till = vertices_static_[dst];
-		int index = player_->in_line;
-		while (till.x != vertices_static_[index].x
-			|| till.y != vertices_static_[index].y)
+	std::vector<floatXY> cw = vertices_temp_;
+	std::vector<floatXY> ccw = vertices_temp_;
+
+
+	int static_size = vertices_static_.size();
+
+
+
+	//  cw
+	// push_back (dst, src] by increasing
+	{
+		int from = (dst + 1 == static_size ? 0 : dst + 1);
+		int to = src;
+
+		do
 		{
-			vertices_static_.erase(vertices_static_.begin() + index);
+			if (from == static_size)
+				from = 0;
 
-			index = (index == vertices_static_.size() - 1 ? 0 : index);
+			cw.push_back(vertices_static_[from]);
+
+			from++;
+		} while (from != to + 1);
+	}
+
+	//  ccw
+	// push_back [dst, src) by decreasing
+	{
+		int from = dst;
+		int to = (src + 1 == static_size ? 0 : src + 1);
+
+		do
+		{
+			if (from == -1)
+				from = static_size - 1;
+
+			ccw.push_back(vertices_static_[from]);
+
+			from--;
+		} while (from != to - 1);
+	}
+
+
+	std::queue<floatXY> inters_cw;
+	
+	for (int j = 0; j < cw.size(); ++j)
+	{
+		int next_j = (j != cw.size() - 1 ? j + 1 : 0);
+
+		floatXY inter = OverlapLine(
+			{ -0.1, enemy_->location_.y }, 
+			{ enemy_->location_.x, enemy_->location_.y},
+			cw[j], cw[next_j]);
+
+		if (inter.x != -1)
+		{
+			inters_cw.push(inter);
 		}
+	}
 
 
 
+	if (src == dst)
+	{
+		if (player_->out_move_degree*reverse > 0)
+			vertices_static_.assign(cw.begin(), cw.end());
+		else
+		{
+			vertices_static_.assign(ccw.begin(), ccw.end());
+			reverse *= -1;
+		}
+	}
+	else if(inters_cw.size() % 2 == 1)
+	{
+		vertices_static_.assign(cw.begin(), cw.end());
+	}
+	else
+	{
+		vertices_static_.assign(ccw.begin(), ccw.end());
+		reverse *= -1;
+	}
+
+	player_->in_line = vertices_temp_.size() - 1;
+	player_->old_line = -1;
+	vertices_temp_[0] = vertices_temp_[vertices_temp_.size() - 1];
 }

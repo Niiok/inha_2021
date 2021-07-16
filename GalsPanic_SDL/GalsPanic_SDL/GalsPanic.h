@@ -3,13 +3,14 @@
 //#include "SDL_Game.h"
 #include "SDL_State.h"
 #include "GalsObject.h"
-#include "GalsPlayer.h"
 #include "GalsEnemy.h"
+#include "GalsPlayer.h"
 #include "GalsMap.h"
 
 
 class GalsPlayer;
 class GalsMap;
+class GalsEnemy;
 
 
 class GalsPanic :
