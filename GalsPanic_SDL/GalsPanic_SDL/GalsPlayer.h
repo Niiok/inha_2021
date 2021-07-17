@@ -35,7 +35,7 @@ protected:
 	virtual void MoveOut();
 	virtual void MoveModeChange();
 
-
 	void Coll_Line();
+
 };
 

@@ -93,6 +93,70 @@ void GalsMap::Update()
 
 }
 
+
+floatXY GalsMap::CollWithPolygon(floatXY src, floatXY dst, int* i)
+{
+	int index;
+
+	int vs_size = vertices_static_.size();
+	for (index = 0; index < vs_size; ++(index))
+	{
+		int next_i = (index != vs_size - 1 ? index + 1 : 0);
+
+		floatXY inter = OverlapLine(
+			src, dst,
+			vertices_static_[index], vertices_static_[next_i]);
+
+		if (inter.x != -1)
+		{
+			if (i != nullptr)
+				*i = index;
+
+			return inter;
+		}
+	}
+	index = -1;
+
+	if (i != nullptr)
+		*i = index;
+	return { -1, -1 };
+}
+
+
+floatXY GalsMap::CollWithFootprint(floatXY src, floatXY dst, int* i)
+{
+	int index;
+
+	int vt_size = vertices_temp_.size();
+	for (index = 0; index < vt_size; ++index)
+	{
+		floatXY inter;
+
+		if (index == vt_size - 1)
+			inter = OverlapLine(src, dst,
+				vertices_temp_[index],
+				{ player_->location_.x, player_->location_.y });
+		else
+			inter = OverlapLine(src, dst,
+				vertices_temp_[index],
+				vertices_temp_[index + 1]);
+
+		if (inter.x != -1)
+		{
+			if (i != nullptr)
+				*i = index;
+
+			return inter;
+		}
+	}
+	index = -1;
+
+	if (i != nullptr)
+		*i = index;
+	return { -1, -1 };
+}
+
+
 void GalsMap::RefreshBackground()
 {
 	// polygon refresh
@@ -109,8 +173,9 @@ void GalsMap::RefreshBackground()
 
 	SDL_SetRenderDrawBlendMode(game_renderer, SDL_BLENDMODE_NONE);
 	SDL_SetRenderDrawColor(game_renderer, 1, 1, 1, 220);
-	int vs_size = vertices_static_.size();
 
+
+	int vs_size = vertices_static_.size();
 
 	for (int i = SDL_Game::window_rect.h; i > 0; --i)
 	{

@@ -34,6 +34,8 @@ public:
 	virtual void Update() override;
 	inline void SetPlayer(GalsPlayer& player) { player_ = &player; }
 	inline void SetEnemy(GalsEnemy& enemy) { enemy_ = &enemy; }
+	floatXY CollWithPolygon(floatXY src, floatXY dst, int* coll_line = NULL);
+	floatXY CollWithFootprint(floatXY src, floatXY dst, int* coll_line = NULL);
 
 private:
 	void RefreshBackground();

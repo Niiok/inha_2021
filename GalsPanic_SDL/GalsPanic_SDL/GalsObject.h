@@ -17,6 +17,10 @@ floatXY OverlapLine(
 	floatXY p1, floatXY p2,
 	floatXY p3, floatXY p4);
 
+//floatXY OverlapLine_Scan(
+//	floatXY p1, floatXY p2,
+//	floatXY p3, floatXY p4);
+
 class GalsObject
 {
 public:
