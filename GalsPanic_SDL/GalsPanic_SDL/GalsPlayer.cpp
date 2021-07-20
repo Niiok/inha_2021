@@ -52,7 +52,7 @@ void GalsPlayer::Update()
 		{
 			printf("\t change!\n");
 
-			MoveModeChange();
+			MoveModeChange(1 - move_mode_);
 
 			count = SDL_Game::FPS / 2;
 		}
@@ -92,7 +92,7 @@ void GalsPlayer::MoveIn()
 		dy = dst_vertex_y - src_vertex_y;
 
 		gradient = dy / dx;
-		printf("\tgradient  = %f\n", gradient);
+		//printf("\tgradient  = %f\n", gradient);
 
 		if (isnan(gradient))
 		{
@@ -290,7 +290,6 @@ void GalsPlayer::MoveOut()
 
 		old_direction = new_direction;
 	}
-	printf("\ttotoal degree = %d\n", out_move_degree);
 
 
 	if (SDL_Game::keystate[SDL_SCANCODE_UP] && location_.y - speed_ > 0.0)
@@ -308,44 +307,64 @@ void GalsPlayer::MoveOut()
 
 
 	Coll_Line();
+	Coll_Enemy();
 }
 
 void GalsPlayer::Died()
 {
-	static int count = 1;
-	
-	if (move_mode_ == 2)
-	{
-		if (count == 0)
-			count == SDL_Game::FPS;
-		
-		count--;
-	}
+	location_.x += (respawn_count_ % 4  > 1 ? -1 : 1)* 0.005;
 
-	if (count == 0)
-		move_mode_ = 1;
+	respawn_count_--;
+
+	if (respawn_count_ == 0)
+		MoveModeChange(1);
 }
 
 
 void GalsPlayer::MoveModeChange(int i)
 {
-	switch (move_mode_)
+	static floatXY backup;
+
+	switch (move_mode_)	// quit
 	{
 	case 0:		// out to in  ==  inmove initial
-	{
-		location_.x = map_->vertices_temp_[0].x;
-		location_.y = map_->vertices_temp_[0].y;
-		map_->vertices_temp_.clear();
-	}
-	break;
+		break;
+
 	case 1:		// in to out  ==  outmove initial
+		backup = location_;
+		break;
+
+	case 2:
+		map_->draw_temp_ = 1;
+		break;
+	}
+
+
+	switch (i)	// init
 	{
+	case 0:
 		old_direction = { 0, 0 };
 		out_move_degree = 0;
 		//map_->vertices_temp_.push_back({ location_.x, location_.y });
+		break;
+
+	case 1:
+		if (map_->vertices_temp_.size() > 0)
+		{
+			location_.x = map_->vertices_temp_[0].x;
+			location_.y = map_->vertices_temp_[0].y;
+		}
+		else
+			location_ = backup;
+		map_->vertices_temp_.clear();
+		break;
+
+	case 2:
+		respawn_count_ = SDL_Game::FPS * 3;
+		map_->draw_temp_ = 0;
+		break;
 	}
-	break;
-	}
+
 
 	move_mode_ = i;
 }
@@ -371,7 +390,7 @@ void GalsPlayer::Coll_Line()
 			map_->vertices_temp_.push_back(inter);
 			map_->MergeVertices(in_line, i);
 
-			MoveModeChange();
+			MoveModeChange(1);
 			return;
 		}
 
@@ -392,9 +411,28 @@ void GalsPlayer::Coll_Line()
 
 			if (inter.x != -1)
 			{
-				MoveModeChange();
+				MoveModeChange(1);
 				return;
 			}
 		
 	}
+}
+
+
+void GalsPlayer::Coll_Enemy()
+{
+	floatXY enemy_loc = map_->enemy_->location_;
+	float enemy_size = map_->enemy_->size_/2;
+
+	float enemy_left = enemy_loc.x - enemy_size;
+	float enemy_top = enemy_loc.y - enemy_size;
+	float enemy_right = enemy_loc.x + enemy_size;
+	float enemy_bottom = enemy_loc.y + enemy_size;
+
+	if (location_.x >= enemy_left &&
+		location_.y >= enemy_top &&
+		location_.x <= enemy_right &&
+		location_.y <= enemy_bottom )
+		MoveModeChange(2);
+
 }

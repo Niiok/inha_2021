@@ -29,6 +29,7 @@ protected:
 
 	int reverse = 1;
 	float polygon_size_;
+	int draw_temp_ = 1;
 
 public:
 	virtual void Draw() override;

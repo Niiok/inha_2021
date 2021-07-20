@@ -6,8 +6,8 @@
 #include "SDL_State.h"
 
 static constexpr int INITIAL_FPS = 1000 / 60;
-static constexpr int INITIAL_WIDTH = 512;
-static constexpr int INITIAL_HEIGHT = 512;
+static constexpr int INITIAL_WIDTH = 1024;
+static constexpr int INITIAL_HEIGHT = 1024;
 
 class SDL_Game
 {

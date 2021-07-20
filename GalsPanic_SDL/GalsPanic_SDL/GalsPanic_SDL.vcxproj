@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GalsEnemy.cpp" />
+    <ClCompile Include="GalsHenchman.cpp" />
     <ClCompile Include="GalsMap.cpp" />
     <ClCompile Include="GalsObject.cpp" />
     <ClCompile Include="GalsPanic.cpp" />
@@ -143,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GalsEnemy.h" />
+    <ClInclude Include="GalsHenchman.h" />
     <ClInclude Include="GalsMap.h" />
     <ClInclude Include="GalsObject.h" />
     <ClInclude Include="GalsPanic.h" />

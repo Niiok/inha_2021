@@ -71,7 +71,7 @@ void GalsMap::Draw()
 
 	SDL_SetRenderDrawColor(SDL_Game::renderer, 255, 0, 0, 255);
 
-	if (vertices_temp_.size() > 0)
+	if (vertices_temp_.size() > 0 && draw_temp_ == 1)
 	{
 		for (int i = 0; i < vertices_temp_.size() - 1; ++i)
 		{
@@ -358,5 +358,5 @@ void GalsMap::PolygonSize()
 	printf("\t%.2f\%\n", 100.0f - polygon_size_ / origin_size * 100.0f);
 	
 	if (enemy_ != NULL)
-		enemy_->size_ = enemy_->size_rate_*polygon_size_;
+		enemy_->size_ = enemy_->size_rate_*(polygon_size_ + 0.5);
 }

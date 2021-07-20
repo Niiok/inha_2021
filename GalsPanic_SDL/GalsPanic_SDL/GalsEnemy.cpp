@@ -31,8 +31,8 @@ void GalsEnemy::Update()
 		old_direction.x = (float)(ran_val % (int)max_char) / max_char - 0.5f;
 		old_direction.y = (float)((ran_val / (int)max_char)<<1) / max_char - 0.5f;
 
-		old_direction.x += (map_->player_->location_.x - location_.x)/2;
-		old_direction.y += (map_->player_->location_.y - location_.y)/2;
+		old_direction.x += (map_->player_->location_.x - location_.x);
+		old_direction.y += (map_->player_->location_.y - location_.y);
 
 		hypotenuse = hypotf(old_direction.x, old_direction.y);
 	}

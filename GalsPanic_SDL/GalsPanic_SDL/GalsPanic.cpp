@@ -20,8 +20,8 @@ void GalsPanic::Input()
 void GalsPanic::Process()
 {
 	map_.Update();
-	player_.Update();
 	enemy_.Update();
+	player_.Update();
 
 }
 
@@ -32,8 +32,8 @@ void GalsPanic::Output()
 	
 
 	map_.Draw();
-	player_.Draw();
 	enemy_.Draw();
+	player_.Draw();
 
 }
 

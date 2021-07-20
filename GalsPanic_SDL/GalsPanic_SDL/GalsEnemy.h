@@ -14,6 +14,7 @@ public:
 	GalsEnemy(GalsMap& map);
 	~GalsEnemy() {}
 
+	float size_;
 
 private:
 	GalsMap* map_;
@@ -22,7 +23,6 @@ private:
 
 	SDL_Rect rect_;
 	float size_rate_;
-	float size_;
 
 	floatXY old_direction = { 0, 0 };
 
