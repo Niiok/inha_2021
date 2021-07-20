@@ -15,12 +15,16 @@ GalsPlayer::~GalsPlayer()
 
 void GalsPlayer::Draw()
 {
-	SDL_SetRenderDrawColor(SDL_Game::renderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(SDL_Game::renderer,
+		128 - sin((float)SDL_GetTicks() / 200) * 127,
+		255,
+		128 + sin((float)SDL_GetTicks() / 200) * 127,
+		255);
 
-	SDL_Rect player_rect = { (location_.x - 0.005)*SDL_Game::window_rect.w,
-	(location_.y - 0.005)*SDL_Game::window_rect.h,
-	0.01*SDL_Game::window_rect.w,
-	0.01*SDL_Game::window_rect.h };
+	SDL_Rect player_rect = { (location_.x - 0.01)*SDL_Game::window_rect.w,
+	(location_.y - 0.01)*SDL_Game::window_rect.h,
+	0.02*SDL_Game::window_rect.w,
+	0.02*SDL_Game::window_rect.h };
 	SDL_RenderDrawRect(SDL_Game::renderer, &player_rect);
 }
 
@@ -34,6 +38,10 @@ void GalsPlayer::Update()
 
 	case 1:
 		MoveIn();
+		break;
+
+	case 2:
+		Died();
 		break;
 	}
 
@@ -302,8 +310,24 @@ void GalsPlayer::MoveOut()
 	Coll_Line();
 }
 
+void GalsPlayer::Died()
+{
+	static int count = 1;
+	
+	if (move_mode_ == 2)
+	{
+		if (count == 0)
+			count == SDL_Game::FPS;
+		
+		count--;
+	}
 
-void GalsPlayer::MoveModeChange()
+	if (count == 0)
+		move_mode_ = 1;
+}
+
+
+void GalsPlayer::MoveModeChange(int i)
 {
 	switch (move_mode_)
 	{
@@ -323,7 +347,7 @@ void GalsPlayer::MoveModeChange()
 	break;
 	}
 
-	move_mode_ = 1 - move_mode_;
+	move_mode_ = i;
 }
 
 
@@ -347,7 +371,6 @@ void GalsPlayer::Coll_Line()
 			map_->vertices_temp_.push_back(inter);
 			map_->MergeVertices(in_line, i);
 
-			map_->RefreshBackground();
 			MoveModeChange();
 			return;
 		}

@@ -5,10 +5,11 @@ GalsEnemy::GalsEnemy(GalsMap& map) : map_{ &map }
 {
 	location_.x = 0.5f;
 	location_.y = 0.5f;
+	size_rate_ = 0.1f;
 	size_ = 0.1f;
 
-	rect_.x = (location_.x-size_/2) * SDL_Game::window_rect.w;
-	rect_.y = (location_.y-size_/2) * SDL_Game::window_rect.h;
+	rect_.x = (location_.x-size_rate_/2) * SDL_Game::window_rect.w;
+	rect_.y = (location_.y-size_rate_/2) * SDL_Game::window_rect.h;
 	rect_.w = size_ * SDL_Game::window_rect.w;
 	rect_.h = size_ * SDL_Game::window_rect.h;
 
@@ -30,6 +31,9 @@ void GalsEnemy::Update()
 		old_direction.x = (float)(ran_val % (int)max_char) / max_char - 0.5f;
 		old_direction.y = (float)((ran_val / (int)max_char)<<1) / max_char - 0.5f;
 
+		old_direction.x += (map_->player_->location_.x - location_.x)/2;
+		old_direction.y += (map_->player_->location_.y - location_.y)/2;
+
 		hypotenuse = hypotf(old_direction.x, old_direction.y);
 	}
 
@@ -40,8 +44,8 @@ void GalsEnemy::Update()
 
 
 	floatXY radian_location;
-	radian_location.x = location_.x + old_direction.x*speed_ + old_direction.x/hypotenuse*size_;
-	radian_location.y = location_.x + old_direction.y*speed_ + old_direction.y/hypotenuse*size_;
+	radian_location.x = location_.x + old_direction.x*speed_ + old_direction.x/hypotenuse*size_rate_;
+	radian_location.y = location_.x + old_direction.y*speed_ + old_direction.y/hypotenuse*size_rate_;
 
 	if (map_->CollWithPolygon(location_, new_location).x != -1)
 	{
@@ -65,6 +69,6 @@ void GalsEnemy::Draw()
 	rect_.h = size_ * SDL_Game::window_rect.h;
 
 
-	SDL_SetRenderDrawColor(SDL_Game::renderer, 128, 0, 0, 255);
+	SDL_SetRenderDrawColor(SDL_Game::renderer, 200, 0, 0, 255);
 	SDL_RenderFillRect(SDL_Game::renderer, &rect_);
 }

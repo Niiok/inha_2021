@@ -21,6 +21,7 @@ private:
 	float speed_ = 0.02f;
 
 	SDL_Rect rect_;
+	float size_rate_;
 	float size_;
 
 	floatXY old_direction = { 0, 0 };

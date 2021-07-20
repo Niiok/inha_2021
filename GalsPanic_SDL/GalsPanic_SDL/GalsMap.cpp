@@ -234,6 +234,8 @@ void GalsMap::RefreshBackground()
 
 
 	SDL_SetRenderTarget(game_renderer, NULL);
+
+	PolygonSize();
 }
 
 
@@ -329,4 +331,32 @@ void GalsMap::MergeVertices(int src, int dst)
 	player_->in_line = vertices_temp_.size() - 1;
 	player_->old_line = -1;
 	vertices_temp_[0] = vertices_temp_[vertices_temp_.size() - 1];
+
+
+	RefreshBackground();
+}
+
+void GalsMap::PolygonSize()
+{
+	float x_mul_y = 0;
+	float y_mul_x = 0;
+
+	for (auto i = vertices_static_.begin(); i != vertices_static_.end(); ++i )
+	{
+		auto next = i + 1;
+		if (next == vertices_static_.end())
+			next = vertices_static_.begin();
+
+		x_mul_y += i->x * next->y;
+		y_mul_x += i->y * next->x;
+	}
+
+	polygon_size_ = abs(x_mul_y - y_mul_x) / 2;
+
+	static float origin_size = polygon_size_;
+
+	printf("\t%.2f\%\n", 100.0f - polygon_size_ / origin_size * 100.0f);
+	
+	if (enemy_ != NULL)
+		enemy_->size_ = enemy_->size_rate_*polygon_size_;
 }

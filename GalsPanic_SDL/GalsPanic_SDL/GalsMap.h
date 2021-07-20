@@ -28,6 +28,7 @@ protected:
 	std::vector<floatXY> vertices_temp_;
 
 	int reverse = 1;
+	float polygon_size_;
 
 public:
 	virtual void Draw() override;
@@ -40,6 +41,7 @@ public:
 private:
 	void RefreshBackground();
 	void MergeVertices(int started_line, int ended_line );
+	void PolygonSize();
 
 	class floatXY_less {
 	public:

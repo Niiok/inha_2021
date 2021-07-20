@@ -33,7 +33,8 @@ public:
 protected:
 	virtual void MoveIn();
 	virtual void MoveOut();
-	virtual void MoveModeChange();
+	virtual void Died();
+	virtual void MoveModeChange(int i);
 
 	void Coll_Line();
 
