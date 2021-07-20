@@ -18,26 +18,51 @@ GalsEnemy::GalsEnemy(GalsMap& map) : map_{ &map }
 void GalsEnemy::Update()
 {
 	static int move_count = 0;
-	constexpr float max_short = 32767.0f;
+	constexpr float max_char = 256.0f;
+	static float hypotenuse = 0;
 
 	if (move_count == 0)
 	{
-		move_count = rand() % (SDL_Game::FPS * 3);
+		move_count = SDL_GetTicks() % (SDL_Game::FPS) + 10;
 
 		int ran_val = rand();
 		
-		old_direction.x = (ran_val % (int)max_short) / max_short;
-		old_direction.y = (ran_val / (int)max_short) / max_short;
+		old_direction.x = (float)(ran_val % (int)max_char) / max_char - 0.5f;
+		old_direction.y = (float)((ran_val / (int)max_char)<<1) / max_char - 0.5f;
+
+		hypotenuse = hypotf(old_direction.x, old_direction.y);
 	}
 
-	//for(int i = map_->vertices_static_.size()-1; )
+
+	floatXY new_location;
+	new_location.x = location_.x + old_direction.x*speed_;
+	new_location.y = location_.y + old_direction.y*speed_;
 
 
-	--move_count;
+	floatXY radian_location;
+	radian_location.x = location_.x + old_direction.x*speed_ + old_direction.x/hypotenuse*size_;
+	radian_location.y = location_.x + old_direction.y*speed_ + old_direction.y/hypotenuse*size_;
+
+	if (map_->CollWithPolygon(location_, new_location).x != -1)
+	{
+		//srand(clock());
+		//new_location.x -= old_direction.x * speed_ * 2;
+		//new_location.y -= old_direction.y * speed_ * 2;
+		move_count = 0;
+	}
+	else
+	{
+		location_ = new_location;
+		--move_count;
+	}
 }
 
 void GalsEnemy::Draw()
 {
+	rect_.x = (location_.x-size_/2) * SDL_Game::window_rect.w;
+	rect_.y = (location_.y-size_/2) * SDL_Game::window_rect.h;
+	rect_.w = size_ * SDL_Game::window_rect.w;
+	rect_.h = size_ * SDL_Game::window_rect.h;
 
 
 	SDL_SetRenderDrawColor(SDL_Game::renderer, 128, 0, 0, 255);

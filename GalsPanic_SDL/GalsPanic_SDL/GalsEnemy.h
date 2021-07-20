@@ -18,7 +18,7 @@ public:
 private:
 	GalsMap* map_;
 
-	float speed_ = 0.002f;
+	float speed_ = 0.02f;
 
 	SDL_Rect rect_;
 	float size_;

@@ -363,9 +363,9 @@ void GalsPlayer::Coll_Line()
 		//		map_->vertices_temp_[vt_size - 1], { location_.x, location_.y },
 		//		map_->vertices_temp_[i], map_->vertices_temp_[next_i]);
 
-			/*inter = map_->CollWithFootprint(
+			inter = map_->CollWithFootprint(
 				map_->vertices_temp_[map_->vertices_temp_.size() - 1],
-				{ location_.x, location_.y });*/
+				{ location_.x, location_.y });
 
 			if (inter.x != -1)
 			{

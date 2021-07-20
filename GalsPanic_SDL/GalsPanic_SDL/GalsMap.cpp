@@ -176,12 +176,22 @@ void GalsMap::RefreshBackground()
 
 
 	int vs_size = vertices_static_.size();
+	int ij = 0;
+	int dj = 1;
+
+	/*if (reverse == -1)
+	{
+		ij = vs_size - 1;
+		vs_size = -1;
+		dj = -1;
+	}*/
 
 	for (int i = SDL_Game::window_rect.h; i > 0; --i)
 	{
-		std::queue<floatXY> inters;
+		std::priority_queue<floatXY, std::vector<floatXY>, floatXY_less> inters;
 
-		for (int j = 0; j < vs_size; ++j)
+
+		for (int j = ij; j != vs_size; j += dj)
 		{
 			int next_j = (j != vs_size - 1 ? j + 1 : 0);
 
@@ -195,12 +205,13 @@ void GalsMap::RefreshBackground()
 			}
 		}
 
+
 		while (inters.size() >= 2)
 		{
 			floatXY src, dst;
-			src = inters.front();
+			src = inters.top();
 			inters.pop();
-			dst = inters.front();
+			dst = inters.top();
 			inters.pop();
 
 			src.x *= SDL_Game::window_rect.w;

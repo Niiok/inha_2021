@@ -31,6 +31,6 @@ public:
 	void Output() override;
 
 private:
-	
+
 
 };

@@ -40,5 +40,16 @@ public:
 private:
 	void RefreshBackground();
 	void MergeVertices(int started_line, int ended_line );
+
+	class floatXY_less {
+	public:
+		inline bool operator() (floatXY a, floatXY b)
+		{
+			if (a.x < b.x)
+				return true;
+			else
+				return false;
+		}
+	};
 };
 
