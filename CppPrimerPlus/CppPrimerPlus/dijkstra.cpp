@@ -22,7 +22,7 @@ public:
 	}
 };
 
-list<int> dijkstra(int src, int dst);
+list<int> astar(int src, int dst);
 
 
 int main()
@@ -56,7 +56,7 @@ int main()
 
 	_distance[src] = 0;
 
-	list<int> result = dijkstra(src, dst);
+	list<int> result = astar(src, dst);
 
 
 	printf("\n");
@@ -69,7 +69,7 @@ int main()
 	return 0;
 }
 
-list<int> dijkstra(int src_origin, int dst)
+list<int> astar(int src_origin, int dst)
 {
 	priority_queue<pair<int, int>, vector<pair<int, int>>, dist_greater> _s_que;
 	_s_que.push({src_origin, _distance[src_origin]});
