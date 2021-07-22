@@ -25,7 +25,7 @@ protected:
 
 	int respawn_count_ = SDL_Game::FPS;
 
-	int life_ = 50;
+	int life_ = 3;
 
 
 
