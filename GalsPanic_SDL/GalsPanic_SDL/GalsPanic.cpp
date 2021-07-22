@@ -23,6 +23,11 @@ void GalsPanic::Process()
 	enemy_.Update();
 	player_.Update();
 
+	if (player_.get_life() < 0 || enemy_.get_died() == 1)
+	{
+		SDL_Game::event.type = SDL_QUIT;
+		SDL_PushEvent(&SDL_Game::event);
+	}
 }
 
 void GalsPanic::Output()

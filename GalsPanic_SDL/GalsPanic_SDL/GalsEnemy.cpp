@@ -22,42 +22,62 @@ void GalsEnemy::Update()
 	constexpr float max_char = 256.0f;
 	static float hypotenuse = 0;
 
-	if (move_count == 0)
+
+	if (map_->get_polygon_size() > map_->goal_size_)
 	{
-		move_count = SDL_GetTicks() % (SDL_Game::FPS) + 10;
+		if (move_count == 0)
+		{
+			move_count = SDL_GetTicks() % (SDL_Game::FPS) + 10;
 
-		int ran_val = rand();
-		
-		old_direction.x = (float)(ran_val % (int)max_char) / max_char - 0.5f;
-		old_direction.y = (float)((ran_val / (int)max_char)<<1) / max_char - 0.5f;
+			int ran_val = rand();
 
-		old_direction.x += (map_->player_->location_.x - location_.x);
-		old_direction.y += (map_->player_->location_.y - location_.y);
+			old_direction.x = (float)(ran_val % (int)max_char) / max_char - 0.5f;
+			old_direction.y = (float)((ran_val / (int)max_char) << 1) / max_char - 0.5f;
 
-		hypotenuse = hypotf(old_direction.x, old_direction.y);
-	}
+			old_direction.x += (map_->player_->location_.x - location_.x);
+			old_direction.y += (map_->player_->location_.y - location_.y);
 
-
-	floatXY new_location;
-	new_location.x = location_.x + old_direction.x*speed_;
-	new_location.y = location_.y + old_direction.y*speed_;
+			hypotenuse = hypotf(old_direction.x, old_direction.y);
+		}
 
 
-	floatXY radian_location;
-	radian_location.x = location_.x + old_direction.x*speed_ + old_direction.x/hypotenuse*size_rate_;
-	radian_location.y = location_.x + old_direction.y*speed_ + old_direction.y/hypotenuse*size_rate_;
+		floatXY new_location;
+		new_location.x = location_.x + old_direction.x*speed_;
+		new_location.y = location_.y + old_direction.y*speed_;
 
-	if (map_->CollWithPolygon(location_, new_location).x != -1)
-	{
-		//srand(clock());
-		//new_location.x -= old_direction.x * speed_ * 2;
-		//new_location.y -= old_direction.y * speed_ * 2;
-		move_count = 0;
+
+		floatXY radian_location;
+		radian_location.x = location_.x + old_direction.x*speed_ + old_direction.x / hypotenuse * size_rate_;
+		radian_location.y = location_.x + old_direction.y*speed_ + old_direction.y / hypotenuse * size_rate_;
+
+		if (map_->CollWithPolygon(location_, new_location).x != -1
+			/*|| map_->CollWithFootprint(location_, new_location).x != -1*/)
+		{
+			move_count = 0;
+		}
+		else
+		{
+			if (map_->CollWithFootprint(location_, new_location).x != -1)
+				map_->player_->MoveModeChange(1);
+
+			location_ = new_location;
+			--move_count;
+		}
 	}
 	else
 	{
-		location_ = new_location;
-		--move_count;
+		static int dead_count = SDL_Game::FPS * 5;
+
+		if (dead_count < 0)
+		{
+			died_ = 1;
+		}
+		else
+		{
+			location_.x += (dead_count % 4 > 1 ? -1 : 1)* 0.005;
+
+			--dead_count;
+		}
 	}
 }
 

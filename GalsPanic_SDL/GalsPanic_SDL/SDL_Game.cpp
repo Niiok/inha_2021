@@ -18,7 +18,7 @@ SDL_Game::SDL_Game()
 
 	SDL_assert(IMG_Init(IMG_INIT_PNG));
 
-	window = SDL_CreateWindow("test",
+	window = SDL_CreateWindow("Gals Panic",
 		window_rect.x, window_rect.y, window_rect.w, window_rect.h,
 		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE /*| SDL_WINDOW_FULLSCREEN*/ /*| SDL_WINDOW_BORDERLESS*/);
 	SDL_assert(window);

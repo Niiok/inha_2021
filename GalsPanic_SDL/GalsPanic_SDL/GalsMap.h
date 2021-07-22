@@ -29,6 +29,7 @@ protected:
 
 	int reverse = 1;
 	float polygon_size_;
+	float goal_size_ = 0.1;
 	int draw_temp_ = 1;
 
 public:
@@ -38,6 +39,7 @@ public:
 	inline void SetEnemy(GalsEnemy& enemy) { enemy_ = &enemy; }
 	floatXY CollWithPolygon(floatXY src, floatXY dst, int* coll_line = NULL);
 	floatXY CollWithFootprint(floatXY src, floatXY dst, int* coll_line = NULL);
+	inline float get_polygon_size() const noexcept { return polygon_size_; }
 
 private:
 	void RefreshBackground();

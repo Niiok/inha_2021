@@ -25,18 +25,22 @@ protected:
 
 	int respawn_count_ = SDL_Game::FPS;
 
+	int life_ = 50;
+
 
 
 public:
 	virtual void Draw() override;
 	virtual void Update() override;
 	inline void SetMap(GalsMap& map) { map_ = &map; }
+	inline int get_life() const noexcept { return life_; }
+
+	virtual void MoveModeChange(int i);
 
 protected:
 	virtual void MoveIn();
 	virtual void MoveOut();
 	virtual void Died();
-	virtual void MoveModeChange(int i);
 
 	void Coll_Line();
 	void Coll_Enemy();

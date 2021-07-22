@@ -26,8 +26,11 @@ private:
 
 	floatXY old_direction = { 0, 0 };
 
+	int died_ = 0;
+
 public:
 	void Update();
 	void Draw();
+	inline int get_died() const noexcept { return died_; }
 };
 

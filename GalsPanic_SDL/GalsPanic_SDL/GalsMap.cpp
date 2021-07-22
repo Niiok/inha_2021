@@ -358,5 +358,5 @@ void GalsMap::PolygonSize()
 	printf("\t%.2f\%\n", 100.0f - polygon_size_ / origin_size * 100.0f);
 	
 	if (enemy_ != NULL)
-		enemy_->size_ = enemy_->size_rate_*(polygon_size_ + 0.5);
+		enemy_->size_ = enemy_->size_rate_*(polygon_size_*0.5 + 0.5);
 }

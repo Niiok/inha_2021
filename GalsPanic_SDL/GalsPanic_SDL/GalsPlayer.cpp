@@ -15,17 +15,30 @@ GalsPlayer::~GalsPlayer()
 
 void GalsPlayer::Draw()
 {
+	SDL_Rect win = SDL_Game::window_rect;
+
 	SDL_SetRenderDrawColor(SDL_Game::renderer,
 		128 - sin((float)SDL_GetTicks() / 200) * 127,
 		255,
 		128 + sin((float)SDL_GetTicks() / 200) * 127,
 		255);
 
-	SDL_Rect player_rect = { (location_.x - 0.01)*SDL_Game::window_rect.w,
-	(location_.y - 0.01)*SDL_Game::window_rect.h,
-	0.02*SDL_Game::window_rect.w,
-	0.02*SDL_Game::window_rect.h };
+	SDL_Rect player_rect = { (location_.x - 0.01)*win.w,
+	(location_.y - 0.01)*win.h,
+	0.02*win.w,
+	0.02*win.h };
 	SDL_RenderDrawRect(SDL_Game::renderer, &player_rect);
+
+	for (int i = 0; i < life_; ++i)
+	{
+		SDL_SetRenderDrawColor(SDL_Game::renderer, 200, 100, 100, 50);
+
+		SDL_Rect heart{ 0.02*(i + 1) * win.w,
+		0.02 * win.h,
+		0.03 * (i + 1) * win.w,
+		0.03 * win.h };
+		SDL_RenderFillRect(SDL_Game::renderer, &heart);
+	}
 }
 
 void GalsPlayer::Update()
@@ -59,6 +72,7 @@ void GalsPlayer::Update()
 		else if (count > 0)
 			--count;
 	}
+
 }
 
 
@@ -362,6 +376,7 @@ void GalsPlayer::MoveModeChange(int i)
 	case 2:
 		respawn_count_ = SDL_Game::FPS * 3;
 		map_->draw_temp_ = 0;
+		--life_;
 		break;
 	}
 
