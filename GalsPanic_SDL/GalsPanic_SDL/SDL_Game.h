@@ -27,7 +27,7 @@ public:
 	static SDL_State* game_state;
 
 public:
-	inline void SetState(SDL_State* state) { game_state = state; }
+	inline void SetState(SDL_State* state) noexcept { game_state = state; }
 	void Run();
 
 
