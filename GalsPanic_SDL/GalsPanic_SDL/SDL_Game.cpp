@@ -65,6 +65,7 @@ void SDL_Game::Run()
 		if (new_tick - old_tick >= FPS)
 		{
 			SDL_PollEvent(&event);
+
 			keystate = SDL_GetKeyboardState(NULL);
 			game_state->Input();
 
@@ -77,7 +78,7 @@ void SDL_Game::Run()
 			game_state->Output();
 			SDL_RenderPresent(renderer);
 
-			old_tick = new_tick;
+			//old_tick = new_tick;
 		}
 	}
 
