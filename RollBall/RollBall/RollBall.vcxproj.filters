@@ -15,8 +15,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="SDL_Game.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="SDL_State.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RollBall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SDL_Game.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL_State.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RollBall.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayer.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

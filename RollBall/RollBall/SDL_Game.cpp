@@ -18,6 +18,8 @@ SDL_Game::SDL_Game()
 
 	SDL_assert(IMG_Init(IMG_INIT_PNG));
 
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+
 	window = SDL_CreateWindow("Gals Panic",
 		window_rect.x, window_rect.y, window_rect.w, window_rect.h,
 		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE /*| SDL_WINDOW_FULLSCREEN*/ /*| SDL_WINDOW_BORDERLESS*/);
@@ -43,28 +45,34 @@ void SDL_Game::Run()
 {
 	int old_tick = SDL_GetTicks();
 	int new_tick;
+	bool quit = 0;
 
-	while (event.type != SDL_QUIT)
+	while (!quit)
 	{
-		switch (event.type)
+		while (SDL_PollEvent(&event))
 		{
-		case SDL_WINDOWEVENT:
-			switch (event.window.event)
+			switch (event.type)
 			{
-			case SDL_WINDOWEVENT_RESIZED:
-				window_rect.w = event.window.data1;
-				window_rect.h = event.window.data2;
+			case SDL_QUIT:
+				quit = 1;
+				break;
+
+			case SDL_WINDOWEVENT:
+				switch (event.window.event)
+				{
+				case SDL_WINDOWEVENT_RESIZED:
+					window_rect.w = event.window.data1;
+					window_rect.h = event.window.data2;
+					break;
+				}
 				break;
 			}
-			break;
 		}
-
 
 		new_tick = SDL_GetTicks();
 
 		if (new_tick - old_tick >= FPS)
 		{
-			SDL_PollEvent(&event);
 
 			keystate = SDL_GetKeyboardState(NULL);
 			game_state->Input();
