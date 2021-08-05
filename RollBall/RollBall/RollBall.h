@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SDL_State.h"
-#include "cPlayer.h"
+#include "oun.h"
 
 class RollBall : public SDL_State
 {
@@ -15,6 +15,6 @@ public:
 	void Output() override;
 
 private:
-	Player
-
+	 oun::iObject* player_;
+	
 };

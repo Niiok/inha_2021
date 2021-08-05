@@ -131,14 +131,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="cPlayer.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="RollBall.cpp" />
     <ClCompile Include="SDL_Game.cpp" />
     <ClCompile Include="SDL_State.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cPlayer.h" />
+    <ClInclude Include="Animator.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="RollBall.h" />
     <ClInclude Include="SDL_Game.h" />
     <ClInclude Include="SDL_State.h" />
