@@ -27,17 +27,14 @@
     <ClCompile Include="RollBall.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Animator.cpp">
+    <ClCompile Include="Object.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
+    <ClCompile Include="SDL_Animator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animator.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -48,6 +45,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SDL_State.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL_Animator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

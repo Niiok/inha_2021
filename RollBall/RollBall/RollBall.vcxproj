@@ -70,7 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>Z:\Users\User\Documents\GitHub\oun\source;$(IncludePath)</IncludePath>
+    <IncludePath>Z:\Users\User\Documents\GitHub\oun\source;Z:\SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Z:\SDL\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>D:\SDL\lazyfoo\lazyfoo\lib\x86;D:\SDL\lazyfoo\lazyfoo\include;D:\Users\Admin\Documents\Git\oun\source;$(IncludePath)</IncludePath>
@@ -85,7 +86,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>oun.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>oun.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -131,7 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="SDL_Animator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="RollBall.cpp" />
@@ -139,7 +140,7 @@
     <ClCompile Include="SDL_State.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animator.h" />
+    <ClInclude Include="SDL_Animator.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="RollBall.h" />
     <ClInclude Include="SDL_Game.h" />
