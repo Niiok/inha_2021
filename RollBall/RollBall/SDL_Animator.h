@@ -7,31 +7,31 @@
 class SDL_Animator
 {
 public:
-	enum state
+	enum State
 	{
-		Idle = 0,
-		Walk,
-		Run,
-		Jump,
-		Fall,
-		Swim,
-		Fly,
-		Damaged,
-		Attack,
-		KnockDown,
-		Die,
+		State_Idle = 0,
+		State_Walk,
+		State_Run,
+		State_Jump,
+		State_Fall,
+		State_Swim,
+		State_Fly,
+		State_Damaged,
+		State_Attack,
+		State_KnockDown,
+		State_Die,
 
-		Total
+		State_Total
 	};
 
-	enum direction
+	enum Direction
 	{
-		Front = 0,
-		Back,
-		Left,
-		Right,
+		Direction_Front = 0,
+		Direction_Back,
+		Direction_Left,
+		Direction_Right,
 
-		Total
+		Direction_Total
 	};
 
 	SDL_Animator();
@@ -42,7 +42,7 @@ public:
 
 private:
 	SDL_Texture* texture_;
-	state state_ = Idle;
-	direction direct_ = Front;
+	State state_ = State_Idle;
+	Direction direct_ = Direction_Front;
 	std::map<int, SDL_Rect> area_;
 };

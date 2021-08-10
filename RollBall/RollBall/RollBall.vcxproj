@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{9FC9A052-EA5F-4CE6-9E3E-4CC9E030652D}</ProjectGuid>
+    <ProjectGuid>{8C97A1AE-088F-4ED1-9568-1BDD24FAC610}</ProjectGuid>
     <RootNamespace>RollBall</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -70,12 +70,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>Z:\Users\User\Documents\GitHub\oun\source;Z:\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>Z:\SDL\lib\x86;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\SDL\lazyfoo\lazyfoo\lib\x86;D:\SDL\lazyfoo\lazyfoo\include;D:\Users\Admin\Documents\Git\oun\source;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\SDL\lazyfoo\lazyfoo\lib\x86;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <IncludePath>D:\Users\Admin\Documents\Git\oun\source;C:\SDL\VS\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Users\Admin\Documents\Git\oun\VisualStudio\Debug;C:\SDL\VS\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,7 +95,6 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>oun.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -132,20 +128,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GalsObject.cpp" />
     <ClCompile Include="jsoncpp.cpp" />
-    <ClCompile Include="SDL_Animator.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="RB_Object.cpp" />
+    <ClCompile Include="RB_Player.cpp" />
     <ClCompile Include="RollBall.cpp" />
+    <ClCompile Include="SDL_Animator.cpp" />
     <ClCompile Include="SDL_Game.cpp" />
-    <ClCompile Include="SDL_State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GalsObject.h" />
     <ClInclude Include="json\json-forwards.h" />
     <ClInclude Include="json\json.h" />
-    <ClInclude Include="SDL_Animator.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="RB_Object.h" />
+    <ClInclude Include="RB_Player.h" />
     <ClInclude Include="RollBall.h" />
+    <ClInclude Include="SDL_Animator.h" />
     <ClInclude Include="SDL_Game.h" />
     <ClInclude Include="SDL_State.h" />
   </ItemGroup>

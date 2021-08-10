@@ -15,33 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SDL_Game.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SDL_State.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="RollBall.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SDL_Animator.cpp">
+    <ClCompile Include="GalsObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="jsoncpp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RB_Object.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RollBall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL_Animator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL_Game.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RB_Player.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Object.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="RollBall.h">
+    <ClInclude Include="SDL_Animator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SDL_Game.h">
@@ -50,13 +50,22 @@
     <ClInclude Include="SDL_State.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SDL_Animator.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="json\json-forwards.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="json\json.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GalsObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RB_Object.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RollBall.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RB_Player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,7 +20,7 @@ SDL_Game::SDL_Game()
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
-	window = SDL_CreateWindow("Gals Panic",
+	window = SDL_CreateWindow("Roll Ball",
 		window_rect.x, window_rect.y, window_rect.w, window_rect.h,
 		SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE /*| SDL_WINDOW_FULLSCREEN*/ /*| SDL_WINDOW_BORDERLESS*/);
 	SDL_assert(window);
