@@ -14,13 +14,18 @@ void RB_Player::Plan()
 	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT])
 		plan.x += getSpeed();
 	if (SDL_Game::keystate[SDL_SCANCODE_EQUALS])
-		plan_vol *= 2;
+		plan_vol *= 1.1;
 	if (SDL_Game::keystate[SDL_SCANCODE_MINUS])
-		plan_vol /= 2;
+		plan_vol /= 1.1;
 
 	
 	setPlanLocation(plan);
-	setPlanVolume(plan_vol);
+	if (plan_vol * getWorld()->getZoom()*2 < oun::MAX_SPACE_SCALE)
+		setPlanVolume(plan_vol);
+	setSpeed(plan_vol/10);
+
+	printf("%d : %f %f\n", in_world_, getLocation().x, getLocation().y);
+	printf("%f %f\n\n", getPlanLocation().x, getPlanLocation().y);
 }
 
 void RB_Player::Update()
@@ -42,7 +47,5 @@ void RB_Player::Draw() const
 	SDL_SetRenderDrawColor(SDL_Game::renderer, 200, 200, 200, 255);
 	SDL_RenderDrawRect(SDL_Game::renderer, &rect);
 
-	printf("%f %f\n", getLocation().x, getLocation().y);
-	printf("%f %f\n\n", getPlanLocation().x, getPlanLocation().y);
 
 }

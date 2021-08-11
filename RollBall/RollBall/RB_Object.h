@@ -10,8 +10,8 @@ public:
 	RB_Object(oun::Space* space, oun::floatXYZ loc, float vol) : oun::Object(space, loc, vol) {}
 	~RB_Object() override {}
 
-	void Plan() override;
-	void Update() override;
+	//void Plan() override;
+	//void Update() override;
 	void Draw() const override;
 
 private:

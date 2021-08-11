@@ -1,14 +1,14 @@
 #include "RB_Object.h"
 
-void RB_Object::Plan()
-{
+//void RB_Object::Plan()
+//{
+//
+//}
 
-}
-
-void RB_Object::Update()
-{
-	Locate();
-}
+//void RB_Object::Update()
+//{
+////	Locate();
+//}
 
 void RB_Object::Draw() const
 {
@@ -22,5 +22,5 @@ void RB_Object::Draw() const
 
 	//SDL_RenderCopy(SDL_Game::renderer, )
 	SDL_SetRenderDrawColor(SDL_Game::renderer, 100, 100, 100, 255);
-	SDL_RenderDrawRect(SDL_Game::renderer, &rect);
+	SDL_RenderFillRect(SDL_Game::renderer, &rect);
 }

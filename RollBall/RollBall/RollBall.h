@@ -7,7 +7,7 @@
 #include "RB_Object.h"
 #include "RB_Player.h"
 
-inline float RandomValue() { return rand()%int(10) - 5; }
+inline float RandomValue() { return rand()%int(oun::MAX_SPACE_SCALE - 10) + 10; }
 
 class RollBall : public SDL_State
 {

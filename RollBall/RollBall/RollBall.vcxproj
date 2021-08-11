@@ -71,8 +71,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>Z:\Users\User\Documents\Git\oun\source;D:\Users\Admin\Documents\Git\oun\source;C:\SDL\VS\include;$(IncludePath)</IncludePath>
-    <LibraryPath>Z:\Users\User\Documents\Git\oun\VisualStudio\Debug;D:\Users\Admin\Documents\Git\oun\VisualStudio\Debug;C:\SDL\VS\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>Z:\Users\User\Documents\Git\oun\source;C:\SDL\VS\include;D:\Users\Admin\Documents\Git\oun\source;$(IncludePath)</IncludePath>
+    <LibraryPath>Z:\Users\User\Documents\Git\oun\VisualStudio\Debug;C:\SDL\VS\lib\x86;D:\Users\Admin\Documents\Git\oun\VisualStudio\Debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>Z:\Users\User\Documents\Git\oun\source;C:\SDL\VC\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Z:\Users\User\Documents\Git\oun\VisualStudio\x64\Debug;C:\SDL\VC\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -95,6 +99,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>oun.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
