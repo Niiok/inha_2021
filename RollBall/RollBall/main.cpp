@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 // todo
 /*
 
-- 화면 스크롤
+v  화면 스크롤
 - 애니메이터
 - 충돌 (흡수 or 블럭 or 분해)
 - ttf 지름 표시

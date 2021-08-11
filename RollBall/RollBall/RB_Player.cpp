@@ -22,10 +22,8 @@ void RB_Player::Plan()
 	setPlanLocation(plan);
 	if (plan_vol * getWorld()->getZoom()*2 < oun::MAX_SPACE_SCALE)
 		setPlanVolume(plan_vol);
-	setSpeed(plan_vol/10);
+	setSpeed(plan_vol/SDL_Game::FPS);
 
-	printf("%d : %f %f\n", in_world_, getLocation().x, getLocation().y);
-	printf("%f %f\n\n", getPlanLocation().x, getPlanLocation().y);
 }
 
 void RB_Player::Update()
@@ -36,16 +34,25 @@ void RB_Player::Update()
 void RB_Player::Draw() const
 {
 	SDL_Rect rect;
+	int longer = (SDL_Game::window_rect.h > SDL_Game::window_rect.w ? SDL_Game::window_rect.h : SDL_Game::window_rect.w);
+
 	auto bound = getWorld()->getBound();
 	auto world_loc = getWorldLocation();
-	rect.x = (world_loc.x /*+ getVolume()*/ - bound.x) / bound.w * SDL_Game::window_rect.w;
-	rect.y = (world_loc.y /*+ getVolume()*/ - bound.y) / bound.h * SDL_Game::window_rect.h;
-	rect.w = getVolume() / bound.w * SDL_Game::window_rect.w;
-	rect.h = getVolume() / bound.h * SDL_Game::window_rect.h;
+	rect.x = (world_loc.x - bound.x) / bound.w * longer;
+	rect.y = (world_loc.y - bound.y) / bound.h * longer;
+	rect.w = (getVolume() / bound.w) * longer;
+	rect.h = (getVolume() / bound.h) * longer;
 
 	//SDL_RenderCopy(SDL_Game::renderer, )
 	SDL_SetRenderDrawColor(SDL_Game::renderer, 200, 200, 200, 255);
-	SDL_RenderDrawRect(SDL_Game::renderer, &rect);
+	SDL_RenderFillRect(SDL_Game::renderer, &rect);
 
+	//printf("%d : %f %f\n", in_world_, getLocation().x, getLocation().y);
+	//printf("%f %f\n\n", getPlanLocation().x, getPlanLocation().y);
+}
 
+bool RB_Player::AttachObjectToBall(RB_Object * obj)
+{
+
+	return false;
 }

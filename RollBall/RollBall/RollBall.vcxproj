@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>Z:\Users\User\Documents\Git\oun\source;C:\SDL\VS\include;D:\Users\Admin\Documents\Git\oun\source;$(IncludePath)</IncludePath>
-    <LibraryPath>Z:\Users\User\Documents\Git\oun\VisualStudio\Debug;C:\SDL\VS\lib\x86;D:\Users\Admin\Documents\Git\oun\VisualStudio\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Users\Admin\Documents\Git\oun\source;C:\SDL\VS\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Users\Admin\Documents\Git\oun\VisualStudio\Debug;C:\SDL\VS\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>Z:\Users\User\Documents\Git\oun\source;C:\SDL\VC\include;$(IncludePath)</IncludePath>
@@ -87,7 +87,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>oun.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>oun.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -138,6 +138,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RB_Object.cpp" />
     <ClCompile Include="RB_Player.cpp" />
+    <ClCompile Include="RB_UI.cpp" />
     <ClCompile Include="RollBall.cpp" />
     <ClCompile Include="SDL_Animator.cpp" />
     <ClCompile Include="SDL_Game.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="json\json.h" />
     <ClInclude Include="RB_Object.h" />
     <ClInclude Include="RB_Player.h" />
+    <ClInclude Include="RB_UI.h" />
     <ClInclude Include="RollBall.h" />
     <ClInclude Include="SDL_Animator.h" />
     <ClInclude Include="SDL_Game.h" />
