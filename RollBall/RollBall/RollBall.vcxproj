@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>D:\Users\Admin\Documents\Git\oun\source;C:\SDL\VS\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\Admin\Documents\Git\oun\VisualStudio\Debug;C:\SDL\VS\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>Z:\Users\User\Documents\Git\oun\source;D:\Users\Admin\Documents\Git\oun\source;C:\SDL\VS\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Z:\Users\User\Documents\Git\oun\VisualStudio\Debug;D:\Users\Admin\Documents\Git\oun\VisualStudio\Debug;C:\SDL\VS\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
