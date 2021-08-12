@@ -136,22 +136,27 @@
     <ClCompile Include="GalsObject.cpp" />
     <ClCompile Include="jsoncpp.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RB_Json.cpp" />
     <ClCompile Include="RB_Object.cpp" />
     <ClCompile Include="RB_Player.cpp" />
     <ClCompile Include="RB_UI.cpp" />
     <ClCompile Include="RollBall.cpp" />
     <ClCompile Include="SDL_Animator.cpp" />
+    <ClCompile Include="SDL_cTexture.cpp" />
     <ClCompile Include="SDL_Game.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GalsObject.h" />
     <ClInclude Include="json\json-forwards.h" />
     <ClInclude Include="json\json.h" />
+    <ClInclude Include="RB_Json.h" />
+    <ClInclude Include="RB_Manager.h" />
     <ClInclude Include="RB_Object.h" />
     <ClInclude Include="RB_Player.h" />
     <ClInclude Include="RB_UI.h" />
     <ClInclude Include="RollBall.h" />
     <ClInclude Include="SDL_Animator.h" />
+    <ClInclude Include="SDL_cTexture.h" />
     <ClInclude Include="SDL_Game.h" />
     <ClInclude Include="SDL_State.h" />
   </ItemGroup>

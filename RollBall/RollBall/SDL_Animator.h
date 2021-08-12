@@ -1,8 +1,8 @@
 #pragma once
 
 #include <map>
-#include "SDL.h"
-#include "SDL_image.h"
+#include <SDL.h>
+#include <SDL_image.h>
 
 class SDL_Animator
 {

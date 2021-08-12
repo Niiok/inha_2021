@@ -1,15 +1,13 @@
 #include <stdio.h>
-#include "SDL_Game.h"
 #include "RollBall.h"
+#include "SDL_Game.h"
 
 
 int main(int argc, char* argv[])
 {
 	SDL_Game game;
 
-	SDL_State* state = new RollBall;
-
-	game.SetState(state);
+	game.SetState(&RollBall::Instance());
 	game.Run();
 
 	return 0;
@@ -21,8 +19,8 @@ int main(int argc, char* argv[])
 /*
 
 v  화면 스크롤
+v 충돌 (흡수 or 블럭)
 - 애니메이터
-- 충돌 (흡수 or 블럭 or 분해)
 - ttf 지름 표시
 - 타이틀
 - 게임오버
