@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "SDL_State.h"
 
 static constexpr int INITIAL_FPS = 1000 / 60;
@@ -23,6 +24,7 @@ public:
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
 	static const Uint8* keystate;
+	static TTF_Font* font;
 
 	static SDL_State* game_state;	// Run() halted when this is NULL
 

@@ -13,6 +13,7 @@ class iRollBall
 public:
 	virtual RB_Player* getPlayer() = 0;
 	virtual int getLonger() = 0;
+	virtual int64_t getTimeLimit() = 0;
 	virtual const oun::World& getWorld() = 0;
 	virtual std::set<RB_Object*>& getObjects() = 0;
 

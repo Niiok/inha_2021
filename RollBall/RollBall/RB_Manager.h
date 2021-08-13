@@ -18,7 +18,8 @@ inline float RandomValue() { return rand() % int(MAX_SPACE_SCALE - 10) + 10; }
 
 SDL_Rect ObjectArea(oun::iObject* obj);
 
-class RB_Manager
+class RB_Manager 
+	: public iRollBall
 {
 public:
 	static void Init(iRollBall* rb) { if (singleton_ == NULL) singleton_ = new RB_Manager(rb); }
@@ -28,6 +29,7 @@ public:
 	RollBall* getRollBall() { return (RollBall*)rb_; }
 	RB_Player* getPlayer() { return rb_->getPlayer(); }
 	int getLonger() { return rb_->getLonger(); }
+	int64_t getTimeLimit() { return rb_->getTimeLimit(); }
 	const oun::World& getWorld() { return rb_->getWorld(); }
 	std::set<RB_Object*>& getObjects() { return rb_->getObjects(); }
 

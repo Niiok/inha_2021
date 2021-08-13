@@ -11,21 +11,21 @@ RollBall::RollBall()
 	player_->setSpeed(0.1);
 	world_.setFocus((oun::iDomain*)player_);
 
-	for (int i = 0; i < 0; ++i)
+	for (int i = 0; i < 10000; ++i)
 		objects_.insert(new RB_Object(world_.getCenterSpace(), { RandomValue(),  RandomValue(), 0 }, float(rand()%900 + 100)/100));
 
-	initial_time_ = SDL_GetTicks();
+	time_limit_ += SDL_GetTicks();
 }
 
 RollBall::~RollBall()
 {
-	delete player_;
-
 	for (auto it = objects_.begin(); it != objects_.end();)
 	{
 		auto value = *(it++);
-		delete (oun::iObject*)value;
+		delete value;
 	}
+
+	delete player_;
 
 	delete background_;
 
@@ -46,10 +46,9 @@ inline void RollBall::Process()
 	player_->Update();
 	world_.Update();
 
-	if (initial_time_ + time_limit_ < SDL_GetTicks())
+	if (time_limit_ < SDL_GetTicks())
 		game_end_ = true;
 
-	printf("%f second left\n", float(initial_time_ + time_limit_ - SDL_GetTicks())/1000);
 }
 
 inline void RollBall::Output()
@@ -92,6 +91,7 @@ inline void RollBall::Output()
 
 	world_.Draw();
 
+	ui_.Draw();
 
 	if (game_end_ == true)
 	{

@@ -8,6 +8,7 @@ SDL_Window* SDL_Game::window = NULL;
 SDL_Renderer* SDL_Game::renderer = NULL;
 SDL_Event SDL_Game::event;
 const Uint8* SDL_Game::keystate = NULL;
+TTF_Font* SDL_Game::font = NULL;
 
 SDL_State* SDL_Game::game_state = NULL;
 
@@ -17,6 +18,8 @@ SDL_Game::SDL_Game()
 	SDL_assert(!SDL_Init(SDL_INIT_VIDEO /*| SDL_INIT_EVENTS*/));
 
 	SDL_assert(IMG_Init(IMG_INIT_PNG));
+
+	SDL_assert(!TTF_Init());
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
@@ -28,12 +31,17 @@ SDL_Game::SDL_Game()
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_assert(renderer);
 
+	font = TTF_OpenFont("../data/font.ttf", 32);
+	SDL_assert(font);
+
 }
 
 SDL_Game::~SDL_Game()
 {
+	TTF_CloseFont(font);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	TTF_Quit();
 	IMG_Quit();
 	SDL_Quit();
 

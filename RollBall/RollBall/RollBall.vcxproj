@@ -133,9 +133,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="jsoncpp.cpp" />
+    <ClCompile Include="jsoncpp.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RB_Json.cpp" />
+    <ClCompile Include="RB_Json.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="RB_Manager.cpp" />
     <ClCompile Include="RB_Object.cpp" />
     <ClCompile Include="RB_Player.cpp" />
@@ -144,12 +148,19 @@
     <ClCompile Include="SDL_Animator.cpp" />
     <ClCompile Include="SDL_cTexture.cpp" />
     <ClCompile Include="SDL_Game.cpp" />
+    <ClCompile Include="SDL_iManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="iRollBall.h" />
-    <ClInclude Include="json\json-forwards.h" />
-    <ClInclude Include="json\json.h" />
-    <ClInclude Include="RB_Json.h" />
+    <ClInclude Include="json\json-forwards.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="json\json.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="RB_Json.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="RB_Manager.h" />
     <ClInclude Include="RB_Object.h" />
     <ClInclude Include="RB_Player.h" />
@@ -158,6 +169,7 @@
     <ClInclude Include="SDL_Animator.h" />
     <ClInclude Include="SDL_cTexture.h" />
     <ClInclude Include="SDL_Game.h" />
+    <ClInclude Include="SDL_iManager.h" />
     <ClInclude Include="SDL_State.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
