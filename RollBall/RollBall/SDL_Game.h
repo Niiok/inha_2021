@@ -24,7 +24,7 @@ public:
 	static SDL_Event event;
 	static const Uint8* keystate;
 
-	static SDL_State* game_state;
+	static SDL_State* game_state;	// Run() halted when this is NULL
 
 public:
 	inline void SetState(SDL_State* state) noexcept { game_state = state; }

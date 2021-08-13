@@ -1,35 +1,42 @@
 #pragma once
 
 #include "oun.h"
-#include "RB_Manager.h"
 #include "SDL_State.h"
 #include "SDL_cTexture.h"
+
+#include "iRollBall.h"
+#include "RB_Manager.h"
 #include "RB_Player.h"
 #include "RB_Object.h"
 
-inline float RandomValue() { return rand()%int(MAX_SPACE_SCALE - 10) + 10; }
 
 class RB_Player;
 class RB_Object;
 class RB_UI;
 class oun::World;
 
-class RollBall : public SDL_State
+
+
+class RollBall 
+	: public SDL_State, public iRollBall
 {
-	friend class SDL_Game;
-	friend class RB_Manager;
 
 public:
-	static RollBall& Instance();
-	static inline void Reset();
+	RollBall();
+	~RollBall();
 
+	// SDL_State
 	inline void Input() override;
 	inline void Process() override;
 	inline void Output() override;
 
-private:
-	static RollBall* singleton_;
-	
+	//iRollBall
+	RB_Player* getPlayer() override { return player_; }
+	int getLonger() override { return longer_screen_; }
+	const oun::World& getWorld() override { return world_; }
+	std::set<RB_Object*>& getObjects() override { return objects_; }
+
+private:	
 	SDL_cTexture* background_;
 	oun::World world_;
 	//RB_UI ui_;
@@ -37,8 +44,9 @@ private:
 	std::set<RB_Object*> objects_;
 	int longer_screen_;
 
-	RollBall();	// singleton
-	~RollBall();
+	uint64_t initial_time_;
+	uint64_t time_limit_ = 2000;
+	bool game_end_ = false;
+
 };
 
-SDL_Rect ObjectArea(oun::iObject* obj);

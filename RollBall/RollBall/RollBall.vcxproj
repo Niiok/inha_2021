@@ -133,10 +133,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GalsObject.cpp" />
     <ClCompile Include="jsoncpp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RB_Json.cpp" />
+    <ClCompile Include="RB_Manager.cpp" />
     <ClCompile Include="RB_Object.cpp" />
     <ClCompile Include="RB_Player.cpp" />
     <ClCompile Include="RB_UI.cpp" />
@@ -146,7 +146,7 @@
     <ClCompile Include="SDL_Game.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GalsObject.h" />
+    <ClInclude Include="iRollBall.h" />
     <ClInclude Include="json\json-forwards.h" />
     <ClInclude Include="json\json.h" />
     <ClInclude Include="RB_Json.h" />

@@ -1,12 +1,12 @@
 #pragma once
 
 #include "oun_Object.h"
-#include <SDL.h>
 #include "SDL_Game.h"
 #include "SDL_Animator.h"
 #include <deque>
 
 #include "RB_Manager.h"
+
 
 constexpr int MAX_ATTACHED_OBJECTS_ON_BALL = 10;
 

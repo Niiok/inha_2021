@@ -24,29 +24,36 @@ void RB_Player::Plan()
 	if (SDL_Game::keystate[SDL_SCANCODE_MINUS])
 		plan_vol /= 1.1;
 	if (SDL_Game::keystate[SDL_SCANCODE_ESCAPE])
-		for (auto it = RB_Manager::getObjects().begin(); it != RB_Manager::getObjects().end();)
+	{
+		auto& arounds = RB_Manager::Instance().getObjects();
+
+		for (auto it = arounds.begin(); it != arounds.end();)
 		{
 			auto value = *(it++);
-			delete value;
+			
+			delete (Object*)value;
 		}
 
-	getWorld()->setZoom(100/getVolume()+2);
-	
+	}
+
+	getWorld()->setZoom(100 / getVolume() + 2);
+
 	setPlanLocation(plan);
-	if (plan_vol * getWorld()->getZoom()*2 < MAX_SPACE_SCALE)
+	if (plan_vol * getWorld()->getZoom() * 2 < MAX_SPACE_SCALE)
 		setPlanVolume(plan_vol);
 
 }
 
 void RB_Player::Update()
 {
+
 	collision_ = ObjectArea((iObject*)this);
 	collision_.x += collision_.w * 0.2;
 	collision_.y += collision_.w * 0.4;
 	collision_.w *= 0.6;
 	collision_.h *= 0.6;
 
-	auto& objects = RB_Manager::getWorld().getObjectsAround();
+	auto& objects = RB_Manager::Instance().getWorld().getObjectsAround();
 
 	for (auto it = objects.begin(); it != objects.end();)
 	{
@@ -72,6 +79,8 @@ void RB_Player::Update()
 	}
 
 	Locate();
+
+
 }
 
 void RB_Player::Draw() const
@@ -97,11 +106,11 @@ void RB_Player::Draw() const
 
 bool RB_Player::OverlapRect(SDL_Rect a, SDL_Rect b) const
 {
-	int a_x = (a.x*2 + a.w) / 2;
-	int a_y = (a.y*2 + a.h) / 2;
-	int b_x = (b.x*2 + b.w) / 2;
-	int b_y = (b.y*2 + b.h) / 2;
-	
+	int a_x = (a.x * 2 + a.w) / 2;
+	int a_y = (a.y * 2 + a.h) / 2;
+	int b_x = (b.x * 2 + b.w) / 2;
+	int b_y = (b.y * 2 + b.h) / 2;
+
 	if (abs(a_x - b_x) <= a.w / 2 + b.w / 2 &&
 		abs(a_y - b_y) <= a.h / 2 + b.h / 2)
 		return true;
@@ -133,7 +142,7 @@ bool RB_Player::AttachObjectToBall(iObject * obj)
 	if (!obj->Quit())
 		return false;
 
-	//RollBall::Instance().getObjects().erase((RB_Object*)obj);
+	RB_Manager::Instance().getObjects().erase((RB_Object*)obj);
 
 	attached_.push_back(obj);
 	if (attached_.size() > MAX_ATTACHED_OBJECTS_ON_BALL)
@@ -142,7 +151,7 @@ bool RB_Player::AttachObjectToBall(iObject * obj)
 		attached_.pop_front();
 	}
 
-	setPlanVolume(getVolume() + obj->getVolume()/32);
+	setPlanVolume(getVolume() + obj->getVolume() / 32);
 
 	return true;
 }

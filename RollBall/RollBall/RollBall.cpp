@@ -1,39 +1,35 @@
 #include "RollBall.h"
 
-RollBall* RollBall::singleton_ = NULL;
 
-inline RollBall::RollBall()
+RollBall::RollBall()
 {
+	RB_Manager::Init((iRollBall*)this);
+
 	background_ = new SDL_cTexture("../data/background.png");
 
 	player_ = new RB_Player(world_.getCenterSpace(), {1000, 1000, 0}, 5);
 	player_->setSpeed(0.1);
 	world_.setFocus((oun::iDomain*)player_);
 
-	for (int i = 0; i < 10000; ++i)
+	for (int i = 0; i < 0; ++i)
 		objects_.insert(new RB_Object(world_.getCenterSpace(), { RandomValue(),  RandomValue(), 0 }, float(rand()%900 + 100)/100));
+
+	initial_time_ = SDL_GetTicks();
 }
 
-inline RollBall::~RollBall()
+RollBall::~RollBall()
 {
 	delete player_;
 
-	for (auto it = objects_.begin(); it != objects_.end(); ++it)
-		delete *it;
-}
+	for (auto it = objects_.begin(); it != objects_.end();)
+	{
+		auto value = *(it++);
+		delete (oun::iObject*)value;
+	}
 
-RollBall& RollBall::Instance()
-{
-	if (singleton_ == NULL)
-		singleton_ = new RollBall;
+	delete background_;
 
-	return *singleton_;
-}
-
-inline void RollBall::Reset()
-{
-	if (singleton_ != NULL)
-		delete singleton_;
+	RB_Manager::Quit();
 }
 
 inline void RollBall::Input()
@@ -49,6 +45,11 @@ inline void RollBall::Process()
 {
 	player_->Update();
 	world_.Update();
+
+	if (initial_time_ + time_limit_ < SDL_GetTicks())
+		game_end_ = true;
+
+	printf("%f second left\n", float(initial_time_ + time_limit_ - SDL_GetTicks())/1000);
 }
 
 inline void RollBall::Output()
@@ -87,23 +88,16 @@ inline void RollBall::Output()
 	}
 
 	SDL_RenderCopy(SDL_Game::renderer, *background_, &b_rect, &s_rect);
+
+
 	world_.Draw();
+
+
+	if (game_end_ == true)
+	{
+		SDL_Game::game_state = NULL;
+		delete this;
+	}
 }
 
 
-SDL_Rect ObjectArea(oun::iObject * obj)
-{
-	SDL_Rect area;
-	float volume = obj->getVolume();
-
-	//int longer = RB_Manager::getLonger();
-
-	auto bound = RB_Manager::getWorld().getBound();
-	auto world_loc = obj->getPlanWorldLocation();
-	area.x = (world_loc.x - volume/2 - bound.x) / bound.w * SDL_Game::window_rect.w;
-	area.y = (world_loc.y - volume - bound.y) / bound.h * SDL_Game::window_rect.h;
-	area.w = (volume / bound.w) * SDL_Game::window_rect.w;
-	area.h = (volume / bound.h) * SDL_Game::window_rect.h;
-
-	return area;
-}

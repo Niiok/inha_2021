@@ -37,7 +37,8 @@ SDL_Game::~SDL_Game()
 	IMG_Quit();
 	SDL_Quit();
 
-	delete game_state;
+	if (game_state != NULL)
+		delete game_state;
 }
 
 
@@ -45,16 +46,15 @@ void SDL_Game::Run()
 {
 	int old_tick = SDL_GetTicks();
 	int new_tick;
-	bool quit = 0;
 
-	while (!quit)
+	while (game_state)
 	{
 		while (SDL_PollEvent(&event))
 		{
 			switch (event.type)
 			{
 			case SDL_QUIT:
-				quit = 1;
+				game_state = NULL;
 				break;
 
 			case SDL_WINDOWEVENT:
@@ -74,17 +74,24 @@ void SDL_Game::Run()
 		if (new_tick - old_tick >= FPS)
 		{
 			keystate = SDL_GetKeyboardState(NULL);
-			game_state->Input();
+			
+			if (game_state != NULL)	// Input
+				game_state->Input();
 
-			game_state->Process();
-			old_tick += FPS;
-			if (new_tick - old_tick >= FPS)
-			{
+			if (game_state != NULL)	// Process
 				game_state->Process();
+			old_tick += FPS;
+
+			if (new_tick - old_tick >= FPS)	// additional Process
+			{
+				if (game_state != NULL)
+					game_state->Process();
 				old_tick += FPS;
 			}
 
-			game_state->Output();
+			if (game_state != NULL)	// Output
+				game_state->Output();
+
 			SDL_RenderPresent(renderer);
 		}
 	}

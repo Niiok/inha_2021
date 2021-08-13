@@ -2,8 +2,8 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
-#include <string>
 #include "SDL_Game.h"
+#include <string>
 
 class SDL_cTexture
 {
