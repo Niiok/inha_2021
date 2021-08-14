@@ -4,10 +4,10 @@
 #include "oun_Object.h"
 #include <SDL.h>
 #include "SDL_Game.h"
-#include "SDL_Animator.h"
 #include <math.h>
 #include <time.h>
 
+#include "RB_Animator.h"
 #include "RB_Manager.h"
 
 class RB_Manager;
@@ -24,5 +24,5 @@ public:
 	void Draw() const override;
 
 private:
-	SDL_Animator* animator_;
+	RB_Animator* animator_;
 };

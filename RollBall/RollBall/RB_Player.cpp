@@ -36,10 +36,10 @@ void RB_Player::Plan()
 
 	}
 
-	getWorld()->setZoom(100 / getVolume() + 2);
+	getWorld()->setZoom(1 / getVolume() + 4);
 
 	setPlanLocation(plan);
-	if (plan_vol * getWorld()->getZoom() * 2 < MAX_SPACE_SCALE)
+	//if (plan_vol * getWorld()->getZoom() * 2 < MAX_SPACE_SCALE)
 		setPlanVolume(plan_vol);
 
 }

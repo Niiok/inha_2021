@@ -1,7 +1,7 @@
 #pragma once
 
 #include "oun.h"
-#include "SDL_State.h"
+#include "SDL_GameState.h"
 #include "SDL_cTexture.h"
 
 #include "iRollBall.h"
@@ -19,14 +19,14 @@ class oun::World;
 
 
 class RollBall 
-	: public SDL_State, public iRollBall
+	: public SDL_GameState, public iRollBall
 {
 
 public:
 	RollBall();
 	~RollBall();
 
-	// SDL_State
+	// SDL_GameState
 	inline void Input() override;
 	inline void Process() override;
 	inline void Output() override;
@@ -46,7 +46,7 @@ private:
 	std::set<RB_Object*> objects_;
 	int longer_screen_;
 
-	int64_t time_limit_ = 50000;
+	int64_t time_limit_ = 500000;
 	bool game_end_ = false;
 
 };

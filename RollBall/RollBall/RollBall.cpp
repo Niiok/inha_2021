@@ -38,6 +38,7 @@ inline void RollBall::Input()
 	SDL_RenderFillRect(SDL_Game::renderer, NULL);
 
 	//longer_screen_ = (SDL_Game::window_rect.h > SDL_Game::window_rect.w ? SDL_Game::window_rect.h : SDL_Game::window_rect.w);
+	player_->Plan();
 	world_.Plan();
 }
 

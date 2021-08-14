@@ -3,8 +3,10 @@
 #include <map>
 #include <SDL.h>
 #include <SDL_image.h>
+#include "oun.h"
+#include "RB_Manager.h"
 
-class SDL_Animator
+class RB_Animator
 {
 public:
 	enum State
@@ -34,11 +36,11 @@ public:
 		Direction_Total
 	};
 
-	SDL_Animator();
-	~SDL_Animator();
+	RB_Animator();
+	~RB_Animator();
 
 
-
+	void Draw(oun::iObject*);
 
 private:
 	SDL_Texture* texture_;
