@@ -27,12 +27,6 @@
     <ClCompile Include="RollBall.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SDL_Animator.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SDL_Game.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="RB_Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -42,26 +36,11 @@
     <ClCompile Include="RB_Json.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SDL_cTexture.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="RB_Manager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SDL_iManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SDL_Animator.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SDL_Game.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SDL_State.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="json\json-forwards.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -83,16 +62,10 @@
     <ClInclude Include="RB_Json.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SDL_cTexture.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="RB_Manager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="iRollBall.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SDL_iManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

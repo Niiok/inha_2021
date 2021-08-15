@@ -3,7 +3,7 @@
 
 #include "oun.h"
 #include "iRollBall.h"
-#include "SDL_Game.h"
+#include "SDLpp_Game.h"
 //#include "RB_Player.h"
 //#include "RB_Object.h"
 

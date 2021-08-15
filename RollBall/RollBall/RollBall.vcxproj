@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>D:\Users\Admin\Documents\Git\oun\source;C:\SDL\VS\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Users\Admin\Documents\Git\oun\VisualStudio\Debug;C:\SDL\VS\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>Z:\Users\User\Documents\Git\oun\source;C:\SDL\SDLpp\source;C:\SDL\VC\include;D:\Users\Admin\Documents\Git\oun\source;$(IncludePath)</IncludePath>
+    <LibraryPath>Z:\Users\User\Documents\Git\oun\VisualStudio\Debug;C:\SDL\SDLpp\Debug;C:\SDL\VC\lib\x86;D:\Users\Admin\Documents\Git\oun\VisualStudio\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>Z:\Users\User\Documents\Git\oun\source;C:\SDL\VC\include;$(IncludePath)</IncludePath>
@@ -87,7 +87,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>oun.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>oun.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDLpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -99,7 +99,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>oun.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>oun.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -145,10 +145,6 @@
     <ClCompile Include="RB_Player.cpp" />
     <ClCompile Include="RB_UI.cpp" />
     <ClCompile Include="RollBall.cpp" />
-    <ClCompile Include="SDL_Animator.cpp" />
-    <ClCompile Include="SDL_cTexture.cpp" />
-    <ClCompile Include="SDL_Game.cpp" />
-    <ClCompile Include="SDL_iManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="iRollBall.h" />
@@ -166,11 +162,6 @@
     <ClInclude Include="RB_Player.h" />
     <ClInclude Include="RB_UI.h" />
     <ClInclude Include="RollBall.h" />
-    <ClInclude Include="SDL_Animator.h" />
-    <ClInclude Include="SDL_cTexture.h" />
-    <ClInclude Include="SDL_Game.h" />
-    <ClInclude Include="SDL_iManager.h" />
-    <ClInclude Include="SDL_State.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

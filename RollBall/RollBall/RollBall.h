@@ -1,8 +1,8 @@
 #pragma once
 
 #include "oun.h"
-#include "SDL_State.h"
-#include "SDL_cTexture.h"
+#include "SDLpp_GameState.h"
+#include "SDLpp_Texture.h"
 
 #include "iRollBall.h"
 #include "RB_Manager.h"
@@ -19,14 +19,14 @@ class oun::World;
 
 
 class RollBall 
-	: public SDL_State, public iRollBall
+	: public SDLpp_GameState, public iRollBall
 {
 
 public:
 	RollBall();
 	~RollBall();
 
-	// SDL_State
+	// SDLpp_GameState
 	inline void Input() override;
 	inline void Process() override;
 	inline void Output() override;
@@ -39,7 +39,7 @@ public:
 	std::set<RB_Object*>& getObjects() override { return objects_; }
 
 private:	
-	SDL_cTexture* background_;
+	SDLpp_Texture* background_;
 	oun::World world_;
 	RB_UI ui_;
 	RB_Player* player_;

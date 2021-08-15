@@ -11,19 +11,19 @@ void RB_Player::Plan()
 	oun::floatXYZ plan = getLocation();
 	float plan_vol = getVolume();
 
-	if (SDL_Game::keystate[SDL_SCANCODE_UP])
+	if (SDLpp_Game::keystate[SDL_SCANCODE_UP])
 		plan.y -= getSpeed() * plan_vol;
-	if (SDL_Game::keystate[SDL_SCANCODE_DOWN])
+	if (SDLpp_Game::keystate[SDL_SCANCODE_DOWN])
 		plan.y += getSpeed() * plan_vol;
-	if (SDL_Game::keystate[SDL_SCANCODE_LEFT])
+	if (SDLpp_Game::keystate[SDL_SCANCODE_LEFT])
 		plan.x -= getSpeed() * plan_vol;
-	if (SDL_Game::keystate[SDL_SCANCODE_RIGHT])
+	if (SDLpp_Game::keystate[SDL_SCANCODE_RIGHT])
 		plan.x += getSpeed() * plan_vol;
-	if (SDL_Game::keystate[SDL_SCANCODE_EQUALS])
+	if (SDLpp_Game::keystate[SDL_SCANCODE_EQUALS])
 		plan_vol *= 1.1;
-	if (SDL_Game::keystate[SDL_SCANCODE_MINUS])
+	if (SDLpp_Game::keystate[SDL_SCANCODE_MINUS])
 		plan_vol /= 1.1;
-	if (SDL_Game::keystate[SDL_SCANCODE_ESCAPE])
+	if (SDLpp_Game::keystate[SDL_SCANCODE_ESCAPE])
 	{
 		auto& arounds = RB_Manager::Instance().getObjects();
 
@@ -87,15 +87,15 @@ void RB_Player::Draw() const
 {
 	SDL_Rect area = ObjectArea((iObject*)this);
 
-	//SDL_RenderCopy(SDL_Game::renderer, )
-	SDL_SetRenderDrawColor(SDL_Game::renderer, 200, 200, 200, 255);
-	SDL_RenderFillRect(SDL_Game::renderer, &area);
+	//SDL_RenderCopy(SDLpp_Game::renderer, )
+	SDL_SetRenderDrawColor(SDLpp_Game::renderer, 200, 200, 200, 255);
+	SDL_RenderFillRect(SDLpp_Game::renderer, &area);
 
 	// attacheds
 	for (auto it = attached_.begin(); it != attached_.end(); ++it)
 	{
-		SDL_SetRenderDrawColor(SDL_Game::renderer, 100, 0, 50, 30);
-		//SDL_RenderFillRect(SDL_Game::renderer, );
+		SDL_SetRenderDrawColor(SDLpp_Game::renderer, 100, 0, 50, 30);
+		//SDL_RenderFillRect(SDLpp_Game::renderer, );
 	}
 
 	//printf("%d : %f %f\n", in_world_, getLocation().x, getLocation().y);
@@ -125,10 +125,10 @@ bool RB_Player::CheckCollision(iObject * obj) const
 	obj_rect.y += obj_rect.h;
 
 	// debug
-	//SDL_SetRenderDrawColor(SDL_Game::renderer, 255, 0, 0, 125);
-	//SDL_RenderDrawRect(SDL_Game::renderer, &obj_rect);
-	//SDL_SetRenderDrawColor(SDL_Game::renderer, 0, 255, 0, 125);
-	//SDL_RenderDrawRect(SDL_Game::renderer, &collision_);
+	//SDL_SetRenderDrawColor(SDLpp_Game::renderer, 255, 0, 0, 125);
+	//SDL_RenderDrawRect(SDLpp_Game::renderer, &obj_rect);
+	//SDL_SetRenderDrawColor(SDLpp_Game::renderer, 0, 255, 0, 125);
+	//SDL_RenderDrawRect(SDLpp_Game::renderer, &collision_);
 
 	if (OverlapRect(obj_rect, collision_))
 		return true;

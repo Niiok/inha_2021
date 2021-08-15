@@ -3,8 +3,8 @@
 
 #include "oun_Object.h"
 #include <SDL.h>
-#include "SDL_Game.h"
-#include "SDL_Animator.h"
+#include "SDLpp_Game.h"
+#include "SDLpp_Animator.h"
 #include <math.h>
 #include <time.h>
 
@@ -24,5 +24,5 @@ public:
 	void Draw() const override;
 
 private:
-	SDL_Animator* animator_;
+	SDLpp_Animator* animator_;
 };

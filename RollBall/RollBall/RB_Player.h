@@ -1,8 +1,8 @@
 #pragma once
 
 #include "oun_Object.h"
-#include "SDL_Game.h"
-#include "SDL_Animator.h"
+#include "SDLpp_Game.h"
+#include "SDLpp_Animator.h"
 #include <deque>
 
 #include "RB_Manager.h"
@@ -31,7 +31,7 @@ public:
 	bool AttachObjectToBall(iObject* obj);
 
 private:
-	SDL_Animator* animator_;
+	SDLpp_Animator* animator_;
 	SDL_Rect collision_;
 
 	float speed_ = 1;

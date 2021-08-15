@@ -19,8 +19,8 @@ void RB_Object::Draw() const
 {
 	SDL_Rect rect = ObjectArea((iObject*)this);
 
-	//SDL_RenderCopy(SDL_Game::renderer, )
-	SDL_SetRenderDrawColor(SDL_Game::renderer, 100, 100, 100, 125);
-	SDL_RenderFillRect(SDL_Game::renderer, &rect);
+	//SDL_RenderCopy(SDLpp_Game::renderer, )
+	SDL_SetRenderDrawColor(SDLpp_Game::renderer, 100, 100, 100, 125);
+	SDL_RenderFillRect(SDLpp_Game::renderer, &rect);
 }
 
