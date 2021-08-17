@@ -1,8 +1,8 @@
 #pragma once
 
 #include "oun.h"
-#include "SDL_GameState.h"
-#include "SDL_cTexture.h"
+#include "SDLpp_GameState.h"
+#include "SDLpp_Texture.h"
 
 #include "iRollBall.h"
 #include "RB_Manager.h"
@@ -19,14 +19,14 @@ class oun::World;
 
 
 class RollBall 
-	: public SDL_GameState, public iRollBall
+	: public SDLpp_GameState, public iRollBall
 {
 
 public:
 	RollBall();
 	~RollBall();
 
-	// SDL_GameState
+	// SDLpp_GameState
 	inline void Input() override;
 	inline void Process() override;
 	inline void Output() override;
@@ -38,13 +38,19 @@ public:
 	const oun::World& getWorld() override { return world_; }
 	std::set<RB_Object*>& getObjects() override { return objects_; }
 
+	// temporal
+	void SetPlayerAnim();
+
 private:	
-	SDL_cTexture* background_;
+	SDLpp_Texture* background_;
 	oun::World world_;
 	RB_UI ui_;
 	RB_Player* player_;
 	std::set<RB_Object*> objects_;
 	int longer_screen_;
+
+	// temporal
+	SDLpp_Animator* player_anim_;
 
 	int64_t time_limit_ = 500000;
 	bool game_end_ = false;

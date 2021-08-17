@@ -3,11 +3,11 @@
 
 #include "oun_Object.h"
 #include <SDL.h>
-#include "SDL_Game.h"
+#include "SDLpp_Game.h"
+#include "SDLpp_Animator.h"
 #include <math.h>
 #include <time.h>
 
-#include "RB_Animator.h"
 #include "RB_Manager.h"
 
 class RB_Manager;
@@ -23,6 +23,12 @@ public:
 	void Update() override;
 	void Draw() const override;
 
-private:
-	RB_Animator* animator_;
+	inline void setAnimator(SDLpp_Animator* anim) { animator_ = anim; }
+	inline bool setState(SDLpp_Animator::State state) { state_ = state; }
+	inline bool setDirection(SDLpp_Animator::Direction direct) { direct_ = direct; }
+
+protected:
+	SDLpp_Animator* animator_;
+	SDLpp_Animator::State state_;
+	SDLpp_Animator::Direction direct_;
 };

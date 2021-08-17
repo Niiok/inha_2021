@@ -1,12 +1,12 @@
 #pragma once
 
 #include "oun_Object.h"
-#include "SDL_Game.h"
+#include "SDLpp_Game.h"
+#include "SDLpp_Animator.h"
+#include "RB_Object.h"
 #include <deque>
 
-#include "RB_Object.h"
 #include "RB_Manager.h"
-#include "RB_Animator.h"
 
 
 constexpr int MAX_ATTACHED_OBJECTS_ON_BALL = 10;
@@ -29,13 +29,13 @@ public:
 
 	bool OverlapRect(SDL_Rect a, SDL_Rect b) const;
 	bool CheckCollision(iObject* obj) const;
-	bool AttachObjectToBall(iObject* obj);
+	bool AttachObjectToBall(RB_Object* obj);
 
 private:
 	SDL_Rect collision_;
 
 	float speed_ = 1;
-	std::deque<iObject*> attached_;
+	std::deque<RB_Object*> attached_;
 
 
 };

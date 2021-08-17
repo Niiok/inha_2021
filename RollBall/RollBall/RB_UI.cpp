@@ -11,10 +11,10 @@ void RB_UI::Draw()
 	area_.y = 32;
 	area_.w = texture_.getWidth();
 	area_.h = texture_.getHeight();
-	SDL_RenderCopy(SDL_Game::renderer, texture_, NULL, &area_);
+	SDL_RenderCopy(SDLpp_Game::renderer, texture_, NULL, &area_);
 	texture_.MakeTTF(str2, { 255,0,255,255 });
 	area_.y = 64;
 	area_.w = texture_.getWidth();
 	area_.h = texture_.getHeight();
-	SDL_RenderCopyEx(SDL_Game::renderer, texture_, NULL, &area_, 90, &center_, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(SDLpp_Game::renderer, texture_, NULL, &area_, 90, &center_, SDL_FLIP_NONE);
 }
