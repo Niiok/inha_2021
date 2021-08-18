@@ -1,6 +1,6 @@
 #include "RB_Manager.h"
 
-RB_Manager* RB_Manager::singleton_ = NULL;
+std::stack<RB_Manager*> RB_Manager::singleton_;
 
 
 SDL_Rect ObjectArea(oun::iObject * obj)

@@ -3,6 +3,7 @@
 
 #define COLLISION_SHOW
 
+#include <stack>
 #include "oun.h"
 #include "iRollBall.h"
 #include "SDLpp_Game.h"
@@ -24,9 +25,9 @@ class RB_Manager
 	: public iRollBall
 {
 public:
-	static void Init(iRollBall* rb) { if (singleton_ == NULL) singleton_ = new RB_Manager(rb); }
-	static RB_Manager& Instance() { return *singleton_; }
-	static void Quit() { if (singleton_ != NULL) { delete singleton_; singleton_ = NULL; } }
+	static void Init(iRollBall* rb) { singleton_.push(new RB_Manager(rb)); }
+	static RB_Manager& Instance() { return *singleton_.top(); }
+	static void Quit() { if (!singleton_.empty()) { delete singleton_.top(); singleton_.pop() ; } }
 
 	RollBall* getRollBall() { return (RollBall*)rb_; }
 	RB_Player* getPlayer() { return rb_->getPlayer(); }
@@ -36,7 +37,7 @@ public:
 	std::set<RB_Object*>& getObjects() { return rb_->getObjects(); }
 
 private:
-	static RB_Manager* singleton_;
+	static std::stack<RB_Manager*> singleton_;
 	iRollBall* rb_;
 
 	RB_Manager(iRollBall* rb) { rb_ = rb; }

@@ -7,12 +7,12 @@ RollBall::RollBall()
 
 	background_ = new SDLpp_Texture("../data/background.png");
 
-	player_ = new RB_Player(world_.getCenterSpace(), {1000, 1000, 0}, 5);
+	player_ = new RB_Player(world_.getCenterSpace(), {1000, 1000, 0}, 500);
 	player_->setSpeed(0.1);
 	SetPlayerAnim();
 	world_.setFocus((oun::iDomain*)player_);
 
-	for (int i = 0; i < 100000; ++i)
+	for (int i = 0; i < 0; ++i)
 		objects_.insert(new RB_Object(world_.getCenterSpace(), { RandomValue(),  RandomValue(), 0 }, float(rand()%900 + 100)/100));
 
 	time_limit_ += SDL_GetTicks();
