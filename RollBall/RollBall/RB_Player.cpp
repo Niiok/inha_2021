@@ -10,15 +10,29 @@ void RB_Player::Plan()
 {
 	oun::floatXYZ plan = getLocation();
 	float plan_vol = getVolume();
+	int dir_x = 1;
+	int dir_y = 1;
 
 	if (SDLpp_Game::keystate[SDL_SCANCODE_UP])
+	{
 		plan.y -= getSpeed() * plan_vol;
+		dir_y--;
+	}
 	if (SDLpp_Game::keystate[SDL_SCANCODE_DOWN])
+	{
 		plan.y += getSpeed() * plan_vol;
+		dir_y++;
+	}
 	if (SDLpp_Game::keystate[SDL_SCANCODE_LEFT])
+	{
 		plan.x -= getSpeed() * plan_vol;
+		dir_x--;
+	}
 	if (SDLpp_Game::keystate[SDL_SCANCODE_RIGHT])
+	{
 		plan.x += getSpeed() * plan_vol;
+		dir_x++;
+	}
 	if (SDLpp_Game::keystate[SDL_SCANCODE_EQUALS])
 		plan_vol *= 1.1;
 	if (SDLpp_Game::keystate[SDL_SCANCODE_MINUS])
@@ -41,6 +55,46 @@ void RB_Player::Plan()
 	setPlanLocation(plan);
 	if (plan_vol * getWorld()->getZoom() * 2 < MAX_SPACE_SCALE)
 		setPlanVolume(plan_vol);
+
+	//	0	1	2
+	//	3	4	5
+	//	6	7	8
+	state_ = SDLpp_Animator::State_Walk;
+
+	switch (dir_x + dir_y * 3)
+	{
+	case 4: // idle
+		state_ = SDLpp_Animator::State_Idle;
+		direct_ = SDLpp_Animator::Left;
+		break;
+	case 0:	// up-left
+		direct_ = SDLpp_Animator::UpLeft;
+		break;
+	case 1:	// up
+		direct_ = SDLpp_Animator::Up;
+		break;
+	case 2:	// up-right
+		direct_ = SDLpp_Animator::UpRight;
+		break;
+	case 3:	// left
+		direct_ = SDLpp_Animator::Left;
+		break;
+	case 5:	// right
+		direct_ = SDLpp_Animator::Right;
+		break;
+	case 6:	// down-left
+		direct_ = SDLpp_Animator::DownLeft;
+		break;
+	case 7:	// down
+		direct_ = SDLpp_Animator::Down;
+		break;
+	case 8:	// down-right
+		direct_ = SDLpp_Animator::DownRight;
+		break;
+	default:
+		assert(dir_x + dir_y * 3 > 8);
+		break;
+	}
 
 }
 
@@ -91,7 +145,7 @@ void RB_Player::Draw() const
 	/*SDL_SetRenderDrawColor(SDLpp_Game::renderer, 200, 200, 200, 100);
 	SDL_RenderFillRect(SDLpp_Game::renderer, &area);*/
 	
-	animator_->DrawSprite(SDLpp_Animator::State_Walk, SDLpp_Animator::Direction_Front, (SDL_GetTicks() % 390)/100, &area);
+	animator_->DrawSprite(state_, direct_, (SDL_GetTicks() % 390)/100, &area);
 
 	// attacheds
 	for (auto it = attached_.begin(); it != attached_.end(); ++it)

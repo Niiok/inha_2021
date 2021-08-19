@@ -1,7 +1,7 @@
 #ifndef __RB_MANAGER_H__
 #define __RB_MANAGER_H__
 
-#define COLLISION_SHOW
+//#define COLLISION_SHOW
 
 #include <stack>
 #include "oun.h"
@@ -25,23 +25,23 @@ class RB_Manager
 	: public iRollBall
 {
 public:
-	static void Init(iRollBall* rb) { singleton_.push(new RB_Manager(rb)); }
-	static RB_Manager& Instance() { return *singleton_.top(); }
-	static void Quit() { if (!singleton_.empty()) { delete singleton_.top(); singleton_.pop() ; } }
+	static void Init(iRollBall* rb);
+	static RB_Manager& Instance() { return *singleton_; }
+	static void Quit();
 
-	RollBall* getRollBall() { return (RollBall*)rb_; }
-	RB_Player* getPlayer() { return rb_->getPlayer(); }
-	int getLonger() { return rb_->getLonger(); }
-	int64_t getTimeLimit() { return rb_->getTimeLimit(); }
-	const oun::World& getWorld() { return rb_->getWorld(); }
-	std::set<RB_Object*>& getObjects() { return rb_->getObjects(); }
+	RollBall* getRollBall() { return (RollBall*)rb_.top(); }
+	RB_Player* getPlayer() { return rb_.top()->getPlayer(); }
+	int getLonger() { return rb_.top()->getLonger(); }
+	int64_t getTimeLimit() { return rb_.top()->getTimeLimit(); }
+	const oun::World& getWorld() { return rb_.top()->getWorld(); }
+	std::set<RB_Object*>& getObjects() { return rb_.top()->getObjects(); }
 
 private:
-	static std::stack<RB_Manager*> singleton_;
-	iRollBall* rb_;
+	static RB_Manager* singleton_;
+	std::stack<iRollBall*> rb_;
 
-	RB_Manager(iRollBall* rb) { rb_ = rb; }
-	~RB_Manager() {};
+	RB_Manager() {}
+	~RB_Manager() {}
 };
 
 

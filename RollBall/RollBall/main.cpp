@@ -12,13 +12,16 @@ class RollBall;
 int main(int argc, char* argv[])
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF || _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(308138);
+	//_CrtSetBreakAlloc(169);
 
 	SDLpp_Game game;
 	SDLpp_Resource resource;
+	RollBall* gm = new RollBall;
 
-	game.SetState(new RollBall);
+	game.SetState(gm);
 	game.Run();
+
+	//delete gm;
 
 	_CrtDumpMemoryLeaks();
 

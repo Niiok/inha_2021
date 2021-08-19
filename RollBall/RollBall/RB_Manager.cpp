@@ -1,6 +1,6 @@
 #include "RB_Manager.h"
 
-std::stack<RB_Manager*> RB_Manager::singleton_;
+RB_Manager* RB_Manager::singleton_ = NULL;
 
 
 SDL_Rect ObjectArea(oun::iObject * obj)
@@ -18,4 +18,26 @@ SDL_Rect ObjectArea(oun::iObject * obj)
 	area.h = (volume / bound.h) * SDLpp_Game::window_rect.h;
 
 	return area;
+}
+
+void RB_Manager::Init(iRollBall * rb)
+{
+	if (singleton_ == NULL)
+		singleton_ = new RB_Manager;
+
+	singleton_->rb_.push(rb);
+}
+
+void RB_Manager::Quit()
+{
+	if (singleton_ == NULL || singleton_->rb_.empty())
+		assert(0);
+
+	singleton_->rb_.pop();
+
+	if (singleton_->rb_.empty())
+	{
+		delete singleton_;
+		singleton_ = NULL;
+	}
 }

@@ -7,13 +7,15 @@ RollBall::RollBall()
 
 	background_ = new SDLpp_Texture("../data/background.png");
 
-	player_ = new RB_Player(world_.getCenterSpace(), {1000, 1000, 0}, 500);
+	player_ = new RB_Player(world_.getCenterSpace(), {1000, 1000, 0}, 5);
 	player_->setSpeed(0.1);
 	SetPlayerAnim();
 	world_.setFocus((oun::iDomain*)player_);
 
 	for (int i = 0; i < 0; ++i)
 		objects_.insert(new RB_Object(world_.getCenterSpace(), { RandomValue(),  RandomValue(), 0 }, float(rand()%900 + 100)/100));
+
+	printf("object num : %d\n", objects_.size());
 
 	time_limit_ += SDL_GetTicks();
 
@@ -26,6 +28,8 @@ RollBall::RollBall()
 
 RollBall::~RollBall()
 {
+	printf("object num : %d\n", objects_.size());
+
 	for (auto it = objects_.begin(); it != objects_.end();)
 	{
 		auto value = *(it++);
@@ -115,16 +119,63 @@ inline void RollBall::Output()
 
 void RollBall::SetPlayerAnim()
 {
-	player_anim_ = new SDLpp_Animator("../data/player.png");
-	SDL_Rect area = { 469, 0, 19, 35 };
-	player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::Direction_Front, 0, &area);
-	area = { 174, 0, 19, 35 };
-	player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::Direction_Front, 1, &area);
-	area = { 450, 0, 19, 35 };
-	player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::Direction_Front, 2, &area);
-	area = { 216, 0, 19, 35 };
-	player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::Direction_Front, 3, &area);
+	//	0	1	2
+	//	3	4	5
+	//	6	7	8
 
+	player_anim_ = new SDLpp_Animator("../data/prince.png");
+	SDL_Rect area = { 0, 0, 64, 64 };
+
+	// idle left
+	for (int x = 0; x < 3; ++x)
+	{
+		area.x = 64 * x;
+		player_anim_->AddArea(SDLpp_Animator::State_Idle, SDLpp_Animator::Left, x, &area, SDL_FLIP_NONE);
+	}
+
+	// walk down
+	area.y = 64;
+	for (int x = 0; x < 4; ++x)
+	{
+		area.x = 64 * x;
+		player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::Down, x, &area, SDL_FLIP_NONE);
+	}
+	
+	// walk down left & down right
+	area.y = 128;
+	for (int x = 0; x < 4; ++x)
+	{
+		area.x = 64 * x;
+		player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::DownLeft, x, &area, SDL_FLIP_NONE);
+		player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::DownRight, x, &area, SDL_FLIP_HORIZONTAL);
+	}
+	
+	// walk left & right
+	area.y = 192;
+	for (int x = 0; x < 4; ++x)
+	{
+		area.x = 64 * x;
+		player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::Left, x, &area, SDL_FLIP_NONE);
+		player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::Right, x, &area, SDL_FLIP_HORIZONTAL);
+	}
+	
+	// walk up left & up right
+	area.y = 256;
+	for (int x = 0; x < 4; ++x)
+	{
+		area.x = 64 * x;
+		player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::UpLeft, x, &area, SDL_FLIP_NONE);
+		player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::UpRight, x, &area, SDL_FLIP_HORIZONTAL);
+	}
+	
+	// walk up
+	area.y = 320;
+	for (int x = 0; x < 4; ++x)
+	{
+		area.x = 64 * x;
+		player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::Up, x, &area, SDL_FLIP_NONE);
+	}
+		
 	player_->setAnimator(player_anim_);
 }
 

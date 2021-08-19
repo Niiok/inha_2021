@@ -51,6 +51,7 @@ private:
 
 	// temporal
 	SDLpp_Animator* player_anim_;
+	SDLpp_Resource resource;
 
 	int64_t time_limit_ = 500000;
 	bool game_end_ = false;
