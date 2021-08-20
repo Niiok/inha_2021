@@ -15,13 +15,9 @@ int main(int argc, char* argv[])
 	//_CrtSetBreakAlloc(169);
 
 	SDLpp_Game game;
-	SDLpp_Resource resource;
-	RollBall* gm = new RollBall;
 
-	game.SetState(gm);
+	game.SetState(new RollBall);
 	game.Run();
-
-	//delete gm;
 
 	_CrtDumpMemoryLeaks();
 
@@ -36,7 +32,8 @@ int main(int argc, char* argv[])
 v screen scroll
 v Collision (block or absorb)
 v ttf print diameter
-- Animator
+v Animator
+- Object Factory
 - Sound
 - Title
 - Game over

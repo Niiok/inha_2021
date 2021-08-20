@@ -33,7 +33,7 @@ public:
 	RB_Player* getPlayer() { return rb_.top()->getPlayer(); }
 	int getLonger() { return rb_.top()->getLonger(); }
 	int64_t getTimeLimit() { return rb_.top()->getTimeLimit(); }
-	const oun::World& getWorld() { return rb_.top()->getWorld(); }
+	oun::World& getWorld() { return rb_.top()->getWorld(); }
 	std::set<RB_Object*>& getObjects() { return rb_.top()->getObjects(); }
 
 private:

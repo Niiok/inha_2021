@@ -142,6 +142,7 @@
     </ClCompile>
     <ClCompile Include="RB_Manager.cpp" />
     <ClCompile Include="RB_Object.cpp" />
+    <ClCompile Include="RB_ObjectFactory.cpp" />
     <ClCompile Include="RB_Player.cpp" />
     <ClCompile Include="RB_UI.cpp" />
     <ClCompile Include="RollBall.cpp" />
@@ -159,6 +160,7 @@
     </ClInclude>
     <ClInclude Include="RB_Manager.h" />
     <ClInclude Include="RB_Object.h" />
+    <ClInclude Include="RB_ObjectFactory.h" />
     <ClInclude Include="RB_Player.h" />
     <ClInclude Include="RB_UI.h" />
     <ClInclude Include="RollBall.h" />
