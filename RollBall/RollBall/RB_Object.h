@@ -16,6 +16,15 @@ class RB_Object
 	: public oun::Object
 {
 public:
+	enum ID
+	{
+		ID_Player = 0,
+		ID_Crab,
+		ID_Box,
+		ID_Cow,
+		ID_House
+	};
+
 	RB_Object(oun::Space* space, oun::floatXYZ loc, float vol) : oun::Object(space, loc, vol) {}
 	~RB_Object() override { RB_Manager::Instance().getObjects().erase(this); }
 
@@ -29,6 +38,6 @@ public:
 
 protected:
 	SDLpp_Animator* animator_;
-	SDLpp_Animator::State state_;
-	SDLpp_Animator::Direction direct_;
+	SDLpp_Animator::State state_ = SDLpp_Animator::State_Idle;
+	SDLpp_Animator::Direction direct_ = SDLpp_Animator::Middle;
 };

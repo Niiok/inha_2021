@@ -1,7 +1,7 @@
 #include "RB_ObjectFactory.h"
 
 int RB_ObjectFactory::instance_count = 0;
-std::map<RB_ObjectFactory::ObjectID, SDLpp_Animator*> RB_ObjectFactory::animators;
+std::map<RB_Object::ID, SDLpp_Animator*> RB_ObjectFactory::animators;
 
 RB_ObjectFactory::RB_ObjectFactory()
 {
@@ -24,19 +24,36 @@ RB_ObjectFactory::~RB_ObjectFactory()
 }
 
 
-RB_Object * RB_ObjectFactory::Create(ObjectID id)
+RB_Object * RB_ObjectFactory::Create(RB_Object::ID id, float x, float y)
 {
 	RB_Object* ret = NULL;
 
 	switch (id)
 	{
-	case ID_Player:
-		ret = new RB_Player(RB_Manager::Instance().getWorld().getCenterSpace(), { 1000, 1000, 0 }, 5);
+	case RB_Object::ID_Player:
+		ret = new RB_Player(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 0.5);
 		((RB_Player*)ret)->setSpeed(0.1);
 		RB_Manager::Instance().getWorld().setFocus((oun::iDomain*)ret);
 		break;
 
+	case RB_Object::ID_Crab:
+		ret = new RB_Object(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 0.1);
+		break;
+
+	case RB_Object::ID_Box:
+		ret = new RB_Object(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 1);
+		break;
+
+	case RB_Object::ID_Cow:
+		ret = new RB_Object(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 2);
+		break;
+
+	case RB_Object::ID_House:
+		ret = new RB_Object(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 5);
+		break;
+
 	default:
+		assert(!"Wrong Object ID");
 		break;
 	}
 
@@ -47,13 +64,19 @@ RB_Object * RB_ObjectFactory::Create(ObjectID id)
 	{
 		switch (id)
 		{
-		case ID_Player:
+		case RB_Object::ID_Player:
 			SetPlayerAnim();
 			break;
+
+		default:
+			break;
 		}
+
 		it = animators.find(id);
 	}
-	ret->setAnimator(it->second);
+
+	if (it != animators.end())
+		ret->setAnimator(it->second);
 
 	return ret;
 }
@@ -118,5 +141,5 @@ void RB_ObjectFactory::SetPlayerAnim()
 		player_anim_->AddArea(SDLpp_Animator::State_Walk, SDLpp_Animator::Up, x, &area, SDL_FLIP_NONE);
 	}
 
-	animators.insert({ ID_Player, player_anim_});
+	animators.insert({ RB_Object::ID_Player, player_anim_});
 }

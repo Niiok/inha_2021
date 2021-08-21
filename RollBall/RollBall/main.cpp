@@ -33,7 +33,7 @@ v screen scroll
 v Collision (block or absorb)
 v ttf print diameter
 v Animator
-- Object Factory
+v Object Factory
 - Sound
 - Title
 - Game over

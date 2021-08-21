@@ -7,10 +7,46 @@ RollBall::RollBall()
 
 	background_ = new SDLpp_Texture("../data/background.png");
 
-	player_ = (RB_Player*)object_factory_.Create(RB_ObjectFactory::ID_Player);
+	player_ = (RB_Player*)object_factory_.Create(RB_Object::ID_Player);
 
-	for (int i = 0; i < 0; ++i)
-		objects_.insert(new RB_Object(world_.getCenterSpace(), { RandomValue(),  RandomValue(), 0 }, float(rand()%900 + 100)/100));
+	// crab
+	for (int i = 0; i < 500; ++i)
+	{
+		int rand_num = rand();
+		float x = MAX_SPACE_SCALE/2 + float(rand_num % 100 - 50)/5;
+		float y = MAX_SPACE_SCALE/2 + float(rand_num % 10000 / 100 - 50)/5;
+		objects_.insert(object_factory_.Create(RB_Object::ID_Crab, x, y));
+	}
+	
+	// box
+	for (int i = 0; i < 200; ++i)
+	{
+		int rand_num = rand();
+		float x = MAX_SPACE_SCALE/2 + float(rand_num % 100 - 50)/2;
+		float y = MAX_SPACE_SCALE/2 + float(rand_num % 10000 / 100 - 50)/2;
+		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
+			objects_.insert(object_factory_.Create(RB_Object::ID_Box, x, y));
+	}
+	
+	// cow
+	for (int i = 0; i < 100; ++i)
+	{
+		int rand_num = rand();
+		float x = MAX_SPACE_SCALE/2 + (rand_num % 100 - 50);
+		float y = MAX_SPACE_SCALE/2 + (rand_num % 10000 / 100 - 50);
+		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
+			objects_.insert(object_factory_.Create(RB_Object::ID_Cow, x, y));
+	}
+	
+	// house
+	for (int i = 0; i < 100; ++i)
+	{
+		int rand_num = rand();
+		float x = MAX_SPACE_SCALE/2 + (rand_num % 100 - 50)*3;
+		float y = MAX_SPACE_SCALE/2 + (rand_num % 10000 / 100 - 50)*3;
+		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
+			objects_.insert(object_factory_.Create(RB_Object::ID_House, x, y));
+	}
 
 	printf("object num : %d\n", objects_.size());
 

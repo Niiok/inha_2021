@@ -7,25 +7,18 @@
 class RB_ObjectFactory
 {
 public:
-	enum ObjectID
-	{
-		ID_Player = 0,
-		ID_Box,
-		ID_Cow,
-		ID_House,
-		ID_Crab
-	};
+	
 
 	RB_ObjectFactory();
 	~RB_ObjectFactory();
 
-	RB_Object* Create(ObjectID id);
+	RB_Object* Create(RB_Object::ID id, float x = MAX_SPACE_SCALE/2, float y = MAX_SPACE_SCALE/2);
 
 	private:
 	void SetPlayerAnim();
 
 
 	static int instance_count;
-	static std::map<ObjectID, SDLpp_Animator*> animators;
+	static std::map<RB_Object::ID, SDLpp_Animator*> animators;
 };
 
