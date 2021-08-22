@@ -41,7 +41,7 @@ RB_Object * RB_ObjectFactory::Create(RB_Object::ID id, float x, float y)
 		break;
 
 	case RB_Object::ID_Box:
-		ret = new RB_Object(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 1);
+		ret = new RB_Object(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 0.5);
 		break;
 
 	case RB_Object::ID_Cow:
@@ -50,6 +50,14 @@ RB_Object * RB_ObjectFactory::Create(RB_Object::ID id, float x, float y)
 
 	case RB_Object::ID_House:
 		ret = new RB_Object(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 5);
+		break;
+		
+	case RB_Object::ID_Tree:
+		ret = new RB_Object(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 10);
+		break;
+	
+	case RB_Object::ID_Building:
+		ret = new RB_Object(RB_Manager::Instance().getWorld().getCenterSpace(), { x, y, 0 }, 30);
 		break;
 
 	default:

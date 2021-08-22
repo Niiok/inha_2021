@@ -10,26 +10,26 @@ RollBall::RollBall()
 	player_ = (RB_Player*)object_factory_.Create(RB_Object::ID_Player);
 
 	// crab
-	for (int i = 0; i < 500; ++i)
+	for (int i = 0; i < 1000; ++i)
 	{
 		int rand_num = rand();
-		float x = MAX_SPACE_SCALE/2 + float(rand_num % 100 - 50)/5;
-		float y = MAX_SPACE_SCALE/2 + float(rand_num % 10000 / 100 - 50)/5;
+		float x = MAX_SPACE_SCALE/2 + float(rand_num % 100 - 50)*0.8;
+		float y = MAX_SPACE_SCALE/2 + float(rand_num % 10000 / 100 - 50)*0.8;
 		objects_.insert(object_factory_.Create(RB_Object::ID_Crab, x, y));
 	}
 	
 	// box
-	for (int i = 0; i < 200; ++i)
+	for (int i = 0; i < 500; ++i)
 	{
 		int rand_num = rand();
-		float x = MAX_SPACE_SCALE/2 + float(rand_num % 100 - 50)/2;
-		float y = MAX_SPACE_SCALE/2 + float(rand_num % 10000 / 100 - 50)/2;
+		float x = MAX_SPACE_SCALE/2 + float(rand_num % 100 - 50)*0.9;
+		float y = MAX_SPACE_SCALE/2 + float(rand_num % 10000 / 100 - 50)*0.9;
 		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
 			objects_.insert(object_factory_.Create(RB_Object::ID_Box, x, y));
 	}
 	
 	// cow
-	for (int i = 0; i < 100; ++i)
+	for (int i = 0; i < 200; ++i)
 	{
 		int rand_num = rand();
 		float x = MAX_SPACE_SCALE/2 + (rand_num % 100 - 50);
@@ -46,6 +46,26 @@ RollBall::RollBall()
 		float y = MAX_SPACE_SCALE/2 + (rand_num % 10000 / 100 - 50)*3;
 		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
 			objects_.insert(object_factory_.Create(RB_Object::ID_House, x, y));
+	}
+	
+	// Tree
+	for (int i = 0; i < 50; ++i)
+	{
+		int rand_num = rand();
+		float x = MAX_SPACE_SCALE/2 + (rand_num % 100 - 50)*5;
+		float y = MAX_SPACE_SCALE/2 + (rand_num % 10000 / 100 - 50)*5;
+		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
+			objects_.insert(object_factory_.Create(RB_Object::ID_Tree, x, y));
+	}
+	
+	// Building
+	for (int i = 0; i < 10; ++i)
+	{
+		int rand_num = rand();
+		float x = MAX_SPACE_SCALE/2 + (rand_num % 100 - 50)*10;
+		float y = MAX_SPACE_SCALE/2 + (rand_num % 10000 / 100 - 50)*10;
+		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
+			objects_.insert(object_factory_.Create(RB_Object::ID_Building, x, y));
 	}
 
 	printf("object num : %d\n", objects_.size());

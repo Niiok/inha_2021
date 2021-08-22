@@ -22,7 +22,9 @@ public:
 		ID_Crab,
 		ID_Box,
 		ID_Cow,
-		ID_House
+		ID_House,
+		ID_Tree,
+		ID_Building
 	};
 
 	RB_Object(oun::Space* space, oun::floatXYZ loc, float vol) : oun::Object(space, loc, vol) {}
