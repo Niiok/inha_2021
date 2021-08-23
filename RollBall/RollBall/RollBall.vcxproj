@@ -146,6 +146,7 @@
     <ClCompile Include="RB_Player.cpp" />
     <ClCompile Include="RB_UI.cpp" />
     <ClCompile Include="RollBall.cpp" />
+    <ClCompile Include="TitleRB.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="iRollBall.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="RB_Player.h" />
     <ClInclude Include="RB_UI.h" />
     <ClInclude Include="RollBall.h" />
+    <ClInclude Include="TitleRB.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
