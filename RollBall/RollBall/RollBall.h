@@ -52,7 +52,7 @@ private:
 	std::set<RB_Object*> objects_;
 
 	int longer_screen_;
-	int64_t time_limit_ = 500000;
+	int64_t time_limit_ = 120000;
 	bool game_end_ = false;
 
 };

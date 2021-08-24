@@ -39,7 +39,7 @@ public:
 	inline bool setDirection(SDLpp_Animator::Direction direct) { direct_ = direct; }
 
 protected:
-	SDLpp_Animator* animator_;
+	SDLpp_Animator* animator_ = NULL;
 	SDLpp_Animator::State state_ = SDLpp_Animator::State_Idle;
 	SDLpp_Animator::Direction direct_ = SDLpp_Animator::Middle;
 };

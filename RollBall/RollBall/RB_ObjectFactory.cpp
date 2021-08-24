@@ -75,6 +75,8 @@ RB_Object * RB_ObjectFactory::Create(RB_Object::ID id, float x, float y)
 		case RB_Object::ID_Player:
 			SetPlayerAnim();
 			break;
+		case RB_Object::ID_Box:
+			SetBoxAnim();
 
 		default:
 			break;
@@ -150,4 +152,19 @@ void RB_ObjectFactory::SetPlayerAnim()
 	}
 
 	animators.insert({ RB_Object::ID_Player, player_anim_});
+}
+
+void RB_ObjectFactory::SetBoxAnim()
+{
+	SDLpp_Animator* box_anim_ = new SDLpp_Animator("../data/box.png");
+	SDL_Rect area = { 0, 0, 512, 512 };
+
+	// idle middle
+	for (int x = 0; x < 1; ++x)
+	{
+		//area.x = 64 * x;
+		box_anim_->AddArea(SDLpp_Animator::State_Idle, SDLpp_Animator::Middle, x, &area, SDL_FLIP_NONE);
+	}
+
+	animators.insert({ RB_Object::ID_Box, box_anim_});
 }

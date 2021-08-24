@@ -23,7 +23,14 @@ void RB_Object::Draw() const
 	SDL_Rect rect = ObjectArea((iObject*)this);
 
 	//SDL_RenderCopy(SDLpp_Game::renderer, )
-	SDL_SetRenderDrawColor(SDLpp_Game::renderer, 100, 100, 100, 100);
-	SDL_RenderFillRect(SDLpp_Game::renderer, &rect);
+	if (animator_ == NULL)
+	{
+		SDL_SetRenderDrawColor(SDLpp_Game::renderer, 100, 100, 100, 100);
+		SDL_RenderFillRect(SDLpp_Game::renderer, &rect);
+	}
+	else
+	{
+		animator_->DrawSprite(state_, direct_, SDL_GetTicks() / 10, &rect);
+	}
 }
 

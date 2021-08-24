@@ -16,6 +16,7 @@ public:
 
 	private:
 	void SetPlayerAnim();
+	void SetBoxAnim();
 
 
 	static int instance_count;

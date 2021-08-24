@@ -12,9 +12,11 @@ RollBall::RollBall()
 	// crab
 	for (int i = 0; i < 1000; ++i)
 	{
+		constexpr int sd = RAND_MAX;
+
 		int rand_num = rand();
-		float x = MAX_SPACE_SCALE/2 + float(rand_num % 100 - 50)*0.8;
-		float y = MAX_SPACE_SCALE/2 + float(rand_num % 10000 / 100 - 50)*0.8;
+		float x = MAX_SPACE_SCALE/2 + float(rand_num % (1<<7) - 64)*0.33;
+		float y = MAX_SPACE_SCALE/2 + float(rand_num % (1<<14) / 128 - 64)*0.33;
 		objects_.insert(object_factory_.Create(RB_Object::ID_Crab, x, y));
 	}
 	
@@ -22,8 +24,8 @@ RollBall::RollBall()
 	for (int i = 0; i < 500; ++i)
 	{
 		int rand_num = rand();
-		float x = MAX_SPACE_SCALE/2 + float(rand_num % 100 - 50)*0.9;
-		float y = MAX_SPACE_SCALE/2 + float(rand_num % 10000 / 100 - 50)*0.9;
+		float x = MAX_SPACE_SCALE/2 + float(rand_num % (1<<7) - 64)*0.5;
+		float y = MAX_SPACE_SCALE/2 + float(rand_num % (1<<14) / 128 - 64)*0.5;
 		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
 			objects_.insert(object_factory_.Create(RB_Object::ID_Box, x, y));
 	}
@@ -32,8 +34,8 @@ RollBall::RollBall()
 	for (int i = 0; i < 200; ++i)
 	{
 		int rand_num = rand();
-		float x = MAX_SPACE_SCALE/2 + (rand_num % 100 - 50);
-		float y = MAX_SPACE_SCALE/2 + (rand_num % 10000 / 100 - 50);
+		float x = MAX_SPACE_SCALE/2 + (rand_num % (1<<7) - 64);
+		float y = MAX_SPACE_SCALE/2 + (rand_num % (1<<14) / 128 - 50);
 		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
 			objects_.insert(object_factory_.Create(RB_Object::ID_Cow, x, y));
 	}
@@ -42,8 +44,8 @@ RollBall::RollBall()
 	for (int i = 0; i < 100; ++i)
 	{
 		int rand_num = rand();
-		float x = MAX_SPACE_SCALE/2 + (rand_num % 100 - 50)*3;
-		float y = MAX_SPACE_SCALE/2 + (rand_num % 10000 / 100 - 50)*3;
+		float x = MAX_SPACE_SCALE/2 + (rand_num % (1<<7) - 64)*3;
+		float y = MAX_SPACE_SCALE/2 + (rand_num % (1<<14) / 128 - 64)*3;
 		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
 			objects_.insert(object_factory_.Create(RB_Object::ID_House, x, y));
 	}
@@ -52,8 +54,8 @@ RollBall::RollBall()
 	for (int i = 0; i < 50; ++i)
 	{
 		int rand_num = rand();
-		float x = MAX_SPACE_SCALE/2 + (rand_num % 100 - 50)*5;
-		float y = MAX_SPACE_SCALE/2 + (rand_num % 10000 / 100 - 50)*5;
+		float x = MAX_SPACE_SCALE/2 + (rand_num % (1<<7) - 64)*5;
+		float y = MAX_SPACE_SCALE/2 + (rand_num % (1<<14) / 128 - 64)*5;
 		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
 			objects_.insert(object_factory_.Create(RB_Object::ID_Tree, x, y));
 	}
@@ -62,8 +64,8 @@ RollBall::RollBall()
 	for (int i = 0; i < 10; ++i)
 	{
 		int rand_num = rand();
-		float x = MAX_SPACE_SCALE/2 + (rand_num % 100 - 50)*10;
-		float y = MAX_SPACE_SCALE/2 + (rand_num % 10000 / 100 - 50)*10;
+		float x = MAX_SPACE_SCALE/2 + (rand_num % (1<<7) - 64)*10;
+		float y = MAX_SPACE_SCALE/2 + (rand_num % (1<<14) / 128 - 64)*10;
 		if (x != MAX_SPACE_SCALE / 2 && y != MAX_SPACE_SCALE / 2)
 			objects_.insert(object_factory_.Create(RB_Object::ID_Building, x, y));
 	}
