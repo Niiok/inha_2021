@@ -15,13 +15,20 @@ namespace Lab1_RaceDay
                          // The last two fields are the guy’s GUI controls on the form 
         public RadioButton MyRadioButton; // My RadioButton
         public Label MyLabel; // My Label
+
         public void UpdateLabels()
         {
             // Set my label to my bet’s description, and the label on my 
             // radio button to show my cash (“Joe has 43 bucks”) 
         }
         
-        public void ClearBet() { } // Reset my bet so it’s zero
+        public void ClearBet()
+        {
+            // Reset my bet so it’s zero
+            MyBet = null;
+            MyRadioButton.Text = $"{Name} has {Cash} busks";
+            MyLabel.Text = $"{Name} hasn't placed a bet";
+        } 
 
         public bool PlaceBet(int Amount, int Dog)
         {
@@ -30,5 +37,10 @@ namespace Lab1_RaceDay
             return false;
         }
         public void Collect(int Winner) { } // Ask my bet to pay out
+
+
+        public void Reset()
+        {
+        }
     }
 }
