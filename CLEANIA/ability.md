@@ -18,7 +18,7 @@
 - Vitality
 - HP
 - Dodge (<-> Accuracy)
-- Toughness
+- Tenacity (Toughness)
 - Defense
 - Reduce Damage (you -damage-> me)
 
@@ -32,13 +32,17 @@
 - Move Speed
 - MP
 
-- HP restore (combat, non-combat)
+- HP restore 
+  - combat
+  - non-combat
 - HP restore speed
 - HP restore per damaging
 - HP restore per damaged
 - HP restore per kill
 - HP restore Scale
-- MP restore (combat, non-combat)
+- MP restore 
+  - combat
+  - non-combat
 - MP restore speed
 - MP restore per damaging
 - MP restore per damaged
@@ -50,6 +54,7 @@
 
 ## Option (calcurated value that change stat)
 > How to Adjust Options : (stat + absolute) * percent + addition        
+>     
 > Absolute			: option1 + option2 + ...    
 > Addition			: option1 + option2 + ...    
 > posit-mul Percent	: (1 + option1) * (1 + option2) * ...    
