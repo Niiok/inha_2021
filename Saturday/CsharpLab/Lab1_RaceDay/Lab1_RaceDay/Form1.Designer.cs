@@ -39,7 +39,7 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.raceButton = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.labelOnRadio = new System.Windows.Forms.Label();
             this.labelGuy2 = new System.Windows.Forms.Label();
@@ -130,7 +130,7 @@
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.raceButton);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.labelOnRadio);
             this.groupBox1.Controls.Add(this.labelGuy2);
@@ -216,18 +216,19 @@
             this.button2.TabIndex = 9;
             this.button2.Text = "Bets";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.OnBetButton_Click);
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(478, 186);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(128, 32);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Race !";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.raceButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.raceButton.Font = new System.Drawing.Font("굴림", 16F, System.Drawing.FontStyle.Bold);
+            this.raceButton.Location = new System.Drawing.Point(478, 186);
+            this.raceButton.Name = "button1";
+            this.raceButton.Size = new System.Drawing.Size(128, 32);
+            this.raceButton.TabIndex = 8;
+            this.raceButton.Text = "Race !";
+            this.raceButton.UseVisualStyleBackColor = true;
+            this.raceButton.Click += new System.EventHandler(this.OnRaceButton_Click);
             // 
             // label5
             // 
@@ -366,7 +367,7 @@
         private System.Windows.Forms.Label labelGuy0;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button raceButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label labelOnRadio;
         private System.Windows.Forms.Label labelGuy2;

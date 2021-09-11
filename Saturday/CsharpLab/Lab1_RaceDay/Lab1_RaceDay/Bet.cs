@@ -29,10 +29,7 @@ namespace Lab1_RaceDay
             // The parameter is the winner of the race. If the dog won, 
             // return the amount bet. Otherwise, return the negative of 
             // the amount bet. 
-            if (Dog == Winner)
-                return Amount;
-            else
-                return -Amount;
+            return (Dog == Winner ? Amount : -Amount);
         }
     }
 }

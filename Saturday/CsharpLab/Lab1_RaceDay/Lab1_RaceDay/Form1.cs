@@ -38,9 +38,9 @@ namespace Lab1_RaceDay
 
             KeyValuePair<string, int>[] guyInfos =
                 {
-                new KeyValuePair<string, int>("", seedMoney),
-                new KeyValuePair<string, int>("", seedMoney),
-                new KeyValuePair<string, int>("", seedMoney)
+                new KeyValuePair<string, int>("Joe", seedMoney),
+                new KeyValuePair<string, int>("Ash", seedMoney),
+                new KeyValuePair<string, int>("Smith", seedMoney)
             };
 
 
@@ -48,7 +48,7 @@ namespace Lab1_RaceDay
                 dogs[i] = new Greyhound(dogPictures[i], rand);
 
             for (int i = guys.Length - 1; i >= 0; --i)
-                guys[0] = new Guy(guyInfos[0], guyRadios[0], guyLabels[0]);
+                guys[i] = new Guy(guyInfos[i], guyRadios[i], guyLabels[i]);
 
 
             Reset();
@@ -64,9 +64,11 @@ namespace Lab1_RaceDay
             labelOnRadio.Text = $"Minimum bet: {minBet} bucks";
             label5.Text = "Bets";
 
-
             foreach (Guy guy in guys)
+            {
                 guy.ClearBet();
+                guy.UpdateLabels();
+            }
 
             foreach (Greyhound dog in dogs)
             {
@@ -83,39 +85,83 @@ namespace Lab1_RaceDay
             {
                 pictureBox0.Update();
 
-                for (int i = 0; i < dogs.Length; ++i)
-                {
+                int i = 0;
+
+                for (; i < dogs.Length; ++i)
                     if (dogs[i].Run())
                     {
                         winner = i;
                         break;
                     }
-                }
+
+                i--;
+
+                if (winner == -1)
+                    for (; i >= 0; --i)
+                        if (dogs[i].Run())
+                        {
+                            winner = i;
+                            break;
+                        }
             }
 
             return winner;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void OnRaceButton_Click(object sender, EventArgs e)
         {
             switch (state)
             {
                 case State.Before:
-                    button1.Text = "Running..";
-                    button1.Enabled = false;
-                    MessageBox.Show($"Winner is Dog #{Run() + 1}!");
-                    button1.Text = "Reset";
-                    button1.Enabled = true;
+                    foreach (var guy in guys)
+                    {
+                        if (guy.MyBet == null)
+                        {
+                            MessageBox.Show($"{guy.Name} hasn't placed bet");
+                            return;
+                        }
+                    }
+
+                    raceButton.Text = "Running..";
+                    raceButton.Enabled = false;
+
+                    int winner = Run();
+                    MessageBox.Show($"Winner is Dog #{winner + 1}!");
+                    foreach (var guy in guys)
+                        guy.Collect(winner);
+
+                    raceButton.Text = "Reset";
+                    raceButton.Enabled = true;
                     state = State.After;
 
                     break;
 
                 case State.After:
                     Reset();
-                    button1.Text = "Race !";
+                    raceButton.Text = "Race !";
                     state = State.Before;
                     break;
             }
+        }
+
+        private void OnBetButton_Click(object sender, EventArgs e)
+        {
+            if (radioButtonGuy0.Checked)
+            {
+                guys[0].PlaceBet((int)numericUpDown1.Value, (int)numericUpDown2.Value);
+                guys[0].UpdateLabels();
+            }
+            else if (radioButtonGuy1.Checked)
+            {
+                guys[1].PlaceBet((int)numericUpDown1.Value, (int)numericUpDown2.Value);
+                guys[1].UpdateLabels();
+            }
+            else if (radioButtonGuy2.Checked)
+            {
+                guys[2].PlaceBet((int)numericUpDown1.Value, (int)numericUpDown2.Value);
+                guys[2].UpdateLabels();
+            }
+           
         }
     }
 }
