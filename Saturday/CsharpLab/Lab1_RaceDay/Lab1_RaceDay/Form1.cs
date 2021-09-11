@@ -24,7 +24,7 @@ namespace Lab1_RaceDay
 
         int seedMoney = 50;
         int minBet = 5;
-        State state = State.Before;   
+        State state = State.Before;
 
         public Form1()
         {
@@ -32,55 +32,38 @@ namespace Lab1_RaceDay
 
             Random rand = new Random();
 
-            dogs[0] = new Greyhound();
-            dogs[0].MyPictureBox = pictureDog0;
-            dogs[0].StartingPosition = pictureDog0.Location.X;
-            //dogs[0].RacetrackLength = pictureBox0.Size.Width - pictureDog0.Size.Width;
-            dogs[0].Randomizer = rand;
+            PictureBox[] dogPictures = { pictureDog0, pictureDog1, pictureDog2, pictureDog3 };
+            RadioButton[] guyRadios = {radioButtonGuy0, radioButtonGuy1, radioButtonGuy2 };
+            Label[] guyLabels = {labelGuy0, labelGuy1, labelGuy2 };
 
-            dogs[1] = new Greyhound();
-            dogs[1].MyPictureBox = pictureDog1;
-            dogs[1].StartingPosition = pictureDog1.Location.X;
-            dogs[1].Randomizer = rand;
-
-            dogs[2] = new Greyhound();
-            dogs[2].MyPictureBox = pictureDog2;
-            dogs[2].StartingPosition = pictureDog2.Location.X;
-            dogs[2].Randomizer = rand;
-
-            dogs[3] = new Greyhound();
-            dogs[3].MyPictureBox = pictureDog3;
-            dogs[3].StartingPosition = pictureDog3.Location.X;
-            dogs[3].Randomizer = rand;
-
-            guys[0] = new Guy();
-            guys[0].Name = "man1";
-            guys[0].Cash = seedMoney;
-            guys[0].MyLabel = labelGuy0;
-            guys[0].MyRadioButton = radioButtonGuy0;
-
-            guys[1] = new Guy();
-            guys[1].Name = "man2";
-            guys[1].Cash = seedMoney;
-            guys[1].MyLabel = labelGuy1;
-            guys[1].MyRadioButton = radioButtonGuy1;
-
-            guys[2] = new Guy();
-            guys[2].Name = "man3";
-            guys[2].Cash = seedMoney;
-            guys[2].MyLabel = labelGuy2;
-            guys[2].MyRadioButton = radioButtonGuy2;
+            KeyValuePair<string, int>[] guyInfos =
+                {
+                new KeyValuePair<string, int>("", seedMoney),
+                new KeyValuePair<string, int>("", seedMoney),
+                new KeyValuePair<string, int>("", seedMoney)
+            };
 
 
-            numericUpDown2.Minimum = 1;
-            numericUpDown2.Maximum = dogs.Length;   
+            for (int i = dogs.Length - 1; i >= 0; --i)            
+                dogs[i] = new Greyhound(dogPictures[i], rand);
+
+            for (int i = guys.Length - 1; i >= 0; --i)
+                guys[0] = new Guy(guyInfos[0], guyRadios[0], guyLabels[0]);
+
+
             Reset();
         }
 
         private void Reset()
         {
+            numericUpDown1.Increment = minBet;
+
+            numericUpDown2.Minimum = 1;
+            numericUpDown2.Maximum = dogs.Length;
+
             labelOnRadio.Text = $"Minimum bet: {minBet} bucks";
             label5.Text = "Bets";
+
 
             foreach (Guy guy in guys)
                 guy.ClearBet();

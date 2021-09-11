@@ -16,6 +16,13 @@ namespace Lab1_RaceDay
         public int Location = 0; // My Location on the racetrack
         public Random Randomizer; // An instance of Random
 
+        public Greyhound(PictureBox picture, Random rand)
+        {
+            MyPictureBox = picture;
+            StartingPosition = picture.Location.X;
+            Randomizer = rand;
+        }
+
         public bool Run()
         {
             // Move forward either 1, 2, 3 or 4 spaces at random 
