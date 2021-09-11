@@ -1,5 +1,4 @@
 # How to use AbilityStatus class
-</br>
 
 ### float this[Ability.Stat]
 - returns total stat data after calculations
