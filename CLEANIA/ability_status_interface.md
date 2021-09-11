@@ -11,7 +11,7 @@
 ### `void FullHP(void)` & `void FullMP(void)`
 - set HP or MP into maximum value
     
-### `float AttackBy(AbilityStatus, float)`
+### `float AttackedBy(AbilityStatus, float)`
 - reduce HP of `this`.
   - referenced by `param1`'s stats and `param2`    
     
