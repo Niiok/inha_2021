@@ -1,32 +1,24 @@
 # How to use AbilityStatus class
-
-### float this[Ability.Stat]
+    
+### `float this[Ability.Stat]`
 - returns total stat data after calculations
 > e.g.) enemy2_status[Ability.Stat.Attack]
-</br>
-
-### float HP
-### float MP
+    
+### `float HP` & `float MP`
 - returns current HP or MP
 > getter
-</br>
-
-### void FullHP(void)
-### void FullMP(void)
+    
+### `void FullHP(void)` & `void FullMP(void)`
 - set HP or MP into maximum value
-</br>
-
-### float AttackBy(AbilityStatus, float)
+    
+### `float AttackBy(AbilityStatus, float)`
 - reduce HP of `this`.
   - referenced by `param1`'s stats and `param2`    
-</br>
-
-### bool ConsumeHP(float) 
-### bool ConsumeMP(float)
+    
+### `bool ConsumeHP(float)` & `bool ConsumeMP(float)`
 - try to use `param1` amount of HP or MP as resource
 - reduce HP or MP if this function return true
-</br>
-
-### float GetStat(Ability.Stat stat)
+    
+### `float GetStat(Ability.Stat stat)`
 - same with `float this[Ability.Stat]`
-</br>
+    
