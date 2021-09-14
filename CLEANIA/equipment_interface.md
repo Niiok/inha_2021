@@ -17,7 +17,7 @@ public enum Type
    
 ## Fields
 
-### 'Type EquipmentType'
+### `Type EquipmentType`
 - returns type of equipment
 - 장비 종류를 반환
 > getter
