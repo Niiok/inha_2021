@@ -1,0 +1,4 @@
+- [player considers](https://niiok.github.io/inha_ARAI_2021/CLEANIA/player_class.html)
+- [Ability](https://niiok.github.io/inha_ARAI_2021/CLEANIA/ability.html)
+- [AbilityStatus interface](https://niiok.github.io/inha_ARAI_2021/CLEANIA/ability_status_interface.html)
+- [Equipment interface](https://niiok.github.io/inha_ARAI_2021/CLEANIA/equipment_interface.html)

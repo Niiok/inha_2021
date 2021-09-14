@@ -1,13 +1,19 @@
 # How to use AbilityStatus class
     
-### `float this[Ability.Stat]`
-- returns total stat data after calculations
-> e.g.) enemy2_status[Ability.Stat.Attack]
+## Fields
     
 ### `float HP` & `float MP`
 - returns current HP or MP
 > getter
     
+
+
+## Methods
+	
+### `float this[Ability.Stat]`
+- returns total stat data after calculations
+> e.g.) enemy2_status[Ability.Stat.Attack]
+
 ### `void FullHP(void)` & `void FullMP(void)`
 - set HP or MP into maximum value
     
