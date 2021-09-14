@@ -2,7 +2,7 @@
 
 ## Project Cleania
 - [Project URL](https://github.com/jljl73/Cleania_Project/)
-- [documents](https://niiok.github.io/inha_ARAI_2021/CLEANIA/README.html)
+- [documents](https://niiok.github.io/inha_ARAI_2021/CLEANIA/)
 
 ## Unity toy (Unity)
 - [github](https://github.com/niiok/Unity_First/)
