@@ -28,3 +28,4 @@
 ![img](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/types/media/boxing-and-unboxing/unboxing-conversion-operation.gif)
 
 - enum과 struct는 16byte 미만일 경우 값타입으로 취급된다.
+  - 그러므로 리터럴과 일반적인 enum, struct사이의 캐스팅에는 박싱/언박싱이 발생하지 않는다.
