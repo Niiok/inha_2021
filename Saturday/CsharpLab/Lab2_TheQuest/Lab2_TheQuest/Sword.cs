@@ -12,7 +12,7 @@ namespace Lab2_TheQuest
         public Sword(Game game, Point location)
         : base(game, location) { }
 
-        public override string Name { get { return “Sword”; } }
+        public override string Name { get { return "Sword"; } }
 
         public override void Attack(Direction direction, Random random)
         {

@@ -18,3 +18,4 @@ namespace Lab2_TheQuest
         }
 
     }
+}

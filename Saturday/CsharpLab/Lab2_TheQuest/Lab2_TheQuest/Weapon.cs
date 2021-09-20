@@ -39,13 +39,13 @@ namespace Lab2_TheQuest
             {
                 foreach (Enemy enemy in game.Enemies)
                 {
-                    if (Nearby(enemy.Location, target, radius))
-                    {
-                        enemy.Hit(damage, random);
-                        return true;
-                    }
+                    //if (Nearby(enemy.Location, target, radius))
+                    //{
+                    //    enemy.Hit(damage, random);
+                    //    return true;
+                    //}
                 }
-                target = Move(direction, target, game.Boundaries);
+                //target = Move(direction, target, game.Boundaries);
             }
             return false;
         }
