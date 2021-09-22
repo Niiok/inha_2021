@@ -30,21 +30,24 @@
         {
             this.pictureBox_background = new System.Windows.Forms.PictureBox();
             this.groupBox_attack = new System.Windows.Forms.GroupBox();
+            this.button_attack_right = new System.Windows.Forms.Button();
+            this.button_attack_left = new System.Windows.Forms.Button();
+            this.button_attack_down = new System.Windows.Forms.Button();
             this.button_attack_up = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button_attack_down = new System.Windows.Forms.Button();
-            this.button_attack_left = new System.Windows.Forms.Button();
-            this.button_attack_right = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox_move = new System.Windows.Forms.GroupBox();
             this.button_move_right = new System.Windows.Forms.Button();
             this.button_move_left = new System.Windows.Forms.Button();
             this.button_move_down = new System.Windows.Forms.Button();
             this.button_move_up = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_background)).BeginInit();
             this.groupBox_attack.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox_move.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +55,7 @@
             // 
             this.pictureBox_background.Image = global::Lab2_TheQuest.Properties.Resources.dungeon600x400;
             this.pictureBox_background.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_background.Margin = new System.Windows.Forms.Padding(9);
+            this.pictureBox_background.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
             this.pictureBox_background.Name = "pictureBox_background";
             this.pictureBox_background.Size = new System.Drawing.Size(600, 400);
             this.pictureBox_background.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -65,22 +68,50 @@
             this.groupBox_attack.Controls.Add(this.button_attack_left);
             this.groupBox_attack.Controls.Add(this.button_attack_down);
             this.groupBox_attack.Controls.Add(this.button_attack_up);
-            this.groupBox_attack.Location = new System.Drawing.Point(621, 115);
-            this.groupBox_attack.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox_attack.Location = new System.Drawing.Point(621, 147);
             this.groupBox_attack.Name = "groupBox_attack";
             this.groupBox_attack.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox_attack.Size = new System.Drawing.Size(265, 100);
+            this.groupBox_attack.Size = new System.Drawing.Size(179, 100);
             this.groupBox_attack.TabIndex = 1;
             this.groupBox_attack.TabStop = false;
             this.groupBox_attack.Text = "Attack";
             // 
+            // button_attack_right
+            // 
+            this.button_attack_right.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button_attack_right.Location = new System.Drawing.Point(111, 43);
+            this.button_attack_right.Name = "button_attack_right";
+            this.button_attack_right.Size = new System.Drawing.Size(63, 20);
+            this.button_attack_right.TabIndex = 3;
+            this.button_attack_right.Text = "Right";
+            this.button_attack_right.UseVisualStyleBackColor = true;
+            // 
+            // button_attack_left
+            // 
+            this.button_attack_left.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button_attack_left.Location = new System.Drawing.Point(6, 43);
+            this.button_attack_left.Name = "button_attack_left";
+            this.button_attack_left.Size = new System.Drawing.Size(63, 20);
+            this.button_attack_left.TabIndex = 2;
+            this.button_attack_left.Text = "Left";
+            this.button_attack_left.UseVisualStyleBackColor = true;
+            // 
+            // button_attack_down
+            // 
+            this.button_attack_down.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button_attack_down.Location = new System.Drawing.Point(58, 73);
+            this.button_attack_down.Name = "button_attack_down";
+            this.button_attack_down.Size = new System.Drawing.Size(63, 20);
+            this.button_attack_down.TabIndex = 1;
+            this.button_attack_down.Text = "Down";
+            this.button_attack_down.UseVisualStyleBackColor = true;
+            // 
             // button_attack_up
             // 
             this.button_attack_up.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button_attack_up.Location = new System.Drawing.Point(96, 9);
-            this.button_attack_up.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_attack_up.Location = new System.Drawing.Point(58, 13);
             this.button_attack_up.Name = "button_attack_up";
-            this.button_attack_up.Size = new System.Drawing.Size(75, 23);
+            this.button_attack_up.Size = new System.Drawing.Size(63, 20);
             this.button_attack_up.TabIndex = 0;
             this.button_attack_up.Text = "Up";
             this.button_attack_up.UseVisualStyleBackColor = true;
@@ -99,6 +130,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.pictureBox_background);
             this.panel1.Location = new System.Drawing.Point(9, 9);
@@ -107,38 +139,17 @@
             this.panel1.Size = new System.Drawing.Size(600, 400);
             this.panel1.TabIndex = 3;
             // 
-            // button_attack_down
+            // pictureBox2
             // 
-            this.button_attack_down.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button_attack_down.Location = new System.Drawing.Point(96, 73);
-            this.button_attack_down.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button_attack_down.Name = "button_attack_down";
-            this.button_attack_down.Size = new System.Drawing.Size(75, 23);
-            this.button_attack_down.TabIndex = 1;
-            this.button_attack_down.Text = "Down";
-            this.button_attack_down.UseVisualStyleBackColor = true;
-            // 
-            // button_attack_left
-            // 
-            this.button_attack_left.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button_attack_left.Location = new System.Drawing.Point(6, 41);
-            this.button_attack_left.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button_attack_left.Name = "button_attack_left";
-            this.button_attack_left.Size = new System.Drawing.Size(75, 23);
-            this.button_attack_left.TabIndex = 2;
-            this.button_attack_left.Text = "Left";
-            this.button_attack_left.UseVisualStyleBackColor = true;
-            // 
-            // button_attack_right
-            // 
-            this.button_attack_right.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button_attack_right.Location = new System.Drawing.Point(184, 41);
-            this.button_attack_right.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button_attack_right.Name = "button_attack_right";
-            this.button_attack_right.Size = new System.Drawing.Size(75, 23);
-            this.button_attack_right.TabIndex = 3;
-            this.button_attack_right.Text = "Right";
-            this.button_attack_right.UseVisualStyleBackColor = true;
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.Image = global::Lab2_TheQuest.Properties.Resources.player;
+            this.pictureBox2.Location = new System.Drawing.Point(164, 127);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 3;
+            this.pictureBox2.TabStop = false;
             // 
             // groupBox_move
             // 
@@ -147,10 +158,9 @@
             this.groupBox_move.Controls.Add(this.button_move_down);
             this.groupBox_move.Controls.Add(this.button_move_up);
             this.groupBox_move.Location = new System.Drawing.Point(621, 11);
-            this.groupBox_move.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox_move.Name = "groupBox_move";
             this.groupBox_move.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox_move.Size = new System.Drawing.Size(265, 100);
+            this.groupBox_move.Size = new System.Drawing.Size(179, 100);
             this.groupBox_move.TabIndex = 4;
             this.groupBox_move.TabStop = false;
             this.groupBox_move.Text = "Move";
@@ -158,10 +168,9 @@
             // button_move_right
             // 
             this.button_move_right.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button_move_right.Location = new System.Drawing.Point(184, 41);
-            this.button_move_right.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_move_right.Location = new System.Drawing.Point(111, 43);
             this.button_move_right.Name = "button_move_right";
-            this.button_move_right.Size = new System.Drawing.Size(75, 23);
+            this.button_move_right.Size = new System.Drawing.Size(63, 20);
             this.button_move_right.TabIndex = 3;
             this.button_move_right.Text = "Right";
             this.button_move_right.UseVisualStyleBackColor = true;
@@ -169,10 +178,9 @@
             // button_move_left
             // 
             this.button_move_left.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button_move_left.Location = new System.Drawing.Point(6, 41);
-            this.button_move_left.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_move_left.Location = new System.Drawing.Point(6, 43);
             this.button_move_left.Name = "button_move_left";
-            this.button_move_left.Size = new System.Drawing.Size(75, 23);
+            this.button_move_left.Size = new System.Drawing.Size(63, 20);
             this.button_move_left.TabIndex = 2;
             this.button_move_left.Text = "Left";
             this.button_move_left.UseVisualStyleBackColor = true;
@@ -180,10 +188,9 @@
             // button_move_down
             // 
             this.button_move_down.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button_move_down.Location = new System.Drawing.Point(96, 73);
-            this.button_move_down.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_move_down.Location = new System.Drawing.Point(58, 73);
             this.button_move_down.Name = "button_move_down";
-            this.button_move_down.Size = new System.Drawing.Size(75, 23);
+            this.button_move_down.Size = new System.Drawing.Size(63, 20);
             this.button_move_down.TabIndex = 1;
             this.button_move_down.Text = "Down";
             this.button_move_down.UseVisualStyleBackColor = true;
@@ -191,19 +198,34 @@
             // button_move_up
             // 
             this.button_move_up.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button_move_up.Location = new System.Drawing.Point(96, 9);
-            this.button_move_up.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_move_up.Location = new System.Drawing.Point(58, 13);
             this.button_move_up.Name = "button_move_up";
-            this.button_move_up.Size = new System.Drawing.Size(75, 23);
+            this.button_move_up.Size = new System.Drawing.Size(63, 20);
             this.button_move_up.TabIndex = 0;
             this.button_move_up.Text = "Up";
             this.button_move_up.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.76563F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.23438F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(621, 289);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(179, 120);
+            this.tableLayoutPanel1.TabIndex = 5;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(898, 418);
+            this.ClientSize = new System.Drawing.Size(809, 418);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.groupBox_move);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox_attack);
@@ -213,6 +235,7 @@
             this.groupBox_attack.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox_move.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -233,6 +256,8 @@
         private System.Windows.Forms.Button button_move_left;
         private System.Windows.Forms.Button button_move_down;
         private System.Windows.Forms.Button button_move_up;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 
