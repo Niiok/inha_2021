@@ -19,7 +19,6 @@ namespace Lab2_TheQuest
     class Game
     {
         public List<Enemy> Enemies;
-
         public Weapon WeaponInRoom;
 
         private Player player;

@@ -28,39 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox_background = new System.Windows.Forms.PictureBox();
             this.groupBox_attack = new System.Windows.Forms.GroupBox();
             this.button_attack_right = new System.Windows.Forms.Button();
             this.button_attack_left = new System.Windows.Forms.Button();
             this.button_attack_down = new System.Windows.Forms.Button();
             this.button_attack_up = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox_move = new System.Windows.Forms.GroupBox();
             this.button_move_right = new System.Windows.Forms.Button();
             this.button_move_left = new System.Windows.Forms.Button();
             this.button_move_down = new System.Windows.Forms.Button();
             this.button_move_up = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_background)).BeginInit();
+            this.pictureBox_item1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox_player = new System.Windows.Forms.PictureBox();
+            this.pictureBox_bat = new System.Windows.Forms.PictureBox();
             this.groupBox_attack.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.groupBox_move.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_player)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_bat)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox_background
-            // 
-            this.pictureBox_background.Image = global::Lab2_TheQuest.Properties.Resources.dungeon600x400;
-            this.pictureBox_background.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox_background.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
-            this.pictureBox_background.Name = "pictureBox_background";
-            this.pictureBox_background.Size = new System.Drawing.Size(600, 400);
-            this.pictureBox_background.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox_background.TabIndex = 0;
-            this.pictureBox_background.TabStop = false;
             // 
             // groupBox_attack
             // 
@@ -68,7 +55,7 @@
             this.groupBox_attack.Controls.Add(this.button_attack_left);
             this.groupBox_attack.Controls.Add(this.button_attack_down);
             this.groupBox_attack.Controls.Add(this.button_attack_up);
-            this.groupBox_attack.Location = new System.Drawing.Point(621, 147);
+            this.groupBox_attack.Location = new System.Drawing.Point(614, 125);
             this.groupBox_attack.Name = "groupBox_attack";
             this.groupBox_attack.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox_attack.Size = new System.Drawing.Size(179, 100);
@@ -85,6 +72,7 @@
             this.button_attack_right.TabIndex = 3;
             this.button_attack_right.Text = "Right";
             this.button_attack_right.UseVisualStyleBackColor = true;
+            this.button_attack_right.Click += new System.EventHandler(this.button_attack_right_Click);
             // 
             // button_attack_left
             // 
@@ -95,6 +83,7 @@
             this.button_attack_left.TabIndex = 2;
             this.button_attack_left.Text = "Left";
             this.button_attack_left.UseVisualStyleBackColor = true;
+            this.button_attack_left.Click += new System.EventHandler(this.button_attack_left_Click);
             // 
             // button_attack_down
             // 
@@ -105,6 +94,7 @@
             this.button_attack_down.TabIndex = 1;
             this.button_attack_down.Text = "Down";
             this.button_attack_down.UseVisualStyleBackColor = true;
+            this.button_attack_down.Click += new System.EventHandler(this.button_attack_down_Click);
             // 
             // button_attack_up
             // 
@@ -115,41 +105,7 @@
             this.button_attack_up.TabIndex = 0;
             this.button_attack_up.Text = "Up";
             this.button_attack_up.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::Lab2_TheQuest.Properties.Resources.potion_red;
-            this.pictureBox1.Location = new System.Drawing.Point(81, 320);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.pictureBox2);
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.pictureBox_background);
-            this.panel1.Location = new System.Drawing.Point(9, 9);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(600, 400);
-            this.panel1.TabIndex = 3;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Image = global::Lab2_TheQuest.Properties.Resources.player;
-            this.pictureBox2.Location = new System.Drawing.Point(164, 127);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(30, 30);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 3;
-            this.pictureBox2.TabStop = false;
+            this.button_attack_up.Click += new System.EventHandler(this.button_attack_up_Click);
             // 
             // groupBox_move
             // 
@@ -157,7 +113,7 @@
             this.groupBox_move.Controls.Add(this.button_move_left);
             this.groupBox_move.Controls.Add(this.button_move_down);
             this.groupBox_move.Controls.Add(this.button_move_up);
-            this.groupBox_move.Location = new System.Drawing.Point(621, 11);
+            this.groupBox_move.Location = new System.Drawing.Point(614, 12);
             this.groupBox_move.Name = "groupBox_move";
             this.groupBox_move.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox_move.Size = new System.Drawing.Size(179, 100);
@@ -174,6 +130,7 @@
             this.button_move_right.TabIndex = 3;
             this.button_move_right.Text = "Right";
             this.button_move_right.UseVisualStyleBackColor = true;
+            this.button_move_right.Click += new System.EventHandler(this.button_move_right_Click);
             // 
             // button_move_left
             // 
@@ -184,6 +141,7 @@
             this.button_move_left.TabIndex = 2;
             this.button_move_left.Text = "Left";
             this.button_move_left.UseVisualStyleBackColor = true;
+            this.button_move_left.Click += new System.EventHandler(this.button_move_left_Click);
             // 
             // button_move_down
             // 
@@ -194,6 +152,7 @@
             this.button_move_down.TabIndex = 1;
             this.button_move_down.Text = "Down";
             this.button_move_down.UseVisualStyleBackColor = true;
+            this.button_move_down.Click += new System.EventHandler(this.button_move_down_Click);
             // 
             // button_move_up
             // 
@@ -204,13 +163,14 @@
             this.button_move_up.TabIndex = 0;
             this.button_move_up.Text = "Up";
             this.button_move_up.UseVisualStyleBackColor = true;
+            this.button_move_up.Click += new System.EventHandler(this.button_move_up_Click);
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34.76563F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.23438F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(621, 289);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(614, 268);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -220,34 +180,70 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(179, 120);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
+            // pictureBox_item1
+            // 
+            this.pictureBox_item1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_item1.Image = global::Lab2_TheQuest.Properties.Resources.potion_red;
+            this.pictureBox_item1.Location = new System.Drawing.Point(83, 322);
+            this.pictureBox_item1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox_item1.Name = "pictureBox_item1";
+            this.pictureBox_item1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox_item1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_item1.TabIndex = 2;
+            this.pictureBox_item1.TabStop = false;
+            // 
+            // pictureBox_player
+            // 
+            this.pictureBox_player.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_player.Image = global::Lab2_TheQuest.Properties.Resources.player;
+            this.pictureBox_player.Location = new System.Drawing.Point(83, 75);
+            this.pictureBox_player.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox_player.Name = "pictureBox_player";
+            this.pictureBox_player.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox_player.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_player.TabIndex = 3;
+            this.pictureBox_player.TabStop = false;
+            // 
+            // pictureBox_bat
+            // 
+            this.pictureBox_bat.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_bat.Image = global::Lab2_TheQuest.Properties.Resources.bat;
+            this.pictureBox_bat.Location = new System.Drawing.Point(135, 75);
+            this.pictureBox_bat.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox_bat.Name = "pictureBox_bat";
+            this.pictureBox_bat.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox_bat.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_bat.TabIndex = 6;
+            this.pictureBox_bat.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(809, 418);
+            this.BackgroundImage = global::Lab2_TheQuest.Properties.Resources.dungeon600x400;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ClientSize = new System.Drawing.Size(805, 400);
+            this.Controls.Add(this.pictureBox_bat);
+            this.Controls.Add(this.pictureBox_item1);
+            this.Controls.Add(this.pictureBox_player);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.groupBox_move);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox_attack);
             this.Name = "Form1";
             this.Text = "The Quest";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_background)).EndInit();
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox_attack.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox_move.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_player)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_bat)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox pictureBox_background;
         private System.Windows.Forms.GroupBox groupBox_attack;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button_attack_up;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button_attack_down;
         private System.Windows.Forms.Button button_attack_right;
         private System.Windows.Forms.Button button_attack_left;
@@ -257,7 +253,9 @@
         private System.Windows.Forms.Button button_move_down;
         private System.Windows.Forms.Button button_move_up;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox_item1;
+        private System.Windows.Forms.PictureBox pictureBox_player;
+        private System.Windows.Forms.PictureBox pictureBox_bat;
     }
 }
 
