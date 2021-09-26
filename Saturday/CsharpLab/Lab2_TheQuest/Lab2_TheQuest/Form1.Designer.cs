@@ -39,14 +39,36 @@
             this.button_move_down = new System.Windows.Forms.Button();
             this.button_move_up = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox_item1 = new System.Windows.Forms.PictureBox();
             this.pictureBox_player = new System.Windows.Forms.PictureBox();
             this.pictureBox_bat = new System.Windows.Forms.PictureBox();
+            this.pictureBox_item_red = new System.Windows.Forms.PictureBox();
+            this.pictureBox_item_blue = new System.Windows.Forms.PictureBox();
+            this.pictureBox_item_sword = new System.Windows.Forms.PictureBox();
+            this.pictureBox_item_bow = new System.Windows.Forms.PictureBox();
+            this.pictureBox_item_mace = new System.Windows.Forms.PictureBox();
+            this.pictureBox_ghost = new System.Windows.Forms.PictureBox();
+            this.pictureBox_ghoul = new System.Windows.Forms.PictureBox();
+            this.pictureBox_sword = new System.Windows.Forms.PictureBox();
+            this.pictureBox_bow = new System.Windows.Forms.PictureBox();
+            this.pictureBox_mace = new System.Windows.Forms.PictureBox();
+            this.pictureBox_potion_red = new System.Windows.Forms.PictureBox();
+            this.pictureBox__item_blue = new System.Windows.Forms.PictureBox();
             this.groupBox_attack.SuspendLayout();
             this.groupBox_move.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_player)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_bat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_red)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_blue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_sword)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_bow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_mace)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ghost)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ghoul)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_sword)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_bow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_mace)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_potion_red)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox__item_blue)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox_attack
@@ -180,18 +202,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(179, 120);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
-            // pictureBox_item1
-            // 
-            this.pictureBox_item1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox_item1.Image = global::Lab2_TheQuest.Properties.Resources.potion_red;
-            this.pictureBox_item1.Location = new System.Drawing.Point(83, 322);
-            this.pictureBox_item1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.pictureBox_item1.Name = "pictureBox_item1";
-            this.pictureBox_item1.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox_item1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox_item1.TabIndex = 2;
-            this.pictureBox_item1.TabStop = false;
-            // 
             // pictureBox_player
             // 
             this.pictureBox_player.BackColor = System.Drawing.Color.Transparent;
@@ -208,13 +218,157 @@
             // 
             this.pictureBox_bat.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox_bat.Image = global::Lab2_TheQuest.Properties.Resources.bat;
-            this.pictureBox_bat.Location = new System.Drawing.Point(135, 75);
+            this.pictureBox_bat.Location = new System.Drawing.Point(127, 75);
             this.pictureBox_bat.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox_bat.Name = "pictureBox_bat";
             this.pictureBox_bat.Size = new System.Drawing.Size(30, 30);
             this.pictureBox_bat.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_bat.TabIndex = 6;
             this.pictureBox_bat.TabStop = false;
+            // 
+            // pictureBox_item_red
+            // 
+            this.pictureBox_item_red.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_item_red.Image = global::Lab2_TheQuest.Properties.Resources.potion_red;
+            this.pictureBox_item_red.Location = new System.Drawing.Point(450, 320);
+            this.pictureBox_item_red.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox_item_red.Name = "pictureBox_item_red";
+            this.pictureBox_item_red.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox_item_red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_item_red.TabIndex = 2;
+            this.pictureBox_item_red.TabStop = false;
+            // 
+            // pictureBox_item_blue
+            // 
+            this.pictureBox_item_blue.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_item_blue.Image = global::Lab2_TheQuest.Properties.Resources.potion_blue;
+            this.pictureBox_item_blue.Location = new System.Drawing.Point(368, 320);
+            this.pictureBox_item_blue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox_item_blue.Name = "pictureBox_item_blue";
+            this.pictureBox_item_blue.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox_item_blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_item_blue.TabIndex = 7;
+            this.pictureBox_item_blue.TabStop = false;
+            // 
+            // pictureBox_item_sword
+            // 
+            this.pictureBox_item_sword.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_item_sword.Image = global::Lab2_TheQuest.Properties.Resources.sword;
+            this.pictureBox_item_sword.Location = new System.Drawing.Point(83, 320);
+            this.pictureBox_item_sword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox_item_sword.Name = "pictureBox_item_sword";
+            this.pictureBox_item_sword.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox_item_sword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_item_sword.TabIndex = 8;
+            this.pictureBox_item_sword.TabStop = false;
+            // 
+            // pictureBox_item_bow
+            // 
+            this.pictureBox_item_bow.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_item_bow.Image = global::Lab2_TheQuest.Properties.Resources.bow;
+            this.pictureBox_item_bow.Location = new System.Drawing.Point(139, 320);
+            this.pictureBox_item_bow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox_item_bow.Name = "pictureBox_item_bow";
+            this.pictureBox_item_bow.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox_item_bow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_item_bow.TabIndex = 9;
+            this.pictureBox_item_bow.TabStop = false;
+            // 
+            // pictureBox_item_mace
+            // 
+            this.pictureBox_item_mace.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_item_mace.Image = global::Lab2_TheQuest.Properties.Resources.mace;
+            this.pictureBox_item_mace.Location = new System.Drawing.Point(195, 320);
+            this.pictureBox_item_mace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox_item_mace.Name = "pictureBox_item_mace";
+            this.pictureBox_item_mace.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox_item_mace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_item_mace.TabIndex = 10;
+            this.pictureBox_item_mace.TabStop = false;
+            // 
+            // pictureBox_ghost
+            // 
+            this.pictureBox_ghost.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_ghost.Image = global::Lab2_TheQuest.Properties.Resources.ghost;
+            this.pictureBox_ghost.Location = new System.Drawing.Point(173, 75);
+            this.pictureBox_ghost.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox_ghost.Name = "pictureBox_ghost";
+            this.pictureBox_ghost.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox_ghost.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_ghost.TabIndex = 11;
+            this.pictureBox_ghost.TabStop = false;
+            // 
+            // pictureBox_ghoul
+            // 
+            this.pictureBox_ghoul.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_ghoul.Image = global::Lab2_TheQuest.Properties.Resources.ghoul;
+            this.pictureBox_ghoul.Location = new System.Drawing.Point(215, 75);
+            this.pictureBox_ghoul.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox_ghoul.Name = "pictureBox_ghoul";
+            this.pictureBox_ghoul.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox_ghoul.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_ghoul.TabIndex = 12;
+            this.pictureBox_ghoul.TabStop = false;
+            // 
+            // pictureBox_sword
+            // 
+            this.pictureBox_sword.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_sword.Image = global::Lab2_TheQuest.Properties.Resources.sword;
+            this.pictureBox_sword.Location = new System.Drawing.Point(277, 75);
+            this.pictureBox_sword.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox_sword.Name = "pictureBox_sword";
+            this.pictureBox_sword.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox_sword.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_sword.TabIndex = 13;
+            this.pictureBox_sword.TabStop = false;
+            // 
+            // pictureBox_bow
+            // 
+            this.pictureBox_bow.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_bow.Image = global::Lab2_TheQuest.Properties.Resources.bow;
+            this.pictureBox_bow.Location = new System.Drawing.Point(332, 75);
+            this.pictureBox_bow.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox_bow.Name = "pictureBox_bow";
+            this.pictureBox_bow.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox_bow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_bow.TabIndex = 14;
+            this.pictureBox_bow.TabStop = false;
+            // 
+            // pictureBox_mace
+            // 
+            this.pictureBox_mace.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_mace.Image = global::Lab2_TheQuest.Properties.Resources.mace;
+            this.pictureBox_mace.Location = new System.Drawing.Point(388, 75);
+            this.pictureBox_mace.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox_mace.Name = "pictureBox_mace";
+            this.pictureBox_mace.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox_mace.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_mace.TabIndex = 15;
+            this.pictureBox_mace.TabStop = false;
+            // 
+            // pictureBox_potion_red
+            // 
+            this.pictureBox_potion_red.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox_potion_red.Image = global::Lab2_TheQuest.Properties.Resources.potion_red;
+            this.pictureBox_potion_red.Location = new System.Drawing.Point(320, 148);
+            this.pictureBox_potion_red.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox_potion_red.Name = "pictureBox_potion_red";
+            this.pictureBox_potion_red.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox_potion_red.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox_potion_red.TabIndex = 16;
+            this.pictureBox_potion_red.TabStop = false;
+            // 
+            // pictureBox__item_blue
+            // 
+            this.pictureBox__item_blue.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox__item_blue.Image = global::Lab2_TheQuest.Properties.Resources.potion_blue;
+            this.pictureBox__item_blue.Location = new System.Drawing.Point(368, 138);
+            this.pictureBox__item_blue.Margin = new System.Windows.Forms.Padding(2);
+            this.pictureBox__item_blue.Name = "pictureBox__item_blue";
+            this.pictureBox__item_blue.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox__item_blue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox__item_blue.TabIndex = 17;
+            this.pictureBox__item_blue.TabStop = false;
             // 
             // Form1
             // 
@@ -223,8 +377,19 @@
             this.BackgroundImage = global::Lab2_TheQuest.Properties.Resources.dungeon600x400;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(805, 400);
+            this.Controls.Add(this.pictureBox__item_blue);
+            this.Controls.Add(this.pictureBox_potion_red);
+            this.Controls.Add(this.pictureBox_mace);
+            this.Controls.Add(this.pictureBox_bow);
+            this.Controls.Add(this.pictureBox_sword);
+            this.Controls.Add(this.pictureBox_ghoul);
+            this.Controls.Add(this.pictureBox_ghost);
+            this.Controls.Add(this.pictureBox_item_mace);
+            this.Controls.Add(this.pictureBox_item_bow);
+            this.Controls.Add(this.pictureBox_item_sword);
+            this.Controls.Add(this.pictureBox_item_blue);
             this.Controls.Add(this.pictureBox_bat);
-            this.Controls.Add(this.pictureBox_item1);
+            this.Controls.Add(this.pictureBox_item_red);
             this.Controls.Add(this.pictureBox_player);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.groupBox_move);
@@ -234,9 +399,20 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox_attack.ResumeLayout(false);
             this.groupBox_move.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_player)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_bat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_red)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_blue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_sword)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_bow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_item_mace)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ghost)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_ghoul)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_sword)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_bow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_mace)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_potion_red)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox__item_blue)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -253,9 +429,20 @@
         private System.Windows.Forms.Button button_move_down;
         private System.Windows.Forms.Button button_move_up;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.PictureBox pictureBox_item1;
         private System.Windows.Forms.PictureBox pictureBox_player;
         private System.Windows.Forms.PictureBox pictureBox_bat;
+        private System.Windows.Forms.PictureBox pictureBox_item_red;
+        private System.Windows.Forms.PictureBox pictureBox_item_blue;
+        private System.Windows.Forms.PictureBox pictureBox_item_sword;
+        private System.Windows.Forms.PictureBox pictureBox_item_bow;
+        private System.Windows.Forms.PictureBox pictureBox_item_mace;
+        private System.Windows.Forms.PictureBox pictureBox_ghost;
+        private System.Windows.Forms.PictureBox pictureBox_ghoul;
+        private System.Windows.Forms.PictureBox pictureBox_sword;
+        private System.Windows.Forms.PictureBox pictureBox_bow;
+        private System.Windows.Forms.PictureBox pictureBox_mace;
+        private System.Windows.Forms.PictureBox pictureBox_potion_red;
+        private System.Windows.Forms.PictureBox pictureBox__item_blue;
     }
 }
 

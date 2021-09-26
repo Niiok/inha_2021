@@ -29,7 +29,7 @@ namespace Lab2_TheQuest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            game = new Game(new Rectangle(0, 0, 600, 400));
+            game = new Game(new Rectangle(78, 57, 420, 155));
             game.NewLevel(random);
             UpdateCharacters();
         }
