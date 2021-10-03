@@ -66,12 +66,14 @@ namespace Lab2_TheQuest
             pictureBox_potion_blue.Visible = false;
             pictureBox_mace.Visible = false;
             Control weaponControl = null;
+
             switch (game.WeaponInRoom.Name)
             {
                 case "Sword":
                     weaponControl = pictureBox_sword; break;
             }
             weaponControl.Location = game.WeaponInRoom.Location;
+
             if (game.WeaponInRoom.PickedUp)
             {
                 weaponControl.Visible = false;
@@ -80,6 +82,7 @@ namespace Lab2_TheQuest
             {
                 weaponControl.Visible = true;
             }
+
             if (game.PlayerHitPoints <= 0)
             {
                 MessageBox.Show("You died");

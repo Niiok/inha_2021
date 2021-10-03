@@ -57,12 +57,23 @@ namespace Lab2_TheQuest
             if (!game.WeaponInRoom.PickedUp)
             {
                 // see if the weapon is nearby, and possibly pick it up
+
+                if (game.WeaponInRoom.Nearby(location, 10))
+                {
+                    game.WeaponInRoom.PickUpWeapon();
+                    inventory.Add(game.WeaponInRoom);
+                }
             }
         }
 
         public void Attack(Direction direction, Random random)
         {
             // Your code goes here
+
+            if (equippedWeapon != null)
+            {
+                equippedWeapon.Attack(direction, random);
+            }
         }
     }
 
