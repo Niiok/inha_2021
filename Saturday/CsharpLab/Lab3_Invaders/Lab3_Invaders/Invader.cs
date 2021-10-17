@@ -56,7 +56,82 @@ namespace Lab3_Invaders
         {
             // This is mostly a convenience method, and
             // returns the right bitmap for the specified cell
-            return new Bitmap(Properties.Resources.bug1);
+
+            switch(InvaderType)
+            {
+                case ShipType.Bug:
+                    switch(animationCell)
+                    {
+                        case 0:
+                            return new Bitmap(Properties.Resources.bug1);
+                        case 1:
+                            return new Bitmap(Properties.Resources.bug2);
+                        case 2:
+                            return new Bitmap(Properties.Resources.bug3);
+                        case 3:
+                            return new Bitmap(Properties.Resources.bug4);
+                        default:
+                            return null;
+                    }
+                case ShipType.Saucer:
+                    switch(animationCell)
+                    {
+                        case 0:
+                            return new Bitmap(Properties.Resources.flyingsaucer1);
+                        case 1:
+                            return new Bitmap(Properties.Resources.flyingsaucer2);
+                        case 2:
+                            return new Bitmap(Properties.Resources.flyingsaucer3);
+                        case 3:
+                            return new Bitmap(Properties.Resources.flyingsaucer4);
+                        default:
+                            return null;
+                    }
+                case ShipType.Satellite:
+                    switch(animationCell)
+                    {
+                        case 0:
+                            return new Bitmap(Properties.Resources.satellite1);
+                        case 1:
+                            return new Bitmap(Properties.Resources.satellite2);
+                        case 2:
+                            return new Bitmap(Properties.Resources.satellite3);
+                        case 3:
+                            return new Bitmap(Properties.Resources.satellite4);
+                        default:
+                            return null;
+                    }
+                case ShipType.Spaceship:
+                    switch(animationCell)
+                    {
+                        case 0:
+                            return new Bitmap(Properties.Resources.spaceship1);
+                        case 1:
+                            return new Bitmap(Properties.Resources.spaceship2);
+                        case 2:
+                            return new Bitmap(Properties.Resources.spaceship3);
+                        case 3:
+                            return new Bitmap(Properties.Resources.spaceship4);
+                        default:
+                            return null;
+                    }
+                case ShipType.Star:
+                    switch(animationCell)
+                    {
+                        case 0:
+                            return new Bitmap(Properties.Resources.star1);
+                        case 1:
+                            return new Bitmap(Properties.Resources.star2);
+                        case 2:
+                            return new Bitmap(Properties.Resources.star3);
+                        case 3:
+                            return new Bitmap(Properties.Resources.star4);
+                        default:
+                            return null;
+                    }
+                default:
+                    return null;
+            }
         }
     }
 }
