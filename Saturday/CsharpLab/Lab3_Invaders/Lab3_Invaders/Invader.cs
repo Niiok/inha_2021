@@ -14,10 +14,13 @@ namespace Lab3_Invaders
         Satellite,
         Spaceship,
         Star,
+        enumTotal
     }
 
     class Invader
     {
+        static Bitmap[][] bitmaps_;
+
         private const int HorizontalInterval = 10;
         private const int VerticalInterval = 40;
         private Bitmap image;
@@ -33,6 +36,9 @@ namespace Lab3_Invaders
         public int Score { get; private set; }
         public Invader(ShipType invaderType, Point location, int score)
         {
+            if (bitmaps_ == null)
+                InvaderImageInit();
+
             this.InvaderType = invaderType;
             this.Location = location;
             this.Score = score;
@@ -57,80 +63,41 @@ namespace Lab3_Invaders
             // This is mostly a convenience method, and
             // returns the right bitmap for the specified cell
 
-            switch(InvaderType)
+            return bitmaps_[(int)InvaderType][animationCell];
+        }
+
+        void InvaderImageInit()
+        {
+            if (bitmaps_ == null)
             {
-                case ShipType.Bug:
-                    switch(animationCell)
-                    {
-                        case 0:
-                            return new Bitmap(Properties.Resources.bug1);
-                        case 1:
-                            return new Bitmap(Properties.Resources.bug2);
-                        case 2:
-                            return new Bitmap(Properties.Resources.bug3);
-                        case 3:
-                            return new Bitmap(Properties.Resources.bug4);
-                        default:
-                            return null;
-                    }
-                case ShipType.Saucer:
-                    switch(animationCell)
-                    {
-                        case 0:
-                            return new Bitmap(Properties.Resources.flyingsaucer1);
-                        case 1:
-                            return new Bitmap(Properties.Resources.flyingsaucer2);
-                        case 2:
-                            return new Bitmap(Properties.Resources.flyingsaucer3);
-                        case 3:
-                            return new Bitmap(Properties.Resources.flyingsaucer4);
-                        default:
-                            return null;
-                    }
-                case ShipType.Satellite:
-                    switch(animationCell)
-                    {
-                        case 0:
-                            return new Bitmap(Properties.Resources.satellite1);
-                        case 1:
-                            return new Bitmap(Properties.Resources.satellite2);
-                        case 2:
-                            return new Bitmap(Properties.Resources.satellite3);
-                        case 3:
-                            return new Bitmap(Properties.Resources.satellite4);
-                        default:
-                            return null;
-                    }
-                case ShipType.Spaceship:
-                    switch(animationCell)
-                    {
-                        case 0:
-                            return new Bitmap(Properties.Resources.spaceship1);
-                        case 1:
-                            return new Bitmap(Properties.Resources.spaceship2);
-                        case 2:
-                            return new Bitmap(Properties.Resources.spaceship3);
-                        case 3:
-                            return new Bitmap(Properties.Resources.spaceship4);
-                        default:
-                            return null;
-                    }
-                case ShipType.Star:
-                    switch(animationCell)
-                    {
-                        case 0:
-                            return new Bitmap(Properties.Resources.star1);
-                        case 1:
-                            return new Bitmap(Properties.Resources.star2);
-                        case 2:
-                            return new Bitmap(Properties.Resources.star3);
-                        case 3:
-                            return new Bitmap(Properties.Resources.star4);
-                        default:
-                            return null;
-                    }
-                default:
-                    return null;
+                bitmaps_ = new Bitmap[(int)ShipType.enumTotal][];
+                for (int i = 0; i < (int)ShipType.enumTotal; ++i)
+                    bitmaps_[i] = new Bitmap[4];
+
+                bitmaps_[(int)ShipType.Bug][0] = new Bitmap(Properties.Resources.bug1);
+                bitmaps_[(int)ShipType.Bug][1] = new Bitmap(Properties.Resources.bug2);
+                bitmaps_[(int)ShipType.Bug][2] = new Bitmap(Properties.Resources.bug3);
+                bitmaps_[(int)ShipType.Bug][3] = new Bitmap(Properties.Resources.bug4);
+
+                bitmaps_[(int)ShipType.Saucer][0] = new Bitmap(Properties.Resources.flyingsaucer1);
+                bitmaps_[(int)ShipType.Saucer][1] = new Bitmap(Properties.Resources.flyingsaucer2);
+                bitmaps_[(int)ShipType.Saucer][2] = new Bitmap(Properties.Resources.flyingsaucer3);
+                bitmaps_[(int)ShipType.Saucer][3] = new Bitmap(Properties.Resources.flyingsaucer4);
+
+                bitmaps_[(int)ShipType.Satellite][0] = new Bitmap(Properties.Resources.satellite1);
+                bitmaps_[(int)ShipType.Satellite][1] = new Bitmap(Properties.Resources.satellite2);
+                bitmaps_[(int)ShipType.Satellite][2] = new Bitmap(Properties.Resources.satellite3);
+                bitmaps_[(int)ShipType.Satellite][3] = new Bitmap(Properties.Resources.satellite4);
+
+                bitmaps_[(int)ShipType.Spaceship][0] = new Bitmap(Properties.Resources.spaceship1);
+                bitmaps_[(int)ShipType.Spaceship][1] = new Bitmap(Properties.Resources.spaceship2);
+                bitmaps_[(int)ShipType.Spaceship][2] = new Bitmap(Properties.Resources.spaceship3);
+                bitmaps_[(int)ShipType.Spaceship][3] = new Bitmap(Properties.Resources.spaceship4);
+
+                bitmaps_[(int)ShipType.Star][0] = new Bitmap(Properties.Resources.star1);
+                bitmaps_[(int)ShipType.Star][1] = new Bitmap(Properties.Resources.star2);
+                bitmaps_[(int)ShipType.Star][2] = new Bitmap(Properties.Resources.star3);
+                bitmaps_[(int)ShipType.Star][3] = new Bitmap(Properties.Resources.star4);
             }
         }
     }
