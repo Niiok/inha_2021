@@ -74,30 +74,30 @@ namespace Lab3_Invaders
                 for (int i = 0; i < (int)ShipType.enumTotal; ++i)
                     bitmaps_[i] = new Bitmap[4];
 
-                bitmaps_[(int)ShipType.Bug][0] = new Bitmap(Properties.Resources.bug1);
-                bitmaps_[(int)ShipType.Bug][1] = new Bitmap(Properties.Resources.bug2);
-                bitmaps_[(int)ShipType.Bug][2] = new Bitmap(Properties.Resources.bug3);
-                bitmaps_[(int)ShipType.Bug][3] = new Bitmap(Properties.Resources.bug4);
+                bitmaps_[(int)ShipType.Bug][0] = Properties.Resources.bug1;
+                bitmaps_[(int)ShipType.Bug][1] = Properties.Resources.bug2;
+                bitmaps_[(int)ShipType.Bug][2] = Properties.Resources.bug3;
+                bitmaps_[(int)ShipType.Bug][3] = Properties.Resources.bug4;
 
-                bitmaps_[(int)ShipType.Saucer][0] = new Bitmap(Properties.Resources.flyingsaucer1);
-                bitmaps_[(int)ShipType.Saucer][1] = new Bitmap(Properties.Resources.flyingsaucer2);
-                bitmaps_[(int)ShipType.Saucer][2] = new Bitmap(Properties.Resources.flyingsaucer3);
-                bitmaps_[(int)ShipType.Saucer][3] = new Bitmap(Properties.Resources.flyingsaucer4);
+                bitmaps_[(int)ShipType.Saucer][0] = Properties.Resources.flyingsaucer1;
+                bitmaps_[(int)ShipType.Saucer][1] = Properties.Resources.flyingsaucer2;
+                bitmaps_[(int)ShipType.Saucer][2] = Properties.Resources.flyingsaucer3;
+                bitmaps_[(int)ShipType.Saucer][3] = Properties.Resources.flyingsaucer4;
 
-                bitmaps_[(int)ShipType.Satellite][0] = new Bitmap(Properties.Resources.satellite1);
-                bitmaps_[(int)ShipType.Satellite][1] = new Bitmap(Properties.Resources.satellite2);
-                bitmaps_[(int)ShipType.Satellite][2] = new Bitmap(Properties.Resources.satellite3);
-                bitmaps_[(int)ShipType.Satellite][3] = new Bitmap(Properties.Resources.satellite4);
+                bitmaps_[(int)ShipType.Satellite][0] = Properties.Resources.satellite1;
+                bitmaps_[(int)ShipType.Satellite][1] = Properties.Resources.satellite2;
+                bitmaps_[(int)ShipType.Satellite][2] = Properties.Resources.satellite3;
+                bitmaps_[(int)ShipType.Satellite][3] = Properties.Resources.satellite4;
 
-                bitmaps_[(int)ShipType.Spaceship][0] = new Bitmap(Properties.Resources.spaceship1);
-                bitmaps_[(int)ShipType.Spaceship][1] = new Bitmap(Properties.Resources.spaceship2);
-                bitmaps_[(int)ShipType.Spaceship][2] = new Bitmap(Properties.Resources.spaceship3);
-                bitmaps_[(int)ShipType.Spaceship][3] = new Bitmap(Properties.Resources.spaceship4);
+                bitmaps_[(int)ShipType.Spaceship][0] = Properties.Resources.spaceship1;
+                bitmaps_[(int)ShipType.Spaceship][1] = Properties.Resources.spaceship2;
+                bitmaps_[(int)ShipType.Spaceship][2] = Properties.Resources.spaceship3;
+                bitmaps_[(int)ShipType.Spaceship][3] = Properties.Resources.spaceship4;
 
-                bitmaps_[(int)ShipType.Star][0] = new Bitmap(Properties.Resources.star1);
-                bitmaps_[(int)ShipType.Star][1] = new Bitmap(Properties.Resources.star2);
-                bitmaps_[(int)ShipType.Star][2] = new Bitmap(Properties.Resources.star3);
-                bitmaps_[(int)ShipType.Star][3] = new Bitmap(Properties.Resources.star4);
+                bitmaps_[(int)ShipType.Star][0] = Properties.Resources.star1;
+                bitmaps_[(int)ShipType.Star][1] = Properties.Resources.star2;
+                bitmaps_[(int)ShipType.Star][2] = Properties.Resources.star3;
+                bitmaps_[(int)ShipType.Star][3] = Properties.Resources.star4;
             }
         }
     }
