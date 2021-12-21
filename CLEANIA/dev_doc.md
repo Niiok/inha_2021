@@ -19,13 +19,11 @@
   
 - Out-Unity
   - [SavedData](#SavedData)
-    - 싱글톤
+    - ~~싱글톤~~
   - [ItemStorage](#ItemStorage)
     - 브릿지, 옵저버(발행자)
   - [ItemInstance](#ItemInstance)
     - 팩토리, 프로토타입
-  - [ItemInstance_Equipment](#ItemInstance_Equipment)
-	- .
   
 ----
 
@@ -57,9 +55,9 @@
 
 #### Status
 > 레벨에 따른 기초 스텟 산출    
+> subclass : `Status_ArithmeticProgress`, `Status_Table`    
 - 어댑터
   - 레벨이 오름에 따른 스텟 변화 규칙이 다르기에 적합한 방식으로 테이블을 읽어줌
-    - `Status_ArithmeticProgress`, `Status_Table`
 
 #### Equipable
 > 유닛의 착용중인 장비를 저장    
@@ -79,9 +77,28 @@
 > 어플리케이션과 함께 제거    
 
 #### SavedData
+> 게임이 시작할 때 저장된 json 파일을 파싱하여 데이터 로드    
+> 게임이 끝날 때 Serializable한 멤버들을 json으로 저장    
+- ~~싱글톤~~
+  - `ItemStorage`등의 시스템 데이터를 멤버로 생성/제거 하므로 싱글톤으로 사용했었음
+  - 하지만 현재는 `GameManager`의 멤버로 넣음으로서 싱글톤 패턴을 제거
+    - 게임 데이터 저장과 중앙 시스템 역할을 분리 => 캐릭터 선택화면에서 여러개 사용가능해짐
 
 #### ItemStorage
+> `ItemInstance`들을 저장하는 시스템 객체    
+> subclass : `ItemStorage_LocalGrid`, `ItemStorage_World`, `ItemStorage_Equipment`    
+- 브릿지
+  - 모든 `ItemStorage`는 `iItemStorage` 인터페이스의 `bool Add(ItemInstance)`와 `bool Remove(ItemInstance)`를 구현
+  - 내부에 속한 `ItemInstance`는 기본 추가와 기본 제거를 통해 예외 처리가 가능
+- 옵저버(발행자)
+  - `ItemInstance`의 실질적 소유자로서, 추가와 제거에 대한 갱신정보를 구독자들에게 발행
 
 #### ItemInstance
-
-#### ItemInstance_Equipment
+> 플레이어가 가지는 아이템
+> `ItemInstance`는 UI, 전투, 퀘스트 등 다양한 곳에 참조될 수 있지만, `ItemStorage`간에는 하나에만 참조되고, `ItemInstance`는 이를 부모로 저장    
+> 같은 아이템이어도 저장하는 데이터와 가능한 동작이 다름 => 서브클래스로 분화    
+> subclass : `ItemInstance_Equipment`, `ItemInstance_Etc`
+- 팩토리
+  - 아이템 ID에 따라 다른 종류의 ItemInstance를 생성함
+- 프로토타입
+  - `ItemSO`를 통해 중복되는 데이터(e.g. 아이템 이름, 이미지)는 공유
