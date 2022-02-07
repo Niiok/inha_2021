@@ -8,7 +8,7 @@
 - [github](https://github.com/niiok/Unity_First/)
 
 ## Roll ball (SDL2)
-- [github](https://github.com/niiok/inha_ARAI_2021/tree/masterRollBall/)
+- [github](https://github.com/Niiok/inha_ARAI_2021/tree/master/RollBall)
 
 ## Qix (SDL2)
-- [github](https://github.com/niiok/inha_ARAI_2021/tree/master/GalsPanic_SD/)
+- [github](https://github.com/Niiok/inha_ARAI_2021/tree/master/GalsPanic_SDL)
